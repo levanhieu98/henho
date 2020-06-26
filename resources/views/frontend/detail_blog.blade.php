@@ -116,31 +116,8 @@
 					</div>
 				</div>	
 				@endforeach
-			</div>
-
-			
-
+			</div>		
 		</div>
-
-		<!-- Reviews -->
-
-		
-		<!-- Location on Map -->
-
-	{{-- 	<div class="location_on_map">
-			<div class="location_on_map_title">location on map</div>
-
-			<!-- Google Map -->
-			
-			<div class="travelix_map">
-				<div id="google_map" class="google_map">
-					<div class="map_container">
-						<div id="map"></div>
-					</div>
-				</div>
-			</div>
-
-		</div> --}}
 	</div>
 </div>
 </div>

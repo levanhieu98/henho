@@ -12,7 +12,7 @@
            @endif
            <div class="media">
             <div class="media-left">
-              <img src="https://via.placeholder.com/150C/O https://placeholder.com/" alt="" class="media-object">
+              <img src="{{'frontend/'.$us->img}}" alt="" class="media-object">
             </div>
             <div class="media-body">
               <p class="name">{{$us->name}}</p>

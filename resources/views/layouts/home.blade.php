@@ -45,9 +45,8 @@
   <!-- ======= Header ======= -->
   <header id="header">
     <div class="d-flex flex-column">
-
       <div class="profile">
-        <img src="assets/img/profile-img.jpg" alt="" class="img-fluid rounded-circle">
+        <img src="{{'frontend/'.Auth::user()->img}}" alt="" class="img-fluid rounded-circle">
         <div class="form-inline">
           <h1 class="text-light col-10 "><a href="index.html">{{Auth::user()->name}}</a></h1>
           <div class="dropdown col-2">
@@ -62,7 +61,6 @@
             </div>
           </div>
         </div>
-
         <nav class="nav-menu">
           <ul>
             <li><a href="/trangchu"><i class="bx bx-home"></i> <span>Trang chủ</span></a></li>

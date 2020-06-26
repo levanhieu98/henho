@@ -13,7 +13,7 @@ class Profile extends Migration
      */
     public function up()
     {
-         Schema::create('proflie', function (Blueprint $table) {
+         Schema::create('profile', function (Blueprint $table) {
             $table->increments('Id_profile');
             $table->string('job');
             $table->string('religion');

@@ -257,113 +257,24 @@
                     <div class="owl-carousel owl-theme test_slider">
 
                         <!-- Testimonial Item -->
+                        @foreach($review as $rv)
                         <div class="owl-item">
                             <div class="test_item">
-                                <div class="test_image"><img src="img/test_1.jpg" alt="https://unsplash.com/@anniegray"></div>
-                                <div class="test_icon"><img src="img/backpack.png" alt=""></div>
+                                <div class="test_image"><img src="{{$rv->img}}" alt="https://unsplash.com/@anniegray" height="400"></div>
+                                <div class="test_icon"><img src="img/3920d71d13c859d49b8f51bdf2675082.jpg" alt=""></div>
                                 <div class="test_content_container">
                                     <div class="test_content">
                                         <div class="test_item_info">
-                                            <div class="test_name">carla smith</div>
-                                            <div class="test_date">May 24, 2017</div>
+                                            <div class="test_name">{{$rv->name}}</div>
+                                            <div class="test_date">{{date('d-m-Y',strtotime($rv->date))}}</div>
                                         </div>
-                                        <div class="test_quote_title">" Best holliday ever "</div>
-                                        <p class="test_quote_text">Nullam eu convallis tortor. Suspendisse potenti. In faucibus massa arcu, vitae cursus mi hendrerit nec.</p>
+                                        <div class="test_quote_title">" {{$rv->content}} "</div>
+                                      {{--   <p class="test_quote_text"></p> --}}
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Testimonial Item -->
-                        <div class="owl-item">
-                            <div class="test_item">
-                                <div class="test_image"><img src="img/test_2.jpg" alt="https://unsplash.com/@tschax"></div>
-                                <div class="test_icon"><img src="img/island_t.png" alt=""></div>
-                                <div class="test_content_container">
-                                    <div class="test_content">
-                                        <div class="test_item_info">
-                                            <div class="test_name">carla smith</div>
-                                            <div class="test_date">May 24, 2017</div>
-                                        </div>
-                                        <div class="test_quote_title">" Best holliday ever "</div>
-                                        <p class="test_quote_text">Nullam eu convallis tortor. Suspendisse potenti. In faucibus massa arcu, vitae cursus mi hendrerit nec.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Testimonial Item -->
-                        <div class="owl-item">
-                            <div class="test_item">
-                                <div class="test_image"><img src="img/test_3.jpg" alt="https://unsplash.com/@seefromthesky"></div>
-                                <div class="test_icon"><img src="img/kayak.png" alt=""></div>
-                                <div class="test_content_container">
-                                    <div class="test_content">
-                                        <div class="test_item_info">
-                                            <div class="test_name">carla smith</div>
-                                            <div class="test_date">May 24, 2017</div>
-                                        </div>
-                                        <div class="test_quote_title">" Best holliday ever "</div>
-                                        <p class="test_quote_text">Nullam eu convallis tortor. Suspendisse potenti. In faucibus massa arcu, vitae cursus mi hendrerit nec.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Testimonial Item -->
-                        <div class="owl-item">
-                            <div class="test_item">
-                                <div class="test_image"><img src="img/test_2.jpg" alt=""></div>
-                                <div class="test_icon"><img src="img/island_t.png" alt=""></div>
-                                <div class="test_content_container">
-                                    <div class="test_content">
-                                        <div class="test_item_info">
-                                            <div class="test_name">carla smith</div>
-                                            <div class="test_date">May 24, 2017</div>
-                                        </div>
-                                        <div class="test_quote_title">" Best holliday ever "</div>
-                                        <p class="test_quote_text">Nullam eu convallis tortor. Suspendisse potenti. In faucibus massa arcu, vitae cursus mi hendrerit nec.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Testimonial Item -->
-                        <div class="owl-item">
-                            <div class="test_item">
-                                <div class="test_image"><img src="img/test_1.jpg" alt=""></div>
-                                <div class="test_icon"><img src="img/backpack.png" alt=""></div>
-                                <div class="test_content_container">
-                                    <div class="test_content">
-                                        <div class="test_item_info">
-                                            <div class="test_name">carla smith</div>
-                                            <div class="test_date">May 24, 2017</div>
-                                        </div>
-                                        <div class="test_quote_title">" Best holliday ever "</div>
-                                        <p class="test_quote_text">Nullam eu convallis tortor. Suspendisse potenti. In faucibus massa arcu, vitae cursus mi hendrerit nec.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Testimonial Item -->
-                        <div class="owl-item">
-                            <div class="test_item">
-                                <div class="test_image"><img src="img/test_3.jpg" alt=""></div>
-                                <div class="test_icon"><img src="img/kayak.png" alt=""></div>
-                                <div class="test_content_container">
-                                    <div class="test_content">
-                                        <div class="test_item_info">
-                                            <div class="test_name">carla smith</div>
-                                            <div class="test_date">May 24, 2017</div>
-                                        </div>
-                                        <div class="test_quote_title">" Best holliday ever "</div>
-                                        <p class="test_quote_text">Nullam eu convallis tortor. Suspendisse potenti. In faucibus massa arcu, vitae cursus mi hendrerit nec.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        @endforeach
                     </div>
 
                     <!-- Testimonials Slider Nav - Prev -->

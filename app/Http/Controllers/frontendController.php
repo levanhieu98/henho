@@ -11,12 +11,14 @@ use App\category_blog;
 use App\abum_blog;
 use App\User;
 use App\contact;
-
+use App\review;
+use App\Profile;
 class frontendController extends Controller
 {
     public function index()
-    {
-    	return view('index');
+    { 
+      $review= DB::select("select * from users JOIN  review ON users.id =review.id ORDER BY date DESC ");
+    	return view('index',compact('review'));
     }
 
     public function trangchu()
@@ -44,7 +46,7 @@ class frontendController extends Controller
       $data->subject=$subject;
       $data->message=$message;
       $data->save();
-     
+     return redirect('/lienhe')->with('alert','Bạn đã gửi liên hệ thành công ');
 
       
     }
@@ -82,7 +84,8 @@ class frontendController extends Controller
     public function canhan()
     {
       $profile=User::where('id',Auth::id())->get();
-    	return view('frontend.trangcanhan',compact('profile'));
+      $profile1=Profile::where('id',Auth::id())->get();
+    	return view('frontend.trangcanhan',compact(['profile','profile1']));
     	
     }
 

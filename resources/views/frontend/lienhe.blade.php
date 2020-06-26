@@ -16,30 +16,27 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				{{-- @if(Session::has('alert'))
+				@if(Session::has('alert'))
 				<p class="alert alert-success row-md-6">{{Session::get('alert')}}</p>
-				@endif --}}
+				@endif
 				<!-- Contact Form -->
 				<div class="contact_form_container">
 					<div class="contact_title text-center">Bạn cần trợ giúp ?</div>
-					{{-- <form action="#" id="contact_form" class="contact_form text-center"> --}}
-
-						<input type="text" id="contact_form_name" class="contact_form_name input_field" placeholder="Name" required="required" data-error="Name is required.">
-						<input type="text" id="contact_form_email" class="contact_form_email input_field" placeholder="E-mail" required="required" data-error="Email is required.">
-						<input type="text" id="contact_form_subject" class="contact_form_subject input_field" placeholder="Subject" required="required" data-error="Subject is required.">
-						<textarea id="contact_form_message" class="text_field contact_form_message" name="message" rows="4" placeholder="Message" required="required" data-error="Please, write us a message."></textarea>
-						<button  id="form_submit_button" class="form_submit_button button trans_200">send message<span></span><span></span><span></span></button>
-					{{-- 	</form> --}}
+					<form action="/thongtinlienhe" method="post" id="contact_form" class="contact_form text-center">
+						@csrf
+						<input type="text" id="contact_form_name" name="name" class="contact_form_name input_field" placeholder="Tên" required="required" data-error="Name is required.">
+						<input type="text" id="contact_form_email" name="email" class="contact_form_email input_field" placeholder="E-mail" required="required" data-error="Email is required.">
+						<input type="text" id="contact_form_subject" name="subject" class="contact_form_subject input_field" placeholder="Tiêu đề" required="required" data-error="Subject is required.">
+						<textarea id="contact_form_message" name="message" class="text_field contact_form_message" name="message" rows="4" placeholder="Nội dung" required="required" data-error="Please, write us a message."></textarea>
+						<button  id="form_submit_button" class="form_submit_button button trans_200">Gửi liên hệ<span></span><span></span><span></span></button>
+					</form>
 				</div>
 
 			</div>
 		</div>
 	</div>
 </div>
-
-
 <!-- Google Map -->
-
 <div class="travelix_map">
 	<div id="google_map" class="google_map">
 		<div class="map_container">
@@ -49,7 +46,7 @@
 </div>
 
 @endsection
-@section('js')
+{{-- @section('js')
 <script>
 	$('#form_submit_button').click(function() {
 		$.ajax({
@@ -72,3 +69,4 @@
 	});
 </script>
 @endsection
+ --}}
