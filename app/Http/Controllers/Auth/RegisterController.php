@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-
 class RegisterController extends Controller
 {
     /*
@@ -67,6 +66,9 @@ class RegisterController extends Controller
             'name'=>'required|string|max:255',
             'dob'=>'required',
             'check'=>'required',
+            'job'=>'required',
+            'habit'=>'required',
+            'intro'=>'required',
             
         ],[
          'email.required'=>'Email không được để trống',
@@ -79,6 +81,9 @@ class RegisterController extends Controller
          'password_confirmation.required'=>'Vui lòng nhập lại nhập khẩu',
          'name.required'=>'Tên không được để trống',
          'dob.required'=>'Ngày tháng năm sinh chưa có',
+          'job.required'=>'Công việc không được để trống',
+          'habit.required'=>'Sở thích không được để trống',
+          'intro.required'=>'Giới thiệu bản thân không được để trống',
      ]);
     }
 
@@ -97,10 +102,15 @@ class RegisterController extends Controller
             'city'=>$data['thanhpho'],
             'district'=>$data['quan'],
             'ward'=>$data['phuong'],
+            'job'=>$data['job'],
+            'habit'=>$data['habit'],
+            'intro'=>$data['intro'],
+            'findlove'=>$data['findlove'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'status'=>0,
             'role'=>0,
+            'img'=>'img/user.jpg',
 
         ]);
     }

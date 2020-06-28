@@ -27,7 +27,8 @@ Route::post('/capnhat','frontendController@capnhat');
 Route::get('/messages','messagesController@messages')->middleware('checkadmin');
 Route::get('/contentmassage/{id}','messagesController@contentmassage')->middleware('checkadmin');
 Route::post('/sentmessages','messagesController@sendmassges');
-
+Route::post('/doianhdaidien','frontendController@doianhdaidien');
+Route::get('/suathongtin', 'frontendController@suathongtin');
 
 
 

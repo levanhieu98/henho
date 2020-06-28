@@ -8,7 +8,7 @@
   <div class="steps-form-2">
     <div class="steps-row-2 setup-panel-2 d-flex justify-content-between">
         <div class="steps-step-2">
-            <a href="#step-1" type="button" class="btn btn-amber btn-circle-2 waves-effect ml-0" data-toggle="tooltip" data-placement="top" title="Basic Information"><i class="fa fa-folder-open-o" aria-hidden="true" id="step1"></i></a>
+            <a href="#step-1" type="button" class="btn btn-amber btn-circle-2 waves-effect ml-0" data-toggle="tooltip" data-placement="top" title="Basic Information"><i class="fa fa-user-md" aria-hidden="true" id="step1"></i></a>
         </div>
         <div class="steps-step-2">
             <a href="#step-2" type="button" class="btn btn-blue-grey btn-circle-2 waves-effect" data-toggle="tooltip" data-placement="top" title="Personal Data"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -40,91 +40,128 @@
             <div class="form-group md-form mt-3">
                 <label for="password" data-error="wrong" data-success="right">Mật khẩu</label>
                 <div class="input-group">
-                <input id="password" type="password" class="form-control  @error('password') is-invalid @enderror" name="password" value="{{old('password') }}" required autocomplete="new-password">
-                <div class="input-group-addon">
-               <span toggle="#password-field" class="   fa fa-fw fa-eye field_icon toggle-password"></span>
-                </div>
-                </div>
-                @error('password')
-                <span class="invalid-feedback" role="alert">
+                    <input id="password" type="password" class="form-control  @error('password') is-invalid @enderror" name="password" value="{{old('password') }}" required autocomplete="new-password">
+                    <div class="input-group-addon">
+                       <span toggle="#password-field" class=" fa fa-fw fa-eye field_icon toggle-password"></span>
+                   </div>
+                   @error('password')
+                   <span class="invalid-feedback " role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
                 @enderror
             </div>
-            <div class="form-group md-form mt-3">
-                <label for="password-confirm" data-error="wrong" data-success="right">Nhập lại mật khẩu</label>
-                <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required  autocomplete="new-password">
-                @error('password_confirmation')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-            <button class="btn btn-mdb-color btn-rounded nextBtn-2 float-right" type="button" id="asd">Tiếp tục</button>
         </div>
+        <div class="form-group md-form mt-3">
+            <label for="password-confirm" data-error="wrong" data-success="right">Nhập lại mật khẩu</label>
+            <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required  autocomplete="new-password">
+            @error('password_confirmation')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+        <button class="btn btn-mdb-color btn-rounded nextBtn-2 float-right mb-1" type="button" id="asd">Tiếp tục</button>
     </div>
+</div>
 
-    <!-- Second Step -->
-    <div class="row setup-content-2" id="step-2">
-        <div class="col-md-12">
-            <h3 class="font-weight-bold pl-0 my-4"><strong>Thông tin cá nhân</strong></h3>
-            <div class="form-group md-form">
-                <label for="name" data-error="wrong" data-success="right">Họ và tên</label>
-                <input id="name" type="text" name="name"  class="form-control  @error('name') is-invalid @enderror " value="{{old('name')}}">
-                @error('name')
+<!-- Second Step -->
+<div class="row setup-content-2" id="step-2">
+    <div class="col-md-12">
+        <h3 class="font-weight-bold pl-0 my-4"><strong>Thông tin cá nhân</strong></h3>
+        <div class="form-group md-form">
+            <label for="name" data-error="wrong" data-success="right">Họ và tên</label>
+            <input id="name" type="text" name="name"  class="form-control  @error('name') is-invalid @enderror " value="{{old('name')}}">
+            @error('name')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+        <div class="form-group md-form mt-3">
+           <label for="Dayofbirth-2" data-error="wrong" data-success="right">Ngày sinh</label>
+
+           <div class="row"> 
+             <div class="col-xs-8 col-md-8">
+                <input type="date" class="form-control @error('dob') is-invalid @enderror " name="dob" value="{{old('dob')}}">
+                @error('dob')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
                 @enderror
             </div>
-            <div class="form-group md-form mt-3">
-               <label for="Dayofbirth-2" data-error="wrong" data-success="right">Ngày sinh</label>
 
-               <div class="row"> 
-                 <div class="col-xs-8 col-md-8">
-                    <input type="date" class="form-control @error('dob') is-invalid @enderror " name="dob" value="{{old('dob')}}">
-                    @error('dob')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
+        </div> 
 
-            </div> 
-
+    </div>
+    <div class="form-group md-form">
+       <label for="yourAddress-2" data-error="wrong" data-success="right">Đại chỉ</label>
+       <div class="row"> 
+         <div class="col-xs-4 col-md-4">
+            <select class="form-control " name="thanhpho"  id="tp">              
+                <option value="">Thành phố</option>            
+            </select> 
+        </div> 
+        <div class="col-xs-4 col-md-4"> 
+            <select class="form-control" id="quan" name="quan"> 
+                <option value="">Quận</option> 
+            </select> 
+        </div> 
+        <div class="col-xs-4 col-md-4"> 
+            <select class="form-control" id="phuong" name="phuong" required> 
+                <option value="">Phường</option>            
+            </select> 
+        </div> 
+    </div>
+</div>
+<div class="form-group md-form mt-3">
+    <div class="row">
+        <label class="col-xs-4 col-md-4 "  for="Gender-2" data-error="wrong" data-success="right">Giới tính</label>
+        <div class="col-xs-4 col-md-4 ">
+         <label class="radio-inline align-content-center"><input name="sex" id="inlineCheckbox1" value="1" type="radio" checked="checked"> Nam </label> </div>
+         <div class="col-xs-4 col-md-4 ">
+            <label class="radio-inline align-content-center"><input name="sex" id="inlineCheckbox2" value="0" type="radio">  Nữ </label> </div>
+        </div>
+</div>
+ <div class="form-group md-form">
+            <label for="job" data-error="wrong" data-success="right">Nghề nghiệp</label>
+            <input id="job" type="text" name="job"  class="form-control  @error('job') is-invalid @enderror " value="{{old('job')}}">
+            @error('job')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+        </div>
+<div class="form-group md-form">
+            <label for="habit" data-error="wrong" data-success="right">Sở thích</label>
+            <textarea class="form-control @error('habit') is-invalid @enderror" name="habit" id="habit">{{old('habit')}}</textarea>
+            @error('habit')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
         </div>
         <div class="form-group md-form">
-           <label for="yourAddress-2" data-error="wrong" data-success="right">Đại chỉ</label>
-           <div class="row"> 
-             <div class="col-xs-4 col-md-4">
-                <select class="form-control " name="thanhpho"  id="tp">              
-                    <option value="">Thành phố</option>            
-                </select> 
-            </div> 
-            <div class="col-xs-4 col-md-4"> 
-                <select class="form-control" id="quan" name="quan"> 
-                    <option value="">Quận</option> 
-                </select> 
-            </div> 
-            <div class="col-xs-4 col-md-4"> 
-                <select class="form-control" id="phuong" name="phuong" required> 
-                    <option value="">Phường</option>            
-                </select> 
-            </div> 
+            <label for="intro" data-error="wrong" data-success="right">Giới thiệu sơ lược bản thân</label>
+            <textarea class="form-control @error('intro') is-invalid @enderror" name="intro" id="intro">{{old('intro')}}</textarea>
+            @error('intro')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
         </div>
-    </div>
-    <div class="form-group md-form mt-3">
-        <div class="row">
-            <label class="col-xs-4 col-md-4 "  for="Gender-2" data-error="wrong" data-success="right">Giới tính</label>
-            <div class="col-xs-4 col-md-4 ">
-             <label class="radio-inline align-content-center"><input name="sex" id="inlineCheckbox1" value="1" type="radio" checked="checked"> Nam </label> </div>
-             <div class="col-xs-4 col-md-4 ">
-                <label class="radio-inline align-content-center"><input name="sex" id="inlineCheckbox2" value="0" type="radio">  Nữ </label> </div>
-            </div>
+        <div class="form-group md-form">
+            <label for="findlove" data-error="wrong" data-success="right">Mẫu người bạn thích ?</label>
+            <textarea class="form-control @error('findlove') is-invalid @enderror" name="findlove" id="findlove">{{old('findlove')}}</textarea>
+            @error('habit')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
         </div>
-        <button class="btn btn-mdb-color btn-rounded prevBtn-2 float-left" type="button">Quay lại</button>
-        <button class="btn btn-mdb-color btn-rounded nextBtn-2 float-right" type="button">Tiếp tục</button>
-    </div>
+
+    <button class="btn btn-mdb-color btn-rounded prevBtn-2 float-left mb-1" type="button">Quay lại</button>
+    <button class="btn btn-mdb-color btn-rounded nextBtn-2 float-right mb-1" type="button">Tiếp tục</button>
+</div>
 </div>
 
 <!-- Third Step -->
@@ -135,9 +172,9 @@
             <input type="checkbox" id="checkbox111" class="form-check-input ml-2  @error('check') is-invalid @enderror" name="check"  required>
             <label for="checkbox111" class="form-check-label ml-1" >Tôi cam kết nội dung bên trên là đúng sự thật ,tôi sẽ chịu mọi trách nhiệm về hành vi khai báo của mình</label>
         </div>
-        <button class="btn btn-mdb-color btn-rounded prevBtn-2 float-left" type="button">Quay lại</button>
+        <button class="btn btn-mdb-color btn-rounded prevBtn-2 float-left mb-1" type="button">Quay lại</button>
         {{--   <button class="btn btn-mdb-color btn-rounded nextBtn-2 float-right" type="button">Next</button> --}}
-        <button class="btn btn-success btn-rounded float-right" type="submit">Đăng ký</button>
+        <button class="btn btn-success btn-rounded float-right mb-1" type="submit">Đăng ký</button>
     </div>
 </div>
 

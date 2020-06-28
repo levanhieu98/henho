@@ -28,12 +28,7 @@
   <link href="assets/css/style.css" rel="stylesheet">
 
 
-  <!-- =======================================================
-  * Template Name: iPortfolio - v1.2.1
-  * Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+ 
 
 </head>
 
@@ -53,7 +48,8 @@
             <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown">
               <span class="caret "></span></button>
               <ul class="dropdown-menu">
-                <li><a href="#"><i class="bx bx-user mr-50"></i>Sửa thông tin</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="bx bx-images mr-50"></i>Đổi ảnh đại diện</a></li>
+                <li><a href="/suathongtin"><i class="bx bx-user mr-50"></i>Sửa thông tin</a></li>
                 <li><a href="/doimatkhau"><i class=" bx bx-hive mr-50"></i>Đổi mật khẩu</a></li>
                 <li class="divider"></li>
                 <li><a href="/logout"><i class="bx bx-power-off mr-50"></i>Đăng xuất</a></li>  
@@ -75,24 +71,22 @@
         <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
 
       </div>
-    </header><!-- End Header -->
-
-  
-
+    </header>
+    <!-- End Header -->
     <main id="main">
      @yield('content')
 
    </main><!-- End #main -->
 
    <!-- ======= Footer ======= -->
-   <footer id="footer">
+{{--    <footer id="footer">
     <div class="container">
       <div class="copyright">
         &copy; Copyright <strong><span>iPortfolio</span></strong>
       </div>
-      
     </div>
-  </footer><!-- End  Footer -->
+  </footer> --}}
+  <!-- End  Footer -->
 
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
@@ -108,13 +102,13 @@
   <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
   <script src="assets/vendor/typed.js/typed.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
- 
-
   {{-- pusher_chat --}}
  <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  @yield('js');
+  @yield('js')
+  {{-- Thay doi anh --}}
+   @include('frontend.doianhdaidien')
 </body>
 
 </html>
