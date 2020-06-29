@@ -119,8 +119,24 @@ public function doianhdaidien( request $request )
 }
  public function suathongtin()
  {
-   return view('frontend.suathongtin');
+  $infor=User::where('id',Auth::id())->get();
+   return view('frontend.suathongtin',compact('infor'));
  }
+
+public function dulieusua(Request $request)
+{
+  $name=$request->name;
+  $dob=$request->dob;
+  $gender=$request->sex;
+  $job=$request->job;
+  $habit=$request->habit;
+  $intro=$request->intro;
+  $findlove=$request->findlove;
+  $phone=$request->phone;
+  $religion=$request->religion;
+  User::where('id',Auth::id())->update(['name'=>$name,'dob'=>$dob,'gender'=>$gender,'job'=>$job,'habit'=>$habit,'intro'=>$intro,'findlove'=>$findlove,'phone'=>$phone,'religion'=>$religion]);
+  return redirect('/canhan');
+}
 
 public function banbe(Request $rq)
 {

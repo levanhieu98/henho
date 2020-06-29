@@ -29,6 +29,7 @@ Route::get('/contentmassage/{id}','messagesController@contentmassage')->middlewa
 Route::post('/sentmessages','messagesController@sendmassges');
 Route::post('/doianhdaidien','frontendController@doianhdaidien');
 Route::get('/suathongtin', 'frontendController@suathongtin');
+Route::post('/dulieusua', 'frontendController@dulieusua');
 
 
 
