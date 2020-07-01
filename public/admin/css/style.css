@@ -7568,7 +7568,7 @@ fieldset[disabled] .form-control {
     .sidebar .menu .list {
       list-style: none;
       padding-left: 0; }
-      .sidebar .menu .list li.active > :first-child span {
+      .sidebar .menu .list li.active  :first-child span {
         font-weight: bold; }
       .sidebar .menu .list .header {
         background: #eee;

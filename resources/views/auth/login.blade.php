@@ -44,7 +44,7 @@
                     <a href="{{ route('password.request') }}" class="pull-right text-muted"><small>Quên mật khẩu?</small></a>
                 </div>
                 <div class="modal-footer"  >
-                    <a href="" class="btn btn-lg btn-social btn-facebook form-control " id="hover">
+                    <a href="/auth/facebook" class="btn btn-lg btn-social btn-facebook form-control " id="hover">
                         <i class="fa fa-facebook fa-fw"></i><span class="font"> Sign in with Facebook</span>
                     </a>
                     <a href="" class="btn btn-lg btn-social btn-google form-control  " id="hover">

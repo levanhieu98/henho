@@ -40,6 +40,9 @@ Route::get('/category_blog/{id}','frontendController@category_blog');
 Route::get('/detail_blog/{id}','frontendController@detail_blog');
 Route::get('/gioithieu', 'frontendController@gioithieu');
 
+//login facebook
+Route::get('auth/facebook', 'Auth\AuthController@redirectToFacebook')->name('auth.facebook');
+Route::get('auth/facebook/callback', 'Auth\AuthController@handleFacebookCallback');
 
 
 
@@ -50,6 +53,14 @@ Auth::routes(['verify' => true]);
 Route::get('/logout','Auth\LoginController@logout');
 Route::group(['prefix' => 'admin','middleware'=>'checkRole'], function() {
 	Route::get('home', 'admin\homeController@index')->name('home');
+	Route::get('loaiBlog','admin\category_blog@loaiBlog');
+	Route::get('themloaiBlog','admin\category_blog@themloaiBlog');
+	Route::get('blog','admin\blog@blog');
+	Route::get('themblog','admin\blog@themblog');
+
+
+	Route::get('review','admin\review@review');
+	Route::get('contact','admin\contact@contact');
 	Route::get('dsuser', 'admin\userController@dsuser');
 
 });
