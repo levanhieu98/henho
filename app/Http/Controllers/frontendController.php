@@ -23,15 +23,15 @@ class frontendController extends Controller
 
   public function trangchu()
   {
-   return view('layouts.home');
+   return view('frontend.trangchu');
 
  }
 
- public function lienhe()
+public function lienhe()
  {
   return view('frontend.lienhe');
 
-}
+  }
 
 public function thongtinlienhe(Request $request)
 {
@@ -91,14 +91,14 @@ public function canhan()
 public function doianhdaidien( request $request )
 {
   $request->validate([
-   
+
     'anhdaidien'=>'image',
     
   ],
   [
-    
+
     'hinhdaidien.image'=>' Thêm thất bại File hình không hợp lệ',
-   
+
   ]);
   $image=User::select('img')->Where('id',Auth::id())->first();
   if($request->hasFile('anhdaidien'))
@@ -117,11 +117,11 @@ public function doianhdaidien( request $request )
   User::where('id',Auth::id())->update(['img'=>$ten]);
   return redirect('/canhan');
 }
- public function suathongtin()
- {
+public function suathongtin()
+{
   $infor=User::where('id',Auth::id())->get();
-   return view('frontend.suathongtin',compact('infor'));
- }
+  return view('frontend.suathongtin',compact('infor'));
+}
 
 public function dulieusua(Request $request)
 {

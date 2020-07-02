@@ -30,9 +30,6 @@ Route::post('/sentmessages','messagesController@sendmassges');
 Route::post('/doianhdaidien','frontendController@doianhdaidien');
 Route::get('/suathongtin', 'frontendController@suathongtin');
 Route::post('/dulieusua', 'frontendController@dulieusua');
-
-
-
 Route::get('/lienhe', 'frontendController@lienhe');
 Route::post('/thongtinlienhe','frontendController@thongtinlienhe');
 Route::get('/blog', 'frontendController@blog');

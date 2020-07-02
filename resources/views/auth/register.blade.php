@@ -39,18 +39,17 @@
             </div>
             <div class="form-group md-form mt-3">
                 <label for="password" data-error="wrong" data-success="right">Mật khẩu</label>
-                <div class="input-group">
-                    <input id="password" type="password" class="form-control  @error('password') is-invalid @enderror" name="password" value="{{old('password') }}" required autocomplete="new-password">
-                    <div class="input-group-addon">
-                       <span toggle="#password-field" class=" fa fa-fw fa-eye field_icon toggle-password"></span>
-                   </div>
-                   @error('password')
+                <div class="row clearfix col-lg-12">         
+                    <input id="password" type="password" class=" col-lg-11 form-control  @error('password') is-invalid @enderror" name="password" value="{{old('password') }}" required autocomplete="new-password">             
+                       <span toggle="#password-field" class=" form-control col-lg-1 fa fa-fw fa-eye field_icon toggle-password "></span>
+                  @error('password')
                    <span class="invalid-feedback " role="alert">
                     <strong>{{ $message }}</strong>
-                </span>
-                @enderror
+                    </span>
+                    @enderror 
+                </div>  
             </div>
-        </div>
+
         <div class="form-group md-form mt-3">
             <label for="password-confirm" data-error="wrong" data-success="right">Nhập lại mật khẩu</label>
             <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required  autocomplete="new-password">
@@ -121,43 +120,43 @@
          <div class="col-xs-4 col-md-4 ">
             <label class="radio-inline align-content-center"><input name="sex" id="inlineCheckbox2" value="0" type="radio">  Nữ </label> </div>
         </div>
-</div>
- <div class="form-group md-form">
-            <label for="job" data-error="wrong" data-success="right">Nghề nghiệp</label>
-            <input id="job" type="text" name="job"  class="form-control  @error('job') is-invalid @enderror " value="{{old('job')}}">
-            @error('job')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
-<div class="form-group md-form">
-            <label for="habit" data-error="wrong" data-success="right">Sở thích</label>
-            <textarea class="form-control @error('habit') is-invalid @enderror" name="habit" id="habit">{{old('habit')}}</textarea>
-            @error('habit')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
-        <div class="form-group md-form">
-            <label for="intro" data-error="wrong" data-success="right">Giới thiệu sơ lược bản thân</label>
-            <textarea class="form-control @error('intro') is-invalid @enderror" name="intro" id="intro">{{old('intro')}}</textarea>
-            @error('intro')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
-        <div class="form-group md-form">
-            <label for="findlove" data-error="wrong" data-success="right">Mẫu người bạn thích ?</label>
-            <textarea class="form-control @error('findlove') is-invalid @enderror" name="findlove" id="findlove">{{old('findlove')}}</textarea>
-            @error('habit')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-            @enderror
-        </div>
+    </div>
+    <div class="form-group md-form">
+        <label for="job" data-error="wrong" data-success="right">Nghề nghiệp</label>
+        <input id="job" type="text" name="job"  class="form-control  @error('job') is-invalid @enderror " value="{{old('job')}}">
+        @error('job')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+    <div class="form-group md-form">
+        <label for="habit" data-error="wrong" data-success="right">Sở thích</label>
+        <textarea class="form-control @error('habit') is-invalid @enderror" name="habit" id="habit">{{old('habit')}}</textarea>
+        @error('habit')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+    <div class="form-group md-form">
+        <label for="intro" data-error="wrong" data-success="right">Giới thiệu sơ lược bản thân</label>
+        <textarea class="form-control @error('intro') is-invalid @enderror" name="intro" id="intro">{{old('intro')}}</textarea>
+        @error('intro')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
+    <div class="form-group md-form">
+        <label for="findlove" data-error="wrong" data-success="right">Mẫu người bạn thích ?</label>
+        <textarea class="form-control @error('findlove') is-invalid @enderror" name="findlove" id="findlove">{{old('findlove')}}</textarea>
+        @error('habit')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+    </div>
 
     <button class="btn btn-mdb-color btn-rounded prevBtn-2 float-left mb-1" type="button">Quay lại</button>
     <button class="btn btn-mdb-color btn-rounded nextBtn-2 float-right mb-1" type="button">Tiếp tục</button>
@@ -174,7 +173,7 @@
         </div>
         <button class="btn btn-mdb-color btn-rounded prevBtn-2 float-left mb-1" type="button">Quay lại</button>
         {{--   <button class="btn btn-mdb-color btn-rounded nextBtn-2 float-right" type="button">Next</button> --}}
-        <button class="btn btn-success btn-rounded float-right mb-1" type="submit">Đăng ký</button>
+        <button class="btn btn-success btn-rounded float-right mb-1 " id="ht" type="submit">Đăng ký</button>
     </div>
 </div>
 
@@ -204,6 +203,15 @@
 
         var input = $("#password");
         input.attr('type') === 'password' ? input.attr('type','text') : input.attr('type','password')
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        var $submit=$('#ht').hide();
+        $('#checkbox111').click(function(){
+           $('#ht').toggle(($('#checkbox111').is(':checked')));
+       });   
     });
 </script>
 @endsection

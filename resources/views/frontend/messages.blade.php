@@ -3,6 +3,7 @@
  <div class="container-fluid">
    <div class="row">
      <div class="col-md-4">
+       <div class="mb-1"><input type="text" name="search" value="" placeholder="tìm kiếm"></div>
        <div class="user-wrapper">
         <ul class="users" >
           @foreach($users as $us)
@@ -28,6 +29,7 @@
 
   </div>
 </div>
+
 </div>
 @endsection
 @section('js')
@@ -36,27 +38,27 @@
   var receiver_id='';
   var my_id={{Auth::id()}};
   $(document).ready(function()
-    {
+  {
      // ajax setup form csrf token
      $.ajaxSetup
-      ({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-      });
+     ({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
 
      //pusher_chat
      Pusher.logToConsole = true;
 
      var pusher = new Pusher('81c09a11b33c2c271c23',{
       cluster: 'ap1'
-      });
+    });
 
      var channel = pusher.subscribe('my-channel');
      channel.bind('my-event', function(data) {
       // alert(JSON.stringify(data));
       if (my_id == data.from) {
-      $('#' + data.to).click();
+        $('#' + data.to).click();
                // alert('sender');
              } 
              else if (my_id == data.to) {
@@ -74,62 +76,62 @@
                   }
                 }
 
-     });
+              });
 
-   
+
 
 
      //xem tn
      $('.user').click(function()
      {
-        $('.user').removeClass('active');
-        $(this).addClass('active');
-        $(this).find('.pending').remove();
-        receiver_id=$(this).attr('id');
+      $('.user').removeClass('active');
+      $(this).addClass('active');
+      $(this).find('.pending').remove();
+      receiver_id=$(this).attr('id');
       $.ajax({
         url: '/contentmassage/'+ receiver_id,
         type: 'GET', 
         success: function (data) {
           $('#messages').html(data);
           scrollToBottomFunc();
-            }
-        })
-     });
+        }
+      })
+    });
 
      //gui tn
      $(document).on('keyup','.input-text input',function(e)
-      {
-         var message=$(this).val();
-          if(e.keyCode==13 && message !='' && receiver_id!='')
+     {
+       var message=$(this).val();
+       if(e.keyCode==13 && message !='' && receiver_id!='')
+       {
+        $(this).val('');
+        $.ajax({
+          type: "post",
+          url: "sentmessages", 
+          data: {
+            "receiver_id":receiver_id,
+            "message":message,
+          },
+          success: function (data)
+          {
+           $.ajax({
+            url: '/contentmassage/'+ receiver_id,
+            type: 'GET',  
+            success: function (data)
             {
-              $(this).val('');
-              $.ajax({
-                type: "post",
-                url: "sentmessages", 
-                data: {
-                  "receiver_id":receiver_id,
-                  "message":message,
-                    },
-              success: function (data)
-              {
-               $.ajax({
-                url: '/contentmassage/'+ receiver_id,
-                type: 'GET',  
-                success: function (data)
-                {
-                  $('#messages').html(data);
-                  scrollToBottomFunc();
-                }
-              })
-              // console.log(data);
-             }, error: function (jqXHR, status, err) {
-               },
-             complete: function () {
+              $('#messages').html(data);
               scrollToBottomFunc();
-                }
-              })
             }
-      });
+          })
+              // console.log(data);
+            }, error: function (jqXHR, status, err) {
+            },
+            complete: function () {
+              scrollToBottomFunc();
+            }
+          })
+      }
+    });
    });
 
   function scrollToBottomFunc() {
