@@ -26,6 +26,7 @@ Route::get('/doimatkhau','frontendController@doimk')->middleware('checkadmin');
 Route::post('/capnhat','frontendController@capnhat');
 Route::get('/messages','messagesController@messages')->middleware('checkadmin');
 Route::get('/contentmassage/{id}','messagesController@contentmassage')->middleware('checkadmin');
+Route::post('/ketquatimkiem', 'messagesController@ketquatimkiem')->name('search');
 Route::post('/sentmessages','messagesController@sendmassges');
 Route::post('/doianhdaidien','frontendController@doianhdaidien');
 Route::get('/suathongtin', 'frontendController@suathongtin');
@@ -36,6 +37,8 @@ Route::get('/blog', 'frontendController@blog');
 Route::get('/category_blog/{id}','frontendController@category_blog');
 Route::get('/detail_blog/{id}','frontendController@detail_blog');
 Route::get('/gioithieu', 'frontendController@gioithieu');
+Route::get('/danhgia', 'frontendController@danhgia');
+Route::post('/dulieudanhgia','frontendController@dulieudanhgia');
 
 //login facebook
 Route::get('auth/facebook', 'Auth\AuthController@redirectToFacebook')->name('auth.facebook');

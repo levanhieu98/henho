@@ -1173,9 +1173,7 @@ section {
             color: #777777;
             font-size: 12px;
         }
-       /*  .active {
-            background: #eeeeee;
-        } */
+    
         input[type=text] {
             width: 100%;
             padding: 12px 20px;

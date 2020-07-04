@@ -28,7 +28,7 @@
   <link href="assets/css/style.css" rel="stylesheet">
 
 
- 
+  
 
 </head>
 
@@ -41,7 +41,11 @@
   <header id="header">
     <div class="d-flex flex-column">
       <div class="profile">
-        <img src="{{'frontend/'.Auth::user()->img}}" alt="" class="img-fluid rounded-circle">
+        @if (strpos(Auth::user()->img, 'https://graph.facebook.com') !== false) 
+        <img src="{{Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
+        @else
+        <img src="{{'frontend/'.Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
+        @endif
         <div class="form-inline">
           <h1 class="text-light col-10 "><a href="index.html">{{Auth::user()->name}}</a></h1>
           <div class="dropdown col-2">
@@ -65,6 +69,7 @@
             <li><a href="/messages"><i class="bx bxs-message-rounded-dots"></i> <span>Messages</span></a></li>
             <li><a href="/thuvienanh"><i class="bx bx-photo-album"></i>Thư viện ảnh</a></li>
             <li><a href="/status"><i class="bx bx-edit"></i> Status</a></li>  
+            <li><a href="/danhgia"><i class="bx bx-comment-dots"></i>Đánh giá</a></li> 
             <li><a href="/caidat"><i class="bx bx-cog"></i>Cài đặt</a></li>  
           </ul>
         </nav><!-- .nav-menu -->
@@ -103,12 +108,12 @@
   <script src="assets/vendor/typed.js/typed.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   {{-- pusher_chat --}}
- <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
+  <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   @yield('js')
   {{-- Thay doi anh --}}
-   @include('frontend.doianhdaidien')
+  @include('frontend.doianhdaidien')
 </body>
 
 </html>

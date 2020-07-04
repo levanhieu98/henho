@@ -1,19 +1,28 @@
  @extends('layouts.home')
  @section('content')
+ <style >
+       .active {
+            background: #eeeeee;
+        }
+ </style>
  <div class="container-fluid">
    <div class="row">
      <div class="col-md-4">
-       <div class="mb-1"><input type="text" name="search" value="" placeholder="tìm kiếm"></div>
-       <div class="user-wrapper">
-        <ul class="users" >
+       {{-- <div class="mb-1"><input type="text" name="search" id="search" value="" placeholder="tìm kiếm"></div> --}}
+       <div class="user-wrapper"  id="kq"  >
+        <ul class="users"  >
           @foreach($users as $us)
           <li class="user" id="{{$us->id}}">
            @if($us->unread)
            <span class="pending">{{ $us->unread }}</span>
            @endif
-           <div class="media">
+           <div class="media" >
             <div class="media-left">
-              <img src="{{'frontend/'.$us->img}}" alt="" class="media-object">
+             @if (strpos($us->img, 'https://graph.facebook.com') !== false) 
+             <img src="{{$us->img}}" class="media-object" alt="">
+             @else
+             <img src="{{'frontend/'.$us->img}}" class="img-fluid" alt="">
+             @endif
             </div>
             <div class="media-body">
               <p class="name">{{$us->name}}</p>
@@ -34,6 +43,7 @@
 @endsection
 @section('js')
 <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
+
 <script >
   var receiver_id='';
   var my_id={{Auth::id()}};
@@ -83,7 +93,7 @@
 
      //xem tn
      $('.user').click(function()
-     {
+     { 
       $('.user').removeClass('active');
       $(this).addClass('active');
       $(this).find('.pending').remove();
@@ -140,5 +150,25 @@
     }, 50);
   }
 
+
+</script>
+
+<script>
+   $('#search').on('keyup',function(){
+        $value = $(this).val();
+        $.ajax({
+            type: 'POST',
+            url: '/ketquatimkiem',
+            headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+            data: {
+                'key': $value,
+            },
+            success:function(result){
+                $('#kq').html(result);     
+            }
+        });
+    })
 </script>
 @endsection

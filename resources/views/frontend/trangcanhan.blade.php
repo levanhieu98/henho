@@ -11,7 +11,11 @@
 
     <div class="row">
       <div class="col-lg-4" data-aos="fade-right">
+        @if (strpos(Auth::user()->img, 'https://graph.facebook.com') !== false) 
+        <img src="{{Auth::user()->img}}" class="img-fluid" alt="">
+        @else
         <img src="{{'frontend/'.Auth::user()->img}}" class="img-fluid" alt="">
+        @endif
       </div>
       <div class="col-lg-8 pt-4 pt-lg-0 content " data-aos="fade-left">
         <h3>{{$profile[0]->name}}</h3>
@@ -67,28 +71,28 @@
 @section('js')
 <script >
  $(document).ready(function(){
-    var city=""
-    $.get('/api/city/'+{{$profile[0]->city}},function(data){
+  var city=""
+  $.get('/api/city/'+{{$profile[0]->city}},function(data){
     city=data.Title +',';
     $('#city').html(city);
-    });
   });
-
-$(document).ready(function(){
-    var district=""
-    $.get('/api/id_district/'+{{$profile[0]->district}},function(data){
-    district=data.Title +',';
-    $('#district').html(district);
-    });
-  });
+});
 
  $(document).ready(function(){
-    var ward=""
-    $.get('/api/id_ward/'+{{$profile[0]->ward}},function(data){
+  var district=""
+  $.get('/api/id_district/'+{{$profile[0]->district}},function(data){
+    district=data.Title +',';
+    $('#district').html(district);
+  });
+});
+
+ $(document).ready(function(){
+  var ward=""
+  $.get('/api/id_ward/'+{{$profile[0]->ward}},function(data){
     ward=data.Title ;
     $('#ward').html(ward);
 
-   });
   });
+});
 </script>
 @endsection

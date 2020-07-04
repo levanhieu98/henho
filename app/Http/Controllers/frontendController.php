@@ -17,7 +17,7 @@ class frontendController extends Controller
 {
   public function index()
   { 
-    $review= DB::select("select * from users JOIN  review ON users.id =review.id ORDER BY date DESC ");
+    $review= DB::select("select * from users JOIN  review ON users.id =review.id where review.status=1 ORDER BY date DESC ");
     return view('index',compact('review'));
   }
 
@@ -78,6 +78,23 @@ return view('frontend.detail_blog',compact(['blog','blognew','abum']));
 public function gioithieu()
 {
   return view('frontend.gioithieu');
+
+}
+
+public function danhgia()
+{
+  return view('frontend.review');
+}
+
+public function dulieudanhgia(Request $request)
+{
+  $data=new review();
+  $data->date=now();
+  $data->content=$request->text;
+  $data->status=0;
+  $data->id=Auth::id();
+  $data->save();
+  return redirect('/danhgia')->with('alert','Cảm ơn bạn đã gửi cảm nhận của mình về website');
 
 }
 
