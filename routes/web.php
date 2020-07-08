@@ -39,12 +39,18 @@ Route::get('/detail_blog/{id}','frontendController@detail_blog');
 Route::get('/gioithieu', 'frontendController@gioithieu');
 Route::get('/danhgia', 'frontendController@danhgia');
 Route::post('/dulieudanhgia','frontendController@dulieudanhgia');
+Route::get('/chinhsachquyenriengtu','frontendController@chinhsachquyenriengtu');
+Route::get('/dieukhoandichvu','frontendController@dieukhoandichvu');
+Route::post('/baidang','frontendController@baidang');
+Route::get('/xoabaidang/{id_post}','frontendController@xoabaidang');
 
 //login facebook
 Route::get('auth/facebook', 'Auth\AuthController@redirectToFacebook')->name('auth.facebook');
 Route::get('auth/facebook/callback', 'Auth\AuthController@handleFacebookCallback');
 
-
+/*Login GG+*/
+Route::get('auth/google', 'Auth\GoogleController@redirect');
+Route::get('auth/google/callback', 'Auth\GoogleController@callback');
 
 
 

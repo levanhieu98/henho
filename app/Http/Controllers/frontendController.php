@@ -13,6 +13,7 @@ use App\abum_blog;
 use App\User;
 use App\contact;
 use App\review;
+use App\Post;
 class frontendController extends Controller
 {
   public function index()
@@ -23,15 +24,17 @@ class frontendController extends Controller
 
   public function trangchu()
   {
-   return view('frontend.trangchu');
+    $trangchu= DB::select("select * from users JOIN  post ON users.id =post.id where public=1 or (public=0 and post.id=".Auth::id().")  ");
+   
+   return view('frontend.trangchu', compact('trangchu'));
 
  }
 
-public function lienhe()
+ public function lienhe()
  {
   return view('frontend.lienhe');
 
-  }
+}
 
 public function thongtinlienhe(Request $request)
 {
@@ -173,6 +176,47 @@ public function status(Request $rq)
 
 }
 
+public function baidang(Request $request)
+{
+  $request->validate([
+
+    'status'=>'required',
+    
+  ],
+  [
+
+    'status.required'=>'Nhập nội dung bài viết',
+
+  ]);
+  if($request->hasFile('anhstatus'))
+  {
+    $hinh=($request->file('anhstatus'));
+    $name=$hinh->getClientOriginalName(); 
+    $ten='img/'.str::random(4)."_".$name;   
+    $hinh->move("frontend/img/",$ten);
+
+  }
+  else
+  {
+    $ten="";
+  }
+
+  $data=new Post();
+  $data->image=$ten;
+  $data->content=$request->status;
+  $data->date=now();
+  $data->public=$request->bangtin;
+  $data->id=Auth::id();
+  $data->save();
+  return redirect('/trangchu');
+}
+
+public function xoabaidang($id)
+{
+  $xoa=Post::where('id',Auth::id())->where('id_post',$id)->delete();
+  return redirect('/trangchu');
+}
+
 public function caidat(Request $rq)
 {
  return view('frontend.caidat');
@@ -214,6 +258,15 @@ function capnhat(Request $requests)
  }
 
 }
-
+public function chinhsachquyenriengtu()
+{
+  return view('frontend.chinhsachquyenriengtu');
+  
+}
+public function dieukhoandichvu()
+{
+  return view('frontend.dieukhoandichvu');
+  
+}
 
 }

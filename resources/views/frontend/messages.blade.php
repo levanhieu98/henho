@@ -20,6 +20,8 @@
             <div class="media-left">
              @if (strpos($us->img, 'https://graph.facebook.com') !== false) 
              <img src="{{$us->img}}" class="media-object" alt="">
+             @elseif (strpos($us->img, 'https://lh3.googleusercontent.com') !== false) 
+             <img src="{{$us->img}}" class="media-object" alt="">
              @else
              <img src="{{'frontend/'.$us->img}}" class="img-fluid" alt="">
              @endif

@@ -26,7 +26,10 @@
     <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
     <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="styles/single_listing_styles.css">
-    <link rel="stylesheet" type="text/css" href="styles/single_listing_responsive.css">     
+    <link rel="stylesheet" type="text/css" href="styles/single_listing_responsive.css">  
+
+    <link rel="stylesheet" type="text/css" href="styles/elements_styles.css">
+    <link rel="stylesheet" type="text/css" href="styles/elements_responsive.css">   
 </head>
 <body>
     <div class="super_container">
@@ -56,11 +59,24 @@
         <div class="copyright">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12 order-lg-1 order-2  ">
+                    <div class="col-lg-3 order-lg-1 order-2  ">
                         <div class="copyright_content d-flex flex-row align-items-center">
                             <div><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 order-lg-2 order-1">
+                            <div class="footer_nav_container d-flex flex-row align-items-center justify-content-lg-end">
+                                <div class="footer_nav">
+                                    <ul class="footer_nav_list">
+                                        <li class="footer_nav_item"><a href="/">home</a></li>
+                                        <li class="footer_nav_item"><a href="/gioithieu">about us</a></li>
+                                        <li class="footer_nav_item"><a href="/chinhsachquyenriengtu">Privacy Policy</a></li>
+                                        <li class="footer_nav_item"><a href="/dieukhoandichvu">Terms of Service</a></li>
+                                        <li class="footer_nav_item"><a href="/lienhe">contact</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -88,5 +104,9 @@
         <script src="js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
         <script src="js/swipe-content.js"></script> <!-- A Vanilla JavaScript plugin to detect touch interactions -->
         <script src="js/lienhe.js"></script>
+
+
+        <script src="js/elements_custom.js"></script>
+        <script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
     </body>
     </html>

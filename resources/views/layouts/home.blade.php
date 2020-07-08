@@ -43,6 +43,8 @@
       <div class="profile">
         @if (strpos(Auth::user()->img, 'https://graph.facebook.com') !== false) 
         <img src="{{Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
+         @elseif (strpos(Auth::user()->img, 'https://lh3.googleusercontent.com') !== false) 
+        <img src="{{Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
         @else
         <img src="{{'frontend/'.Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
         @endif

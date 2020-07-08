@@ -47,7 +47,7 @@
                     <a href="/auth/facebook" class="btn btn-lg btn-social btn-facebook form-control " id="hover">
                         <i class="fa fa-facebook fa-fw"></i><span class="font"> Sign in with Facebook</span>
                     </a>
-                    <a href="" class="btn btn-lg btn-social btn-google form-control  " id="hover">
+                    <a href="/auth/google" class="btn btn-lg btn-social btn-google form-control  " id="hover">
                         <i class="fa fa-google fa-fw bg-"></i> <span class="font">Sign in with Google</span>    
                     </a>
                 </div>

@@ -646,7 +646,7 @@ section {
 .testimonials .testimonial-item {
   box-sizing: content-box;
   text-align: center;
-  min-height: 320px;
+  min-height: 100px;
 }
 
 .testimonials .testimonial-item .testimonial-img {
