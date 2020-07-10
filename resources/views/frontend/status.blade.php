@@ -25,7 +25,12 @@
         </span>
         @enderror
           <div class="row clearfix container-fluid form-inline">
-            <input type="file" name="anhstatus"  class="form-control mt-2 mb-2 col-lg-6"  onchange="readURL(this)" id="anh"  /> <i class="bx bx-image col-lg-6" style="font-size:50px"></i>
+            <input type="file" name="anhstatus"  class="form-control mt-2 mb-2 col-lg-6 @error('anhstatus') is-invalid @enderror"  onchange="readURL(this)" id="anh"  /> <i class="bx bx-image col-lg-6" style="font-size:50px"></i>
+              @error('anhstatus')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+        @enderror
           </div>
          <div class="mb-2 " id='show'>
            

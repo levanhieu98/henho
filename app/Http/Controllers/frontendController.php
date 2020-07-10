@@ -24,7 +24,7 @@ class frontendController extends Controller
 
   public function trangchu()
   {
-    $trangchu= DB::select("select * from users JOIN  post ON users.id =post.id where public=1 or (public=0 and post.id=".Auth::id().")  ");
+    $trangchu= DB::select("select * from users JOIN  post ON users.id =post.id where public=1 or (public=0 and post.id=".Auth::id().") ORDER BY date DESC ");
    
    return view('frontend.trangchu', compact('trangchu'));
 
@@ -181,11 +181,13 @@ public function baidang(Request $request)
   $request->validate([
 
     'status'=>'required',
+    'anhstatus'=>'image',
     
   ],
   [
 
     'status.required'=>'Nhập nội dung bài viết',
+    'anhstatus.image'=>'Vui lòng chọn đúng file hình'
 
   ]);
   if($request->hasFile('anhstatus'))
