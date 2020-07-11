@@ -53,7 +53,6 @@ Route::get('auth/google', 'Auth\GoogleController@redirect');
 Route::get('auth/google/callback', 'Auth\GoogleController@callback');
 
 
-
 //Back_end
 Auth::routes(['verify' => true]);
 Route::get('/logout','Auth\LoginController@logout');

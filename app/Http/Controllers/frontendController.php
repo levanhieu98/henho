@@ -25,57 +25,57 @@ class frontendController extends Controller
   public function trangchu()
   {
     $trangchu= DB::select("select * from users JOIN  post ON users.id =post.id where public=1 or (public=0 and post.id=".Auth::id().") ORDER BY date DESC ");
-   
-   return view('frontend.trangchu', compact('trangchu'));
 
+    return view('frontend.trangchu', compact('trangchu'));
+
+  }
+
+  public function lienhe()
+  {
+    return view('frontend.lienhe');
+
+  }
+
+  public function thongtinlienhe(Request $request)
+  {
+
+    $name=$request->name;
+    $email=$request->email;
+    $subject=$request->subject;
+    $message=$request->message;
+    $data=new contact();
+    $data->name=$name;
+    $data->email=$email;
+    $data->subject=$subject;
+    $data->message=$message;
+    $data->save();
+    return redirect('/lienhe')->with('alert','Bạn đã gửi liên hệ thành công ');
+
+
+  }
+
+  public function blog()
+  {
+    $blog=Blog::orderByDesc('datesubmitted')->paginate(4);
+    $blogrd=Blog::get()->random(4);
+    $category=category_blog::all();
+    return view('frontend.blog',compact(['blog','category','blogrd']));
+
+  }
+
+  public function category_blog($id)
+  {
+   $blog=Blog::where('Id_category',$id)->paginate(4);
+   $blogrd=Blog::get()->random(4);
+   $category=category_blog::all();
+   return view('frontend.blog',compact(['blog','category','blogrd']));
  }
 
- public function lienhe()
- {
-  return view('frontend.lienhe');
-
-}
-
-public function thongtinlienhe(Request $request)
-{
-
-  $name=$request->name;
-  $email=$request->email;
-  $subject=$request->subject;
-  $message=$request->message;
-  $data=new contact();
-  $data->name=$name;
-  $data->email=$email;
-  $data->subject=$subject;
-  $data->message=$message;
-  $data->save();
-  return redirect('/lienhe')->with('alert','Bạn đã gửi liên hệ thành công ');
-
-
-}
-
-public function blog()
-{
-  $blog=Blog::orderByDesc('datesubmitted')->paginate(4);
-  $blogrd=Blog::get()->random(4);
-  $category=category_blog::all();
-  return view('frontend.blog',compact(['blog','category','blogrd']));
-
-}
-
-public function category_blog($id)
-{
- $blog=Blog::where('Id_category',$id)->paginate(4);
- $blogrd=Blog::get()->random(4);
- $category=category_blog::all();
- return view('frontend.blog',compact(['blog','category','blogrd']));
-}
-
-public function detail_blog($id)
-{ $blog=Blog::where('id',$id)->get();
-$blognew=Blog::get()->random(4);
-$abum=abum_blog::where('id',$id)->get();
-return view('frontend.detail_blog',compact(['blog','blognew','abum']));
+ public function detail_blog($id)
+ { $blog=Blog::where('id',$id)->get();
+ $blognew=Blog::get()->random(4);
+ $abum=abum_blog::where('id',$id)->get();
+ return view('frontend.detail_blog',compact(['blog','blognew','abum']));
 }
 
 public function gioithieu()
