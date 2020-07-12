@@ -24,37 +24,28 @@
                 <div class="body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                           
                             <thead>
                                 <tr>
                                     <th>Id</th>
                                     <th>Tiêu đề</th>
-                                    <th>Mô tả</th>
-                                    <th>Nội dung</th>
-                                    <th>Hình</th>
-                                    <th>Tác giả</th>
-                                    <th>Ngày đăng</th>
-                                    <th>Id_category</th>
+                                    <th>Mô tả</th> 
                                     <th>Cập nhât/Xóa</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($bl as $b)
                                 <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
-                                    <td>Edinburgh</td>
+                                    <td>{{$b->id}}</td>
+                                    <td>{{$b->title}}</td>
+                                    <td>{{$b->descriptive}}</td>   
                                     <td>  
                                         <a href="" class="btn bg-blue waves-effect">Sữa</a> &nbsp;
                                         <a href="" class="btn bg-red waves-effect" onClick="return confirm ('Bạn có muốn xóa không')">Xoá</a>
                                     </td>
-
                                 </tr>
-                                
-                            </tbody>
+                                  @endforeach
+                            </tbody> 
                         </table>
                     </div>
                 </div>

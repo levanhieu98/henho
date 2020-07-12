@@ -14,6 +14,7 @@ use App\User;
 use App\contact;
 use App\review;
 use App\Post;
+use App\comment;
 class frontendController extends Controller
 {
   public function index()
@@ -58,7 +59,7 @@ class frontendController extends Controller
   {
     $blog=Blog::orderByDesc('datesubmitted')->paginate(4);
     $blogrd=Blog::get()->random(4);
-    $category=category_blog::all();
+    $category=category_blog::where('Trangthai',1)->get();
     return view('frontend.blog',compact(['blog','category','blogrd']));
 
   }
@@ -67,7 +68,7 @@ class frontendController extends Controller
   {
    $blog=Blog::where('Id_category',$id)->paginate(4);
    $blogrd=Blog::get()->random(4);
-   $category=category_blog::all();
+   $category=category_blog::where('Trangthai',1)->get();
    return view('frontend.blog',compact(['blog','category','blogrd']));
  }
 
@@ -213,10 +214,69 @@ public function baidang(Request $request)
   return redirect('/trangchu');
 }
 
+public function suabaidang($id,$id_user)
+{
+ $kt =DB::table('post')->where('id',$id_user)->where('id_post',$id)->first();
+  if($kt!=null)
+  {
+    $sua=Post::where('id_post',$id)->get();
+    return view('frontend.suabaidang',compact('sua'));
+  }
+  else
+  {
+    return redirect('/trangchu');
+  }
+}
+
+public function dulieusuabaidang( Request $request,$id)
+{
+  $image=DB::table('post')->select('image')->Where('id_post',$id)->first();
+  $request->validate([
+
+    'status'=>'required',
+    'anhstatus'=>'image',
+    
+  ],
+  [
+
+    'status.required'=>'Nhập nội dung bài viết',
+    'anhstatus.image'=>'Vui lòng chọn đúng file hình'
+
+  ]);
+  if($request->hasFile('anhstatus'))
+  {
+    $hinh=($request->file('anhstatus'));
+    $name=$hinh->getClientOriginalName(); 
+    $ten='img/'.str::random(4)."_".$name;  
+    // unlink("frontend/".$image->image);   
+    $hinh->move("frontend/img/",$ten);
+
+  }
+  else
+  {
+    $ten=$image->image;
+  }
+  $data=array('image'=>$ten,'content'=>$request->status,'date'=>now(),'public'=>$request->bangtin,'id'=>Auth::id());
+  DB::table('post')->where('id_post',$id)->update($data);
+  return redirect('/trangchu');
+}
+
 public function xoabaidang($id)
 {
-  $xoa=Post::where('id',Auth::id())->where('id_post',$id)->delete();
-  return redirect('/trangchu');
+  $kt =DB::table('comment')->where('id_post',$id)->first();
+  if($kt!=null)
+  {
+    $xoabl=comment::where('id_post',$id)->delete();
+    $xoa=Post::where('id',Auth::id())->where('id_post',$id)->delete();
+   
+    return redirect('/trangchu');
+  }
+  else
+  {
+     $xoa=Post::where('id',Auth::id())->where('id_post',$id)->delete();
+      return redirect('/trangchu');
+  }
+  
 }
 
 public function caidat(Request $rq)

@@ -56,7 +56,8 @@
           <div class="dropdown  float-right col-lg-2 ">
             <button class="btn btn-link bx bx-dots-horizontal-rounded mt-4"  type="button" data-toggle="dropdown">
             </button>
-            <ul class="dropdown-menu" >             
+            <ul class="dropdown-menu" > 
+             <li ><a href="/suabaidang/{{$tc->id_post}}/{{Auth::id()}}"><i class="bx bx-wrench" ></i>Sữa bài</a></li>            
              <li ><a href="/xoabaidang/{{$tc->id_post}}"><i class="bx bx-x-circle" ></i>Xóa bài viết</a></li>
            </ul>
          </div>

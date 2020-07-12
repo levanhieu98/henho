@@ -31,23 +31,20 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Gender</th>
-                                    <th>City</th>
-                                    <th>District</th>
-                                    <th>Ward</th>
-                                    <th>Xóa</th>
+                                    <th>Khóa tài khoản</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($user as $us)
                                 <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                    <td>2011/04/25</td>
+                                    <td>{{$us->id}}</td>
+                                    <td>{{$us->name}}</td>
+                                    <td>{{$us->email}}</td>
+                                    <td>{{($us->gender)==1?'Nam':'Nữ'}}</td>
+                                    
                                     <td>  <a href="" class="btn bg-red waves-effect" onClick="return confirm ('Bạn có muốn xóa không')">Khóa tài khoản</a></td>
-                                </tr>   
+                                </tr>  
+                                @endforeach 
                             </tbody>
                         </table>
                     </div>

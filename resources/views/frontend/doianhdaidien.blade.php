@@ -3,7 +3,7 @@
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-header   ">
-					<img src="{{'frontend/'.Auth::user()->img}}" width="100" height="150" alt="" >
+					<img src="{{'/frontend/'.Auth::user()->img}}" width="100" height="150" alt="" >
 				</div>
 				<div class="modal-body">
 					<form action="/doianhdaidien" method="POST" accept-charset="utf-8" enctype="multipart/form-data">

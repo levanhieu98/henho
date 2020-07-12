@@ -4,6 +4,12 @@
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
+                @if(Session::has('alert'))
+                <p class="alert alert-success row-md-6">{{Session::get('alert')}}</p>
+                @endif
+                @if(Session::has('error'))
+                <p class="alert alert-danger">{{Session::get('error')}}</p>
+                @endif
                 <div class="header">
                     <h2>
                         Danh sách loại Blog
@@ -33,18 +39,17 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($category as $cr)
                                 <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
+                                    <td>{{$cr->Id_category}}</td>
+                                    <td>{{$cr->Ten_category}}</td>
+                                    <td>{{$cr->Trangthai}}</td>
                                     <td>  
-                                        <a href="" class="btn bg-blue waves-effect">Sữa</a> &nbsp;
-                                        <a href="" class="btn bg-red waves-effect" onClick="return confirm ('Bạn có muốn xóa không')">Xoá</a>
+                                        <a href="/admin/sualoai/{{$cr->Id_category}}" class="btn bg-blue waves-effect">Sữa</a> &nbsp;
+                                        <a href="/admin/xoaloai/{{$cr->Id_category}}" class="btn bg-red waves-effect" onClick="return confirm ('Bạn có muốn xóa không')">Xoá</a>
                                     </td>
-
                                 </tr>
-                               
-
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

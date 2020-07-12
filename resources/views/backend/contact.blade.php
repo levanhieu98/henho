@@ -35,13 +35,15 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($contact as $ct)
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                </tr>   
+                                <td>{{$ct->id}}</td>
+                                <td>{{$ct->name}}</td>
+                                <td>{{$ct->email}}</td>
+                                <td>{{$ct->subject}}</td>
+                                <td>{{$ct->message}}</td>
+                            </tr>
+                            @endforeach   
                             </tbody>
                         </table>
                     </div>

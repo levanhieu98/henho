@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 
 //front_end
+//giao dien nguoi dung
 Route::get('/','frontendController@index');
 Route::get('/trangchu', 'frontendController@trangchu')->middleware(['verified','checkadmin'])->name('personal');
 Route::get('/canhan', 'frontendController@canhan')->middleware('checkadmin');
@@ -31,6 +32,12 @@ Route::post('/sentmessages','messagesController@sendmassges');
 Route::post('/doianhdaidien','frontendController@doianhdaidien');
 Route::get('/suathongtin', 'frontendController@suathongtin');
 Route::post('/dulieusua', 'frontendController@dulieusua');
+Route::post('/baidang','frontendController@baidang');
+Route::get('/suabaidang/{id_post}/{id_user}','frontendController@suabaidang');
+Route::post('/dulieusuabaidang/{id_post}','frontendController@dulieusuabaidang');
+Route::get('/xoabaidang/{id_post}','frontendController@xoabaidang');
+
+//giao dien ngoai
 Route::get('/lienhe', 'frontendController@lienhe');
 Route::post('/thongtinlienhe','frontendController@thongtinlienhe');
 Route::get('/blog', 'frontendController@blog');
@@ -41,8 +48,7 @@ Route::get('/danhgia', 'frontendController@danhgia');
 Route::post('/dulieudanhgia','frontendController@dulieudanhgia');
 Route::get('/chinhsachquyenriengtu','frontendController@chinhsachquyenriengtu');
 Route::get('/dieukhoandichvu','frontendController@dieukhoandichvu');
-Route::post('/baidang','frontendController@baidang');
-Route::get('/xoabaidang/{id_post}','frontendController@xoabaidang');
+
 
 //login facebook
 Route::get('auth/facebook', 'Auth\AuthController@redirectToFacebook')->name('auth.facebook');
@@ -58,14 +64,27 @@ Auth::routes(['verify' => true]);
 Route::get('/logout','Auth\LoginController@logout');
 Route::group(['prefix' => 'admin','middleware'=>'checkRole'], function() {
 	Route::get('home', 'admin\homeController@index')->name('home');
+
+// Category_blog
 	Route::get('loaiBlog','admin\category_blog@loaiBlog');
 	Route::get('themloaiBlog','admin\category_blog@themloaiBlog');
+	Route::post('dulieuloai','admin\category_blog@dulieuloai');
+	Route::get('xoaloai/{id}','admin\category_blog@xoaloai');
+	Route::get('sualoai/{id}', 'admin\category_blog@sualoai');
+	Route::post('dulieusua/{id}','admin\category_blog@dulieusua');
+
+
+//Blog	
 	Route::get('blog','admin\blog@blog');
 	Route::get('themblog','admin\blog@themblog');
 
-
+//review
 	Route::get('review','admin\review@review');
+
+//contact
 	Route::get('contact','admin\contact@contact');
+
+//users
 	Route::get('dsuser', 'admin\userController@dsuser');
 
 });

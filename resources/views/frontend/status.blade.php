@@ -5,7 +5,7 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Status</h2>
+          <h2>Bài đăng</h2>
           <p>Chào {{Auth::user()->name}} !!</p>
         </div>
         <form action="/baidang" method="post" accept-charset="utf-8" enctype="multipart/form-data">

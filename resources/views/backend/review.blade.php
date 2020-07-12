@@ -36,16 +36,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($review as $rv)
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
+                                <td>{{$rv->Id_review}}</td>
+                                <td>{{date('d-m-Y'),$rv->date}}</td>
+                                <td>{{$rv->content}}</td>
+                                <td>{{$rv->status}}</td>
+                                <td>{{$rv->id}}</td>
                                 <td>  <a href="" class="btn bg-blue waves-effect">Duyệt</a> &nbsp;
                                     <a href="" class="btn bg-red waves-effect" onClick="return confirm ('Bạn có muốn xóa không')">Xoá</a>
                                 </td>
-                                </tr>   
+                            </tr>
+                            @endforeach   
                             </tbody>
                         </table>
                     </div>
