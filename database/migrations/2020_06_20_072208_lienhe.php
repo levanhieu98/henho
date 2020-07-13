@@ -19,6 +19,7 @@ class Lienhe extends Migration
             $table->string('email')->unique();
              $table->string('subject');
               $table->string('message');
+              $table->date('date');
             $table->rememberToken();
             $table->timestamps();
         });

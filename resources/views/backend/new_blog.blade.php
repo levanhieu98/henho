@@ -72,7 +72,7 @@
 						<div class="col-sm-9">
 							<div class="form-group">
 								<div class="form-line abc">
-									<textarea class="form-control ckeditor" id="Noidung" name="Noidung" rows="3" >{{old('Noidung')}}</textarea>
+									<textarea class="form-control ckeditor" id ="editor" name="Noidung" rows="3" >{{old('Noidung')}}</textarea>
 								</div>
 							</div>
 						</div>
@@ -117,5 +117,5 @@
     document.querySelectorAll('.btn.dropdown-toggle.btn-default')[0].style.display = 'none';
   })
 </script>
-<script src="ckeditor/ckeditor.js" type="text/javascript" charset="utf-8" async defer></script>
+
 @endsection

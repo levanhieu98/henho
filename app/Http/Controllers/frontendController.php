@@ -49,6 +49,7 @@ class frontendController extends Controller
     $data->email=$email;
     $data->subject=$subject;
     $data->message=$message;
+    $data->date=now();
     $data->save();
     return redirect('/lienhe')->with('alert','Bạn đã gửi liên hệ thành công ');
 

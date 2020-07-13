@@ -32,6 +32,7 @@
                                 <th>Email</th>
                                 <th>Tiêu đề</th>
                                 <th>Nội dung</th>
+                                <th>Ngày gửi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,6 +43,7 @@
                                 <td>{{$ct->email}}</td>
                                 <td>{{$ct->subject}}</td>
                                 <td>{{$ct->message}}</td>
+                                 <td>{{date('d-m-Y'),$ct->date}}</td>
                             </tr>
                             @endforeach   
                             </tbody>

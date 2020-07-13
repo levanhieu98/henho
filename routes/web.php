@@ -64,6 +64,8 @@ Auth::routes(['verify' => true]);
 Route::get('/logout','Auth\LoginController@logout');
 Route::group(['prefix' => 'admin','middleware'=>'checkRole'], function() {
 	Route::get('home', 'admin\homeController@index')->name('home');
+	Route::get('doimatkhau','admin\adminController@doimatkhau' );
+	Route::post('matkhaumoi','admin\adminController@matkhaumoi');
 
 // Category_blog
 	Route::get('loaiBlog','admin\category_blog@loaiBlog');
