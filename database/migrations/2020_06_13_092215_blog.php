@@ -23,6 +23,7 @@ class Blog extends Migration
         $table->string('author',30);
         $table->date('datesubmitted');
         $table->integer('Id_category')->unsigned();
+        $table->boolean('status');
         $table->foreign('Id_category')->references('Id_category')->on('category_blog')->onDelete('RESTRICT');
         
     });

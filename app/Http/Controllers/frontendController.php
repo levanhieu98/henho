@@ -58,8 +58,8 @@ class frontendController extends Controller
 
   public function blog()
   {
-    $blog=Blog::orderByDesc('datesubmitted')->paginate(4);
-    $blogrd=Blog::get()->random(4);
+    $blog=Blog::where('status',1)->orderByDesc('datesubmitted')->paginate(4);
+    $blogrd=Blog::where('status',1)->get()->random(4);
     $category=category_blog::where('Trangthai',1)->get();
     return view('frontend.blog',compact(['blog','category','blogrd']));
 
@@ -67,15 +67,15 @@ class frontendController extends Controller
 
   public function category_blog($id)
   {
-   $blog=Blog::where('Id_category',$id)->paginate(4);
-   $blogrd=Blog::get()->random(4);
+   $blog=Blog::where('status',1)->where('Id_category',$id)->paginate(4);
+   $blogrd=Blog::where('status',1)->get()->random(4);
    $category=category_blog::where('Trangthai',1)->get();
    return view('frontend.blog',compact(['blog','category','blogrd']));
  }
 
  public function detail_blog($id)
- { $blog=Blog::where('id',$id)->get();
- $blognew=Blog::get()->random(4);
+ { $blog=Blog::where('status',1)->where('id',$id)->get();
+ $blognew=Blog::where('status',1)->get()->random(4);
  $abum=abum_blog::where('id',$id)->get();
  return view('frontend.detail_blog',compact(['blog','blognew','abum']));
 }
@@ -93,13 +93,23 @@ public function danhgia()
 
 public function dulieudanhgia(Request $request)
 {
-  $data=new review();
-  $data->date=now();
-  $data->content=$request->text;
-  $data->status=0;
-  $data->id=Auth::id();
-  $data->save();
-  return redirect('/danhgia')->with('alert','Cảm ơn bạn đã gửi cảm nhận của mình về website');
+ $request->validate([
+
+  'text'=>'required',
+
+],
+[
+
+  'text.required'=>' Vui lòng nhập đánh giá',
+
+]);
+ $data=new review();
+ $data->date=now();
+ $data->content=$request->text;
+ $data->status=0;
+ $data->id=Auth::id();
+ $data->save();
+ return redirect('/danhgia')->with('alert','Cảm ơn bạn đã gửi cảm nhận của mình về website');
 
 }
 
@@ -218,15 +228,15 @@ public function baidang(Request $request)
 public function suabaidang($id,$id_user)
 {
  $kt =DB::table('post')->where('id',$id_user)->where('id_post',$id)->first();
-  if($kt!=null)
-  {
-    $sua=Post::where('id_post',$id)->get();
-    return view('frontend.suabaidang',compact('sua'));
-  }
-  else
-  {
-    return redirect('/trangchu');
-  }
+ if($kt!=null)
+ {
+  $sua=Post::where('id_post',$id)->get();
+  return view('frontend.suabaidang',compact('sua'));
+}
+else
+{
+  return redirect('/trangchu');
+}
 }
 
 public function dulieusuabaidang( Request $request,$id)
@@ -269,15 +279,15 @@ public function xoabaidang($id)
   {
     $xoabl=comment::where('id_post',$id)->delete();
     $xoa=Post::where('id',Auth::id())->where('id_post',$id)->delete();
-   
+
     return redirect('/trangchu');
   }
   else
   {
-     $xoa=Post::where('id',Auth::id())->where('id_post',$id)->delete();
-      return redirect('/trangchu');
-  }
-  
+   $xoa=Post::where('id',Auth::id())->where('id_post',$id)->delete();
+   return redirect('/trangchu');
+ }
+
 }
 
 public function caidat(Request $rq)

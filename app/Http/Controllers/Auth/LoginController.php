@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo ="";
+    // protected $redirectTo ="";
     
 
     /**
@@ -41,19 +41,19 @@ class LoginController extends Controller
 
     }
 
-   protected function redirectTo()
-   {
+    protected function redirectTo()
+    {
 
-    if(Auth::user()->role=='1'){
-        return '/admin/home';
-    }elseif(Auth::user()->role=='0'){
-        return '/trangchu';
-    }   
+        if(Auth::user()->role==1){
+            return '/admin/home';
+        }elseif(Auth::user()->role==0){
+            return '/trangchu';
+        }   
 
-}
-public function logout()
-{
-    Auth::logout();
-    return redirect('/');
-}
+    }
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
+    }
 }

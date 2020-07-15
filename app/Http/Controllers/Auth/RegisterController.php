@@ -29,16 +29,16 @@ class RegisterController extends Controller
      *
      * @var string
      */
-      protected function redirectTo()
-   {
+    protected function redirectTo()
+    {
 
-    if(Auth::user()->role=='1'){
-        return '/admin/home';
-    }elseif(Auth::user()->role=='0'){
-        return '/trangchu';
-    }   
+        if(Auth::user()->role==1){
+            return '/admin/home';
+        }elseif(Auth::user()->role==0){
+            return '/trangchu';
+        }   
 
-}
+    }
 
     /**
      * Create a new controller instance.
@@ -71,20 +71,20 @@ class RegisterController extends Controller
             'intro'=>'required',
             
         ],[
-         'email.required'=>'Email không được để trống',
-         'check.required'=>'Chưa đồng ý điều khoản',
-         'email.email'=>'Email không đúng định dạng ',
-         'email.unique'=>'Email đã tồn tại',
-         'password.required'=>'Mật khẩu không được để trống',
-         'password.confirmed'=>'Mật khẩu không trùng khớp',
-         'password.min'=>'Mật khẩu it nhất 8 kí tự',
-         'password_confirmation.required'=>'Vui lòng nhập lại nhập khẩu',
-         'name.required'=>'Tên không được để trống',
-         'dob.required'=>'Ngày tháng năm sinh chưa có',
-          'job.required'=>'Công việc không được để trống',
-          'habit.required'=>'Sở thích không được để trống',
-          'intro.required'=>'Giới thiệu bản thân không được để trống',
-     ]);
+           'email.required'=>'Email không được để trống',
+           'check.required'=>'Chưa đồng ý điều khoản',
+           'email.email'=>'Email không đúng định dạng ',
+           'email.unique'=>'Email đã tồn tại',
+           'password.required'=>'Mật khẩu không được để trống',
+           'password.confirmed'=>'Mật khẩu không trùng khớp',
+           'password.min'=>'Mật khẩu it nhất 8 kí tự',
+           'password_confirmation.required'=>'Vui lòng nhập lại nhập khẩu',
+           'name.required'=>'Tên không được để trống',
+           'dob.required'=>'Ngày tháng năm sinh chưa có',
+           'job.required'=>'Công việc không được để trống',
+           'habit.required'=>'Sở thích không được để trống',
+           'intro.required'=>'Giới thiệu bản thân không được để trống',
+       ]);
     }
 
     /**

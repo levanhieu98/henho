@@ -5,7 +5,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- lienhe --}}
     <script>document.getElementsByTagName("html")[0].className += " js";</script>
-    <link rel="stylesheet" href="assets/css/lienhe.css">
+    <link rel="stylesheet" href="/assets/css/lienhe.css">
     <base href="/frontend/">
     <link rel="shortcut icon" href="img/fav.png">
     <meta charset="utf-8">

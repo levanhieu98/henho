@@ -8,23 +8,19 @@
                     <h2>
                         Danh sách Blog
                     </h2>
-                    <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">more_vert</i>
-                            </a>
-                            <ul class="dropdown-menu pull-right">
-                                <li><a href="javascript:void(0);">Action</a></li>
-                                <li><a href="javascript:void(0);">Another action</a></li>
-                                <li><a href="javascript:void(0);">Something else here</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                    @if(Session::has('alert'))
+                    <p class="alert alert-success row-md-6">{{Session::get('alert')}}</p>
+                    @endif
+
+                    @if(Session::has('error'))
+                    <p class="alert alert-danger row-md-6">{{Session::get('error')}}</p>
+                    @endif
+
                 </div>
                 <div class="body">
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover dataTable js-exportable">
-                           
+
                             <thead>
                                 <tr>
                                     <th>Id</th>
@@ -40,11 +36,11 @@
                                     <td>{{$b->title}}</td>
                                     <td>{{$b->descriptive}}</td>   
                                     <td>  
-                                        <a href="" class="btn bg-blue waves-effect">Sữa</a> &nbsp;
-                                        <a href="" class="btn bg-red waves-effect" onClick="return confirm ('Bạn có muốn xóa không')">Xoá</a>
+                                        <a href="/admin/suablog/{{$b->id}}" class="btn bg-blue waves-effect">Sữa</a> &nbsp;
+                                        <a href="/admin/xoablog/{{$b->id}}/{{$b->Id_category}}" class="btn bg-red waves-effect" onClick="return confirm ('Bạn có muốn xóa không')">Xoá</a>
                                     </td>
                                 </tr>
-                                  @endforeach
+                                @endforeach
                             </tbody> 
                         </table>
                     </div>

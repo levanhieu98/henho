@@ -7,13 +7,13 @@
             <div class="card">
                 <div class="header">
                     <h2>
-                     Danh sách User
+                     Danh sách quản trị
                  </h2>
                  @if(Session::has('alert'))
-                 <p class="alert alert-success row-md-6">{{Session::get('alert')}}</p>
+                 <p class="alert alert-success">{{Session::get('alert')}}</p>
                  @endif
-             </div>
-             <div class="body">
+            </div>
+            <div class="body">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                         <thead>
@@ -32,8 +32,7 @@
                                 <td>{{$us->name}}</td>
                                 <td>{{$us->email}}</td>
                                 <td>{{($us->gender)==1?'Nam':'Nữ'}}</td>
-
-                                <td>  <a href="/admin/khoataikhoan/{{$us->id}}" class="btn bg-red waves-effect" onClick="return confirm ('Tài khoản này sẽ xóa vĩnh viễn')">Xóa tài khoản</a></td>
+                                <td><a href="/admin/xoaadmin/{{$us->id}}" class="btn bg-red waves-effect" onClick="return confirm ('Bạn có muốn xóa không')">Xóa tài khoản</a></td>
                             </tr>  
                             @endforeach 
                         </tbody>

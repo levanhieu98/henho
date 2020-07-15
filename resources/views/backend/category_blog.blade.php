@@ -14,18 +14,7 @@
                     <h2>
                         Danh sách loại Blog
                     </h2>
-                    <ul class="header-dropdown m-r--5">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <i class="material-icons">more_vert</i>
-                            </a>
-                            <ul class="dropdown-menu pull-right">
-                                <li><a href="javascript:void(0);">Action</a></li>
-                                <li><a href="javascript:void(0);">Another action</a></li>
-                                <li><a href="javascript:void(0);">Something else here</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                 
                 </div>
                 <div class="body">
                     <div class="table-responsive">
@@ -45,7 +34,7 @@
                                     <td>{{$cr->Ten_category}}</td>
                                     <td>{{$cr->Trangthai}}</td>
                                     <td>  
-                                        <a href="/admin/sualoai/{{$cr->Id_category}}" class="btn bg-blue waves-effect">Sữa</a> &nbsp;
+                                        <a href="/admin/sualoai/{{$cr->Id_category}}" class="btn bg-blue waves-effect">Sửa</a> &nbsp;
                                         <a href="/admin/xoaloai/{{$cr->Id_category}}" class="btn bg-red waves-effect" onClick="return confirm ('Bạn có muốn xóa không')">Xoá</a>
                                     </td>
                                 </tr>

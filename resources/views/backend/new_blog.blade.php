@@ -1,33 +1,39 @@
 @extends('layoutsadmin.index')
 @section('content')
 <style>
-.form-group .form-line {border-bottom:none}
-.form-group .form-control {padding:3px; border:1px solid #999}
-.form-group .form-line.abc {padding-top:5px;}
+	.form-group .form-line {border-bottom:none}
+	.form-group .form-control {padding:3px; border:1px solid #999}
+	.form-group .form-line.abc {padding-top:5px;}
 </style>
 <div class="row clearfix">
 	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 center-block" style="float:none">
 		<div class="card">
+			@if (count($errors)>0)
+			<div class="alert alert-danger">
+				<ul type="none" >
+					@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			</div>
+			@endif
 			<div class="header">
 				<h2> Thêm Blog</h2>
 			</div>
 			<div class="body">
-				<form class="form-horizontal " method="post" action="admin/tin/laydulieuthem" enctype="multipart/form-data" >
+				<form class="form-horizontal " method="post" action="/admin/dulieublog" enctype="multipart/form-data" >
 					@csrf
 					<div class="row clearfix">
 						<div class="col-sm-3 form-control-label">
 							<label >Loại Blog</label>
 						</div>
-						 <div class="col-sm-9 ">
-                                    <select class="  show-tick">
-                                        <option value="">-- Please select --</option>
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="30">30</option>
-                                        <option value="40">40</option>
-                                        <option value="50">50</option>
-                                    </select>
-                         </div>
+						<div class="col-sm-9 ">
+							<select class="  show-tick" name="id">
+								@foreach($category_blog as $cb)
+								<option value="{{$cb->Id_category}}">{{$cb->Ten_category}}</option>
+								@endforeach
+							</select>
+						</div>
 					</div>
 					<div class="row clearfix">
 						<div class="col-sm-3 form-control-label">
@@ -37,6 +43,11 @@
 							<div class="form-group">
 								<div class="form-line">
 									<input type="text" id="Tieude" name="Tieude" class="form-control " placeholder= "Nhập tiêu đề"  min="1" max="1000" value="{{old('Tieude')}}">
+									@error('text')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+									@enderror
 								</div>
 							</div>
 						</div>
@@ -102,8 +113,23 @@
 						</div>
 					</div>
 					<div class="row clearfix">
+						<div class="col-sm-3 form-control-label">
+							<label>Trạng thái</label>
+						</div>
+						<div class="col-sm-9">
+							<div class="form-group">
+								<div class="form-line abc">
+									<input type="radio" id="AH3" name="AnHien" value="1" checked="checked">
+									<label for="AH3">Hiện</label>
+									<input type="radio" id="AH4" name="AnHien" value="0"  >
+									<label for="AH4">Ẩn</label>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row clearfix">
 						<div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-							<button type="submit" class="btn btn-primary m-t-15 waves-effect">Thêm tin tức</button>
+							<button type="submit" class="btn btn-primary m-t-15 waves-effect">Thêm blog</button>
 						</div>
 					</div>
 				</form>
@@ -113,9 +139,9 @@
 </div>
 </body>
 <script>
-  window.addEventListener('load', () => {
-    document.querySelectorAll('.btn.dropdown-toggle.btn-default')[0].style.display = 'none';
-  })
+	window.addEventListener('load', () => {
+		document.querySelectorAll('.btn.dropdown-toggle.btn-default')[0].style.display = 'none';
+	})
 </script>
 
 @endsection

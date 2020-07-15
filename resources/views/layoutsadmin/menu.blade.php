@@ -40,7 +40,7 @@
         </li>
 
         <li>
-            <a href="javascript:void(0);" class="menu-toggle">
+            <a href="javascript:void(0);" class="menu-toggle ">
                 <i class="material-icons">perm_phone_msg</i>
                 <span>Liên hệ</span>
             </a>
@@ -76,6 +76,20 @@
 
                 <li>
                     <a href="/admin/dsuser">User</a>
+                </li>
+
+            </ul>
+        </li>
+            
+             <li>
+            <a href="javascript:void(0);" class="menu-toggle">
+                <i class="material-icons">account_circle</i>
+                <span>Quản trị</span>
+            </a>
+            <ul class="ml-menu">
+
+                <li>
+                    <a href="/admin/dsadmin">Danh sách</a>
                 </li>
 
             </ul>

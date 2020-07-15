@@ -24,13 +24,14 @@ class category_blog extends Controller
 		
 		$request->validate([
 
-			'category_blog'=>'required|min:4',
+			'category_blog'=>'required|unique:category_blog,Ten_category|min:4',
 
 		],
 		[
 
 			'category_blog.required'=>'Vui lòng nhập loại blog',
 			'category_blog.min'=>'Tên ít nhất 4 kí tự',
+			 'category_blog.unique'=>"Thêm thất bại loại blog đã tồn tại",
 
 		]);
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
    	protected $table='blog';
-    protected $fillable = ['title', 'content', 'img', 'author','datesubmitted'];
+    protected $fillable = ['title', 'content', 'img', 'author','datesubmitted','status'];
 
     public function category_blog()
     {

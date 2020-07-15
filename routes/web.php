@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 //front_end
 //giao dien nguoi dung
-Route::get('/','frontendController@index');
+Route::get('/','frontendController@index')->middleware(['guest'])->name('giaodien');
 Route::get('/trangchu', 'frontendController@trangchu')->middleware(['verified','checkadmin'])->name('personal');
 Route::get('/canhan', 'frontendController@canhan')->middleware('checkadmin');
 Route::get('/banbe', 'frontendController@banbe')->middleware('checkadmin');
@@ -63,7 +63,7 @@ Route::get('auth/google/callback', 'Auth\GoogleController@callback');
 Auth::routes(['verify' => true]);
 Route::get('/logout','Auth\LoginController@logout');
 Route::group(['prefix' => 'admin','middleware'=>'checkRole'], function() {
-	Route::get('home', 'admin\homeController@index')->name('home');
+	Route::get('home', 'admin\homeController@index')->name('home')->middleware('verified');
 	Route::get('doimatkhau','admin\adminController@doimatkhau' );
 	Route::post('matkhaumoi','admin\adminController@matkhaumoi');
 
@@ -79,15 +79,27 @@ Route::group(['prefix' => 'admin','middleware'=>'checkRole'], function() {
 //Blog	
 	Route::get('blog','admin\blog@blog');
 	Route::get('themblog','admin\blog@themblog');
+	Route::post('dulieublog','admin\blog@dulieublog' );
+	Route::get('suablog/{id}','admin\blog@suablog');
+	Route::post('dulieusuab/{id}','admin\blog@dulieusuab' );
+	Route::get('xoablog/{id}/{idloai}','admin\blog@xoablog');
 
 //review
 	Route::get('review','admin\review@review');
+	Route::get('duyetreview/{id}','admin\review@duyetreview');
+	Route::get('xoareview/{id}','admin\review@xoareview');
 
 //contact
 	Route::get('contact','admin\contact@contact');
 
 //users
 	Route::get('dsuser', 'admin\userController@dsuser');
+	Route::get('khoataikhoan/{id}', 'admin\userController@khoataikhoan');
+//admin
+	Route::get('dsadmin','admin\userController@dsadmin')->middleware('checkroleadmin');
+	Route::get('themquantri', 'admin\userController@themquantri')->middleware('checkroleadmin');
+	Route::post('dthemquantri','admin\userController@dthemquantri')->middleware('checkroleadmin');
+	Route::get('xoaadmin/{id}','admin\userController@xoaadmin');
 
 });
 
