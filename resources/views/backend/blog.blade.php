@@ -36,7 +36,7 @@
                                     <td>{{$b->title}}</td>
                                     <td>{{$b->descriptive}}</td>   
                                     <td>  
-                                        <a href="/admin/suablog/{{$b->id}}" class="btn bg-blue waves-effect">Sữa</a> &nbsp;
+                                        <a href="/admin/suablog/{{$b->id}}" class="btn bg-blue waves-effect">Sửa</a> &nbsp;
                                         <a href="/admin/xoablog/{{$b->id}}/{{$b->Id_category}}" class="btn bg-red waves-effect" onClick="return confirm ('Bạn có muốn xóa không')">Xoá</a>
                                     </td>
                                 </tr>

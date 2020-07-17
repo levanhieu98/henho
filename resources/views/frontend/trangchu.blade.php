@@ -12,17 +12,27 @@
     <div class="section-title">
       <h2>Gợi ý bạn bè</h2>
     </div>
+
     <div class="owl-carousel testimonials-carousel">
+     @foreach($banbe as $b)
      <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
       <p>
         <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-        <a href="#">Ten ABCs</a>
+        <a href="#">{{$b->name}}</a>
         <i class="bx bxs-quote-alt-right quote-icon-right"></i>
       </p>
-      <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+      @if (strpos($b->img, 'https://graph.facebook.com') !== false) 
+      <img src="{{$b->img}}" class="testimonial-img" alt="">
+      @elseif (strpos($b->img, 'https://lh3.googleusercontent.com') !== false) 
+      <img src="{{$b->img}}" class="testimonial-img" alt="">
+      @else
+      <img src="{{'frontend/'.$b->img}}" class="testimonial-img" alt="">
+      @endif
       <div id="heart"><a href="#"  ><i class="bx bxs-heart" style="font-size:50px"></i></a></div>
     </div>
+    @endforeach
   </div>
+
 </div>
 </section>
 
@@ -39,11 +49,11 @@
           <div class="media col-lg-10 float-left mt-2"  >
             <div class="media-left">
              @if (strpos($tc->img, 'https://graph.facebook.com') !== false) 
-             <img src="{{$tc->img}}" class="media-object "  alt="">
+             <a href="/chitietcanhan/{{$tc->id}}"><img src="{{$tc->img}}" class="media-object "  alt=""></a>
              @elseif (strpos($tc->img, 'https://lh3.googleusercontent.com') !== false) 
-             <img src="{{$tc->img}}" class="media-object " alt="">
+             <a href="/chitietcanhan/{{$tc->id}}"> <img src="{{$tc->img}}" class="media-object " alt=""></a>
              @else
-             <img src="{{'frontend/'.$tc->img}}"  alt="">
+             <a href="/chitietcanhan/{{$tc->id}}"><img src="{{'frontend/'.$tc->img}}"  alt=""></a>
              @endif
              
            </div>

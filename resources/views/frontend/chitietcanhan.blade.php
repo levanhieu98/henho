@@ -10,12 +10,12 @@
 
     <div class="row">
       <div class="col-lg-4" data-aos="fade-right">
-        @if (strpos(Auth::user()->img, 'https://graph.facebook.com') !== false) 
-        <img src="{{Auth::user()->img}}" class="img-fluid" alt="">
-        @elseif (strpos(Auth::user()->img, 'https://lh3.googleusercontent.com') !== false) 
-        <img src="{{Auth::user()->img}}" class="img-fluid" alt="">
+        @if (strpos($profile[0]->img, 'https://graph.facebook.com') !== false) 
+        <img src="{{$profile[0]->img}}" class="img-fluid" alt="">
+        @elseif (strpos($profile[0]->img, 'https://lh3.googleusercontent.com') !== false) 
+        <img src="{{$profile[0]->img}}" class="img-fluid" alt="">
         @else
-        <img src="{{'frontend/'.Auth::user()->img}}" class="img-fluid" alt="">
+        <img src="{{'/frontend/'.$profile[0]->img}}" class="img-fluid" alt="">
         @endif
       </div>
       <div class="col-lg-8 pt-4 pt-lg-0 content " data-aos="fade-left">
@@ -53,6 +53,7 @@
       <h2>Giới thiệu về bản thân</h2>
       <p class="mt-2 ml-2">
        {{$profile[0]->intro}}
+
      </p>
    </div>
 

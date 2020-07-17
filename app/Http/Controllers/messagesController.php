@@ -14,7 +14,7 @@ class messagesController extends Controller
 	{
 		$users= DB::select("select users.id, users.name, users.img, users.email, count(is_read) as unread 
       from users  LEFT JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = ".Auth::id() ."
-      where role= 0 and users.id != " . Auth::id().  " 
+      where role= 0 and users.id != " . Auth::id().  " and users.gender!=".Auth::user()->gender."
       group by users.id, users.name, users.img, users.email");
 		return view('frontend/messages',compact('users'));
 	}

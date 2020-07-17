@@ -17,25 +17,31 @@ use Illuminate\Support\Facades\Route;
 //front_end
 //giao dien nguoi dung
 Route::get('/','frontendController@index')->middleware(['guest'])->name('giaodien');
-Route::get('/trangchu', 'frontendController@trangchu')->middleware(['verified','checkadmin'])->name('personal');
-Route::get('/canhan', 'frontendController@canhan')->middleware('checkadmin');
-Route::get('/banbe', 'frontendController@banbe')->middleware('checkadmin');
-Route::get('/thuvienanh', 'frontendController@thuvienanh')->middleware('checkadmin');
-Route::get('/status', 'frontendController@status')->middleware('checkadmin');
-Route::get('/caidat', 'frontendController@caidat')->middleware('checkadmin');
-Route::get('/doimatkhau','frontendController@doimk')->middleware('checkadmin');
-Route::post('/capnhat','frontendController@capnhat');
-Route::get('/messages','messagesController@messages')->middleware('checkadmin');
-Route::get('/contentmassage/{id}','messagesController@contentmassage')->middleware('checkadmin');
-Route::post('/ketquatimkiem', 'messagesController@ketquatimkiem')->name('search');
-Route::post('/sentmessages','messagesController@sendmassges');
-Route::post('/doianhdaidien','frontendController@doianhdaidien');
-Route::get('/suathongtin', 'frontendController@suathongtin');
-Route::post('/dulieusua', 'frontendController@dulieusua');
-Route::post('/baidang','frontendController@baidang');
-Route::get('/suabaidang/{id_post}/{id_user}','frontendController@suabaidang');
-Route::post('/dulieusuabaidang/{id_post}','frontendController@dulieusuabaidang');
-Route::get('/xoabaidang/{id_post}','frontendController@xoabaidang');
+Route::get('/trangchu', 'frontendController@trangchu')->middleware(['verified','checkadmin','checkstatus'])->name('personal');
+Route::group(['middleware' => ['checkstatus','checkadmin']], function() {
+	Route::get('/canhan', 'frontendController@canhan');
+	Route::get('/banbe', 'frontendController@banbe');
+	Route::get('/thuvienanh', 'frontendController@thuvienanh');
+	Route::get('/status', 'frontendController@status');
+	Route::get('/caidat', 'frontendController@caidat');
+	Route::get('/doimatkhau','frontendController@doimk');
+	Route::post('/capnhat','frontendController@capnhat');
+	Route::get('/messages','messagesController@messages');
+	Route::get('/contentmassage/{id}','messagesController@contentmassage');
+	Route::post('/ketquatimkiem', 'messagesController@ketquatimkiem')->name('search');
+	Route::post('/sentmessages','messagesController@sendmassges');
+	Route::post('/doianhdaidien','frontendController@doianhdaidien');
+	Route::get('/suathongtin', 'frontendController@suathongtin');
+	Route::post('/dulieusua', 'frontendController@dulieusua');
+	Route::post('/baidang','frontendController@baidang');
+	Route::get('/suabaidang/{id_post}/{id_user}','frontendController@suabaidang');
+	Route::post('/dulieusuabaidang/{id_post}','frontendController@dulieusuabaidang');
+	Route::get('/xoabaidang/{id_post}','frontendController@xoabaidang');
+	Route::get('/trangtimkiem', 'frontendController@trangtimkiem');
+	Route::get('/trangtimkiem/search', 'frontendController@search');
+	Route::get('/chitietcanhan/{id}','frontendController@chitietcanhan');
+});
+
 
 //giao dien ngoai
 Route::get('/lienhe', 'frontendController@lienhe');
@@ -95,12 +101,17 @@ Route::group(['prefix' => 'admin','middleware'=>'checkRole'], function() {
 //users
 	Route::get('dsuser', 'admin\userController@dsuser');
 	Route::get('khoataikhoan/{id}', 'admin\userController@khoataikhoan');
+	Route::get('motaikhoan/{id}', 'admin\userController@motaikhoan');
 //admin
 	Route::get('dsadmin','admin\userController@dsadmin')->middleware('checkroleadmin');
 	Route::get('themquantri', 'admin\userController@themquantri')->middleware('checkroleadmin');
 	Route::post('dthemquantri','admin\userController@dthemquantri')->middleware('checkroleadmin');
 	Route::get('xoaadmin/{id}','admin\userController@xoaadmin');
 
+});
+
+Route::fallback(function () {
+	return redirect('/');
 });
 
 

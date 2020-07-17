@@ -67,6 +67,7 @@
           <ul>
             <li><a href="/trangchu"><i class="bx bx-home"></i> <span>Trang chủ</span></a></li>
             <li><a href="/canhan"><i class="bx bx-user"></i> <span>Trang cá nhân</span></a></li>
+            <li><a href="/trangtimkiem"><i class="bx bx-search"></i> <span>Tìm kiếm</span></a></li>
             <li><a href="/banbe"><i class="bx bx-group"></i> <span>Bạn bè</span></a></li>
             <li><a href="/messages"><i class="bx bxs-message-rounded-dots"></i> <span>Messages</span></a></li>
             <li><a href="/thuvienanh"><i class="bx bx-photo-album"></i>Thư viện ảnh</a></li>

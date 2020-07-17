@@ -26,8 +26,9 @@ class frontendController extends Controller
   public function trangchu()
   {
     $trangchu= DB::select("select * from users JOIN  post ON users.id =post.id where public=1 or (public=0 and post.id=".Auth::id().") ORDER BY date DESC ");
+    $banbe=User::where('id','!=',Auth::id())->where('role',0)->get();
 
-    return view('frontend.trangchu', compact('trangchu'));
+    return view('frontend.trangchu', compact(['trangchu','banbe']));
 
   }
 
@@ -118,6 +119,12 @@ public function canhan()
   $profile=User::where('id',Auth::id())->get();
   return view('frontend.trangcanhan',compact('profile'));
 
+}
+
+public function chitietcanhan($id)
+{
+  $profile=User::where('id',$id)->get();
+  return view('frontend.chitietcanhan',compact('profile'));
 }
 
 public function doianhdaidien( request $request )
@@ -331,6 +338,52 @@ function capnhat(Request $requests)
  }
 
 }
+
+public function trangtimkiem()
+{
+  return view('frontend.ketquatimkiem');
+  
+}
+
+public function search(Request $request)
+{
+  $keyword=$request->search;
+  if ($request->ajax()) {
+    $output = '';
+    $result = DB::table('users')->where('name', 'LIKE', '%' . $keyword . '%')->where('role',0)->get();
+    if ($result->count()>0) {
+      foreach ($result as $key => $value) {
+       if (strpos($value->img, 'img/') !== false)
+       {
+        $img='frontend/'. $value->img;
+      }
+      else
+      {
+        $img=$value->img;
+      }
+      $output .= '<tr>
+      <td>' .'<img src='.$img.' width="100" height="100"' .'>'. '</td>
+      <td>' . $value->name . '</td>
+      <td>' . $value->job . '</td>
+      <td>' . $value->intro . '</td>
+      <td>' . $value->habit . '</td>
+      <td>' . $value->findlove . '</td>
+      <td>' . '<button class="btn btn-outline-info"  >Kết bạn</button>'
+      . '</td>
+      </tr>'; 
+    }
+  }
+  else
+  {
+      echo "'<td colspan=7 style='text-align:center;font-size:20px;color:red '>Không tìm thấy </td>'";
+  }
+
+  return Response($output);
+}
+
+}
+
+
 public function chinhsachquyenriengtu()
 {
   return view('frontend.chinhsachquyenriengtu');

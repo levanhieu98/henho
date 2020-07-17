@@ -19,8 +19,14 @@ class userController extends Controller
 
 	public function khoataikhoan($id)
 	{
-		user::where('id',$id)->delete();
-		return redirect('admin/dsuser')->with('alert','Đã xóa tài khoản');
+		user::where('id',$id)->update(['status'=>1]);
+		return redirect('admin/dsuser')->with('alert','Đã khóa tài khoản');
+	}
+
+	public function motaikhoan($id)
+	{
+		user::where('id',$id)->update(['status'=>0]);
+		return redirect('admin/dsuser')->with('alert','Đã khóa tài khoản');
 	}
 
 	public function dsadmin()

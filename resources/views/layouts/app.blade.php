@@ -108,5 +108,12 @@
 
         <script src="js/elements_custom.js"></script>
         <script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+
+        {{-- Thông báo khóa tk --}}
+        <script>
+            @if(Session::has('erro_login'))
+            alert("{{Session::get('erro_login')}}"); 
+            @endif
+        </script>
     </body>
     </html>

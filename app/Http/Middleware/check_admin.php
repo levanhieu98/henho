@@ -14,10 +14,14 @@ class check_admin
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {   if(Auth::user()->role==1)
-            {
-                 return redirect()->route('home');
-            }
-        return $next($request);
-    }
+    {   if(Auth::check()&&Auth::user()->role==1)
+        {
+           return redirect()->route('home');
+       }
+       if(Auth::check()==false)
+       {
+        return redirect()->route('giaodien');
+       }
+       return $next($request);
+   }
 }

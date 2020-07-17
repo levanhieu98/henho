@@ -14,10 +14,14 @@ class check
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {  if(Auth::user()->role==0)
-            {
-                 return redirect()->route('personal');
-            }
-           return $next($request);
+    {  if(Auth::check()&&Auth::user()->role==0)
+        {
+           return redirect()->route('personal');
+       }
+       if(Auth::check()==false)
+       {
+        return redirect()->route('giaodien');
     }
+    return $next($request);
+}
 }
