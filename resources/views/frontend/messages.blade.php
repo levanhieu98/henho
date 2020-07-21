@@ -106,6 +106,7 @@
         success: function (data) {
           $('#messages').html(data);
           scrollToBottomFunc();
+          // alert( receiver_id);
         }
       })
     });

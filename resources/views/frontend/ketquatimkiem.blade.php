@@ -63,5 +63,7 @@
     });
   })
   $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
-</script>       
+</script>  
+
+  
 @endsection

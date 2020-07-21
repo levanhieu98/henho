@@ -164,6 +164,7 @@ public function suathongtin()
 
 public function dulieusua(Request $request)
 {
+  $dc=User::select('city','district','ward')->where('id',Auth::id())->first();
   $name=$request->name;
   $dob=$request->dob;
   $gender=$request->sex;
@@ -173,7 +174,19 @@ public function dulieusua(Request $request)
   $findlove=$request->findlove;
   $phone=$request->phone;
   $religion=$request->religion;
-  User::where('id',Auth::id())->update(['name'=>$name,'dob'=>$dob,'gender'=>$gender,'job'=>$job,'habit'=>$habit,'intro'=>$intro,'findlove'=>$findlove,'phone'=>$phone,'religion'=>$religion]);
+  if($request->thanhpho!=""&&$request->quan!=""&&$request->phuong!="")
+  {
+    $tp=$request->thanhpho;
+    $qu=$request->quan;
+    $ph=$request->phuong;
+  }
+  else
+  {
+    $tp=$dc->city;
+    $qu=$dc->district;
+    $ph=$dc->ward;
+  }
+  User::where('id',Auth::id())->update(['name'=>$name,'dob'=>$dob,'gender'=>$gender,'job'=>$job,'habit'=>$habit,'intro'=>$intro,'findlove'=>$findlove,'phone'=>$phone,'city'=>$tp,'district'=>$qu,'ward'=>$ph,'religion'=>$religion]);
   return redirect('/canhan');
 }
 
@@ -368,7 +381,7 @@ public function search(Request $request)
       <td>' . $value->intro . '</td>
       <td>' . $value->habit . '</td>
       <td>' . $value->findlove . '</td>
-      <td>' . '<button class="btn btn-outline-info"  >Kết bạn</button>'
+      <td>' . '<button class="btn btn-outline-info"   >Kết bạn</button>'
       . '</td>
       </tr>'; 
     }

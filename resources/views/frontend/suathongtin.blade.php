@@ -29,7 +29,7 @@
 
 				</div> 
 			</div>
-			{{-- <div class="form-group md-form">
+			<div class="form-group md-form">
 				<label for="yourAddress-2" data-error="wrong" data-success="right">Đại chỉ</label>
 			
 				<div class="row"> 
@@ -49,7 +49,7 @@
 						</select> 
 					</div> 
 				</div>
-			</div> --}}
+			</div>
 			<div class="form-group md-form mt-3">
 				<div class="row">
 					<label class="col-xs-4 col-md-4 "  for="Gender-2" data-error="wrong" data-success="right">Giới tính</label>
