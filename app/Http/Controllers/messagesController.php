@@ -12,10 +12,29 @@ class messagesController extends Controller
 {
 	public function messages()
 	{
-		$users= DB::select("select users.id, users.name, users.img, users.email, count(is_read) as unread 
-      from users  LEFT JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = ".Auth::id() ."
-      where role= 0 and users.id != " . Auth::id().  " and users.gender!=".Auth::user()->gender."
-      group by users.id, users.name, users.img, users.email");
+		// $users= DB::select("select users.id, users.name, users.img, users.email, count(is_read) as unread 
+  //     from users  LEFT JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = ".Auth::id() ."
+  //     where role= 0 and users.id != " . Auth::id().  " and users.gender!=".Auth::user()->gender."
+  //     group by users.id, users.name, users.img, users.email");
+  
+    $fr=DB::table('friends')->select('user_id_1','user_id_2')->where('approved',1)->where('user_id_1', Auth::id())->orwhere('user_id_2', Auth::id())->get();
+    $arr=[];
+    foreach ($fr as $value) {
+      if($value->user_id_1==Auth::id()){
+        unset($value->user_id_1);
+        $arr[]=$value->user_id_2;
+      }else if($value->user_id_2==Auth::id()){
+        unset($value->user_id_2);
+        $arr[]=$value->user_id_1;
+      }
+    }
+   
+   // $users= DB::select("select users.id, users.name, users.img, users.email, count(is_read) as unread 
+   //    from users  LEFT JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = ".Auth::id() ."
+   //    where role= 0 and users.id != " . Auth::id()."
+   //    group by users.id, users.name, users.img, users.email");
+  dd($fr);
+  
 		return view('frontend/messages',compact('users'));
 	}
 

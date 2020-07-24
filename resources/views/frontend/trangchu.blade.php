@@ -4,7 +4,6 @@
    #heart a:hover {
      color:red;
    }
-
  </style>
  <!-- ======= About Section ======= -->
  <section id="testimonials" class="testimonials section-bg">
@@ -28,7 +27,7 @@
       @else
       <img src="{{'frontend/'.$b->img}}" class="testimonial-img" alt="">
       @endif
-      <div id="heart"><a href="#"  ><i class="bx bxs-heart" style="font-size:50px"></i></a></div>
+      <div id="heart"  ><a href="" ><i onclick="friend(event)" id="{{$b->id}}" class="bx bxs-heart " style="font-size:50px"></i></a></div>
     </div>
     @endforeach
   </div>
@@ -105,6 +104,32 @@
 @endsection
 @section('js')
 <script>
+
+  function friend(event)
+  {
+    event.preventDefault();
+    $.ajax({
+      url:'/ketban',
+      type:'POST',
+       headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+      data:{
+        'id_user1':{{Auth::id()}},
+        'id_user2':event.target.id,
+
+      },
+      success: function (data)
+       {
+          console.log(data);
+        }
+
+    });
+    
+  }
+
+
+
 
   //Hien thi o nhap binh luan
   $(document).ready(function() {
@@ -270,5 +295,9 @@ function tatxbl(event)
           });   
         });
       }
+
+      
     </script>
+
+
     @endsection

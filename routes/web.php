@@ -40,6 +40,7 @@ Route::group(['middleware' => ['checkstatus','checkadmin']], function() {
 	Route::get('/trangtimkiem', 'frontendController@trangtimkiem');
 	Route::get('/trangtimkiem/search', 'frontendController@search');
 	Route::get('/chitietcanhan/{id}','frontendController@chitietcanhan');
+	Route::post('/ketban','friendsController@ketban');
 });
 
 
