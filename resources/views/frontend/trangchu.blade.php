@@ -21,13 +21,14 @@
         <i class="bx bxs-quote-alt-right quote-icon-right"></i>
       </p>
       @if (strpos($b->img, 'https://graph.facebook.com') !== false) 
-      <img src="{{$b->img}}" class="testimonial-img" alt="">
+      <a href="/chitietcanhan/{{$b->id}}">  <img src="{{$b->img}}" class="testimonial-img" alt=""></a>
       @elseif (strpos($b->img, 'https://lh3.googleusercontent.com') !== false) 
-      <img src="{{$b->img}}" class="testimonial-img" alt="">
+      <a href="/chitietcanhan/{{$b->id}}"><img src="{{$b->img}}" class="testimonial-img" alt=""></a>
       @else
-      <img src="{{'frontend/'.$b->img}}" class="testimonial-img" alt="">
+      <a href="/chitietcanhan/{{$b->id}}"> <img src="{{'frontend/'.$b->img}}" class="testimonial-img" alt=""></a>
       @endif
-      <div id="heart"  ><a href="" ><i onclick="friend(event)" id="{{$b->id}}" class="bx bxs-heart " style="font-size:50px"></i></a></div>
+      {{-- <div id="heart"  ><a href="" ><i onclick="friend(event)" id="{{$b->id}}" class="bx bxs-heart " style="font-size:50px"></i></a></div> --}}
+      <div id="heart" ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$b->id}}" type="button">Kết bạn</button></div>
     </div>
     @endforeach
   </div>
@@ -111,21 +112,19 @@
     $.ajax({
       url:'/ketban',
       type:'POST',
-       headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
       data:{
         'id_user1':{{Auth::id()}},
         'id_user2':event.target.id,
-
       },
       success: function (data)
-       {
-          console.log(data);
-        }
+      {
+        console.log(data);
+      }
 
-    });
-    
+    }); 
   }
 
 
@@ -147,7 +146,7 @@
         }
         else
         {
-          var img='frontend/{{Auth::user()->img}}';
+          var img='/frontend/{{Auth::user()->img}}';
           // console.log(img);
         }
         var show='<img src="'+img+'" alt="" class="media  rounded-circle mr-2  " style="width:50px;height:50px" >'+' <input type="text" name="content" id="binhluanpost-'+event.target.value+'" class="form-control rounded mb-2 col-lg-8 bl" placeholder="Nhập bình luận"  >';
@@ -227,77 +226,76 @@ function tat(event)
 
 //nhap du lieu tra loi binh luan
 function myFunction(event) {
- // alert(event.target.value);
- var content=event.target.value;
- var id_post=event.target.previousSibling.id;//lay then ae o trc
- var img=$('img').attr('src');
- var id_cha=event.target.id;
- // alert(id_post);
- $.ajax({
-   url:'/api/traloibl',
-   type:'POST',
-   headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  },
-  data:{
-   'content':content,
-   'id_post':id_post,
-   'id_user':{{Auth::id()}},
-   'img':img,
-   'id_cha':id_cha,
- }, success: function (data)
- {
-  $('.otlbl').val('');
-  $('.traloibl').addClass('d-none');
-  console.log(data);
-    // alert(id_post);
-  }
+     // alert(event.target.value);
+     var content=event.target.value;
+     var id_post=event.target.previousSibling.id;//lay then ae o trc
+     var img=$('img').attr('src');
+     var id_cha=event.target.id;
+     // alert(id_post);
+     $.ajax({
+       url:'/api/traloibl',
+       type:'POST',
+       headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data:{
+       'content':content,
+       'id_post':id_post,
+       'id_user':{{Auth::id()}},
+       'img':img,
+       'id_cha':id_cha,
+     }, success: function (data)
+     {
+      $('.otlbl').val('');
+      $('.traloibl').addClass('d-none');
+      console.log(data);
+        // alert(id_post);
+      }
 
-});
-}
+    });
+   }
 
 //xem binh luan 
 
-function tatxbl(event)
-{
-  var str='{{Auth::user()->img}}';
-  if(str.indexOf('https://graph.facebook.com')!==-1)
-  {
-    var img='{{Auth::user()->img}}';
-  }
-  else if(str.indexOf('https://lh3.googleusercontent.com')!==-1)
-  {
-    var img='{{Auth::user()->img}}';
-  }
-  else
-  {
-    var img='frontend/{{Auth::user()->img}}';
-          // console.log(img);
-        }
-        event.preventDefault();
-        var idcomment=event.target.id.split('-').pop();
-        var httl='#httl-'+idcomment;
-        $(httl).removeClass('d-none');
-        var id_post=$('.idPost').attr('id');
-        // alert(id_post);
-        $.get('/api/traloibl/'+idcomment, function(data) 
+  function tatxbl(event)
+      {
+        var str='{{Auth::user()->img}}';
+        if(str.indexOf('https://graph.facebook.com')!==-1)
         {
-          var ht=''
-          $.each(data,function(k,v)
-          {
-            ht+='<div class="form-inline container-fluid form-inline d-flex justify-content-center" style="border-left: 2px solid blue" ><img src="'+v.images+'" alt="" class="media  rounded-circle mr-2   " style="width:50px;height:50px" >'+
-            '<input type="text" class="form-control col-lg-10 mb-2 hienthibl" disabled value="'+v.content+'"></div>'+
-            '<div class="mr-5"><a href=""  class="mr-2 " id="xbl-'+v.id_comment+'" onclick="tatxbl(event)">Xem bình luận</a>'+
-            '<a href=""  class="traloi" id="traloi-'+v.id_comment+'" onclick="tat(event)">Trả lời</a></div>'+
-            '<div class="d-none form-inline container-fluid justify-content-center traloibl  " id="otl-'+v.id_comment+'" ><img src="'+img+'" alt="" class="media  rounded-circle mr-2 idPost " id="'+v.id_post+'" style="width:50px;height:50px" ><input type="text"  class="form-control col-lg-8 mb-2 otlbl"  onchange="myFunction(event)" id="'+v.id_comment+'"></div>'+'<div class="d-none form-inline container-fluid justify-content-end   " id="httl-'+v.id_comment+'"  ></div>'+
-            '</div>';
-            $(httl).html(ht);
-          });   
-        });
+          var img='{{Auth::user()->img}}';
+        }
+        else if(str.indexOf('https://lh3.googleusercontent.com')!==-1)
+        {
+          var img='{{Auth::user()->img}}';
+        }
+        else
+        {
+          var img='/frontend/{{Auth::user()->img}}';
+                  // console.log(img);
+        }
+            event.preventDefault();
+            var idcomment=event.target.id.split('-').pop();
+            var httl='#httl-'+idcomment;
+            $(httl).removeClass('d-none');
+            var id_post=$('.idPost').attr('id');
+            // alert(id_post);
+            $.get('/api/traloibl/'+idcomment, function(data) 
+            {
+              var ht=''
+              $.each(data,function(k,v)
+              {
+                ht+='<div class="form-inline container-fluid form-inline d-flex justify-content-center" style="border-left: 2px solid blue" ><img src="'+v.images+'" alt="" class="media  rounded-circle mr-2   " style="width:50px;height:50px" >'+
+                '<input type="text" class="form-control col-lg-10 mb-2 hienthibl" disabled value="'+v.content+'"></div>'+
+                '<div class="mr-5"><a href=""  class="mr-2 " id="xbl-'+v.id_comment+'" onclick="tatxbl(event)">Xem bình luận</a>'+
+                '<a href=""  class="traloi" id="traloi-'+v.id_comment+'" onclick="tat(event)">Trả lời</a></div>'+
+                '<div class="d-none form-inline container-fluid justify-content-center traloibl  " id="otl-'+v.id_comment+'" ><img src="'+img+'" alt="" class="media  rounded-circle mr-2 idPost " id="'+v.id_post+'" style="width:50px;height:50px" ><input type="text"  class="form-control col-lg-8 mb-2 otlbl"  onchange="myFunction(event)" id="'+v.id_comment+'"></div>'+'<div class="d-none form-inline container-fluid justify-content-end   " id="httl-'+v.id_comment+'"  ></div>'+
+                '</div>';
+                $(httl).html(ht);
+              });   
+            });
       }
 
-      
-    </script>
+ </script>
 
 
-    @endsection
+      @endsection

@@ -20,6 +20,7 @@ class Lienhe extends Migration
              $table->string('subject');
               $table->string('message');
               $table->date('date');
+              $table->boolean('status');
             $table->rememberToken();
             $table->timestamps();
         });

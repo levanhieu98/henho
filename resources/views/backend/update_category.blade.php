@@ -10,7 +10,7 @@
     <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 center-block" style="float:none">
       <div class="card">
         <div class="header">
-          <h2> Thêm loại blog</h2>
+          <h2> Sửa loại blog</h2>
           <ul class="header-dropdown m-r--5">
           </ul>
         </div>
@@ -57,7 +57,7 @@
 
             <div class="row clearfix">
               <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                <button type="submit" class="btn btn-primary m-t-15 waves-effect">Sữa loại Blog</button>
+                <button type="submit" class="btn btn-primary m-t-15 waves-effect">Sửa loại Blog</button>
               </div>
             </div>
           </form>

@@ -25,6 +25,7 @@ class frontendController extends Controller
 
   public function trangchu()
   {
+   
     $trangchu= DB::select("select * from users JOIN  post ON users.id =post.id where public=1 or (public=0 and post.id=".Auth::id().") ORDER BY date DESC ");
     $banbe=User::where('id','!=',Auth::id())->where('role',0)->get();
 
@@ -89,7 +90,8 @@ public function gioithieu()
 
 public function danhgia()
 {
-  return view('frontend.review');
+  $review =review::all();
+  return view('frontend.review',compact('review'));
 }
 
 public function dulieudanhgia(Request $request)
@@ -124,7 +126,8 @@ public function canhan()
 public function chitietcanhan($id)
 {
   $profile=User::where('id',$id)->get();
-  return view('frontend.chitietcanhan',compact('profile'));
+  $post= DB::select("select * from users JOIN  post ON users.id =post.id where users.id=".$id." and public=1   ORDER BY date DESC ");
+  return view('frontend.chitietcanhan',compact(['profile','post']));
 }
 
 public function doianhdaidien( request $request )
@@ -200,6 +203,32 @@ public function thuvienanh(Request $rq)
 {
  return view('frontend.thuvienanh');
 
+}
+
+public function dulieuanh(Request $request)
+{
+  // $request->validate([
+
+
+  //   'abumanh'=>'image',  
+  // ],[
+
+  //   'abumanh.image'=>'Vui lòng chọn đúng file hình'
+  // ]);
+ 
+
+ if($request->hasFile('abumanh'))
+ {
+  $hinh = $request->file('abumanh');
+  foreach ($hinh as $file) {
+   $name=$file->getClientOriginalName(); 
+   $ten='img/'.str::random(4)."_".$name;   
+    // unlink("frontend/img/".$image->img);  
+    // $hinh->move("frontend/img/",$ten);
+   var_dump($ten);
+ }
+}
+ // return redirect('/thuvienanh');
 }
 
 public function status(Request $rq)
@@ -363,7 +392,7 @@ public function search(Request $request)
   $keyword=$request->search;
   if ($request->ajax()) {
     $output = '';
-    $result = DB::table('users')->where('name', 'LIKE', '%' . $keyword . '%')->where('role',0)->get();
+    $result = DB::table('users')->where('habit', 'LIKE', '%' . $keyword . '%')->where('role',0)->where('id','!=',Auth::id())->get();
     if ($result->count()>0) {
       foreach ($result as $key => $value) {
        if (strpos($value->img, 'img/') !== false)
@@ -381,14 +410,14 @@ public function search(Request $request)
       <td>' . $value->intro . '</td>
       <td>' . $value->habit . '</td>
       <td>' . $value->findlove . '</td>
-      <td>' . '<button class="btn btn-outline-info"   >Kết bạn</button>'
+      <td>' . '<button class="btn btn-outline-info sm-1 bt" onclick="test(event)" id="'.$value->id.'" >Kết bạn</button>'
       . '</td>
       </tr>'; 
     }
   }
   else
   {
-      echo "'<td colspan=7 style='text-align:center;font-size:20px;color:red '>Không tìm thấy </td>'";
+    echo "'<td colspan=7 style='text-align:center;font-size:20px;color:red '>Không tìm thấy </td>'";
   }
 
   return Response($output);

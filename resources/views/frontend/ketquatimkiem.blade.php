@@ -63,7 +63,31 @@
     });
   })
   $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
-</script>  
 
-  
+
+  function test(event)
+  {
+    // alert(event.target.id);
+    $.ajax({
+      url:'/ketban',
+      type:'POST',
+       headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+      data:{
+        'id_user1':{{Auth::id()}},
+        'id_user2':event.target.id,
+
+      },
+      success: function (data)
+       {
+          console.log(data);
+        // $kq='#'+event.target.id
+        //   $($kq).html('da gui')
+        }
+
+    });
+  }
+
+</script>  
 @endsection

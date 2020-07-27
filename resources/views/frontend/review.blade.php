@@ -12,15 +12,31 @@
     </div>
     <form action="/dulieudanhgia" method="POST" accept-charset="utf-8">
       @csrf
-      <textarea class="form-control @error('text') is-invalid @enderror"  placeholder="Đây là vùng nhập text" name="text"></textarea>
+      <textarea class="form-control txt @error('text') is-invalid @enderror"  placeholder="Đây là vùng nhập text" name="text"></textarea>
       @error('text')
       <span class="invalid-feedback" role="alert">
         <strong>{{ $message }}</strong>
       </span>
       @enderror
-      <button type="submit" class="btn btn-primary btn-lg mt-2 float-right">Gửi nhận xét</button>
+      <button type="submit " class="btn btn-primary btn-lg mt-2 float-right bt ">Gửi nhận xét</button>
     </form>
 
   </div>
 </section><!-- End Services Section -->
+@endsection
+
+@section('js')
+ @foreach($review as $rv)
+    @if(Auth::id()==$rv->id)
+        <script>
+          $('.txt').addClass('d-none');
+           $('.bt').addClass('d-none');
+        </script>
+    @elseif(Auth::id()!=$rv->id)
+    <script>
+          $('.txt').addClass('d-fex');
+           $('.bt').addClass('d-fex');
+        </script>
+    @endif
+    @endforeach
 @endsection

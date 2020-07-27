@@ -6,20 +6,26 @@
 
     <div class="section-title">
       <h2>Thư viện ảnh</h2>
-      <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+      <form action="/dulieuanh" method="POST" accept-charset="utf-8"  multiple enctype="multipart/form-data">
+        @csrf
+        <input type="file" multiple id="gallery-photo-add" name="abumanh[]"  class="@error('abumanh') is-invalid @enderror">
+        @error('abumanh')
+        <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+        <button type="submit" class="btn btn-sm bg-success" >Upload</button>
+
+      </form>
+      
     </div>
 
-    <input type="file" multiple id="gallery-photo-add">
     <div class="gallery mt-2"></div>
-
 
     <div class="row" data-aos="fade-up">
       <div class="col-lg-12 d-flex justify-content-center">
         <ul id="portfolio-flters">
           <li data-filter="*" class="filter-active">All</li>
-          <li data-filter=".filter-app">App</li>
-          <li data-filter=".filter-card">Card</li>
-          <li data-filter=".filter-web">Web</li>
         </ul>
       </div>
     </div>
@@ -148,6 +154,6 @@
       imagesPreview(this, 'div.gallery');
       $("div.gallery").html("");
     });
-  });
+  });  
 </script>
 @endsection

@@ -18,7 +18,7 @@
 			</div>
 			@endif
 			<div class="header">
-				<h2> Thêm Blog</h2>
+				<h2> Sửa Blog</h2>
 			</div>
 			<div class="body">
 				@foreach($category_id as $cd)

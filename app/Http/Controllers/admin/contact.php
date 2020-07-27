@@ -13,4 +13,13 @@ class contact extends Controller
     	$contact=DB::table('contact')->get();
     	return view('backend.contact',compact('contact'));
     }
+
+    public function xuly(Request $request)
+    {
+    	$id=$request->id;
+    	
+    	DB::table('contact')->where('id',$id)->update(['status'=>1]);
+    	return redirect('/admin/contact');
+
+    }
 }

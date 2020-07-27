@@ -14,7 +14,7 @@ class friendsController extends Controller
     	 $fr=new Friend();
     	 $fr->user_id_1=$request->id_user1;
     	 $fr->user_id_2=$request->id_user2;
-    	 $user = Friend::all()->where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->first();
+    	 $user = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->first();
     	 if($user )
     	 {
     	 	 $fr=Friend::where('user_id_2', '=', Auth::user()->id)->update(['approved'=>1]);

@@ -27,6 +27,7 @@ Route::group(['middleware' => ['checkstatus','checkadmin']], function() {
 	Route::get('/doimatkhau','frontendController@doimk');
 	Route::post('/capnhat','frontendController@capnhat');
 	Route::get('/messages','messagesController@messages');
+	Route::post('/dulieuanh','frontendController@dulieuanh');
 	Route::get('/contentmassage/{id}','messagesController@contentmassage');
 	Route::post('/ketquatimkiem', 'messagesController@ketquatimkiem')->name('search');
 	Route::post('/sentmessages','messagesController@sendmassges');
@@ -41,6 +42,9 @@ Route::group(['middleware' => ['checkstatus','checkadmin']], function() {
 	Route::get('/trangtimkiem/search', 'frontendController@search');
 	Route::get('/chitietcanhan/{id}','frontendController@chitietcanhan');
 	Route::post('/ketban','friendsController@ketban');
+	Route::get('/danhgia', 'frontendController@danhgia');
+	Route::post('/dulieudanhgia','frontendController@dulieudanhgia');
+
 });
 
 
@@ -51,8 +55,6 @@ Route::get('/blog', 'frontendController@blog');
 Route::get('/category_blog/{id}','frontendController@category_blog');
 Route::get('/detail_blog/{id}','frontendController@detail_blog');
 Route::get('/gioithieu', 'frontendController@gioithieu');
-Route::get('/danhgia', 'frontendController@danhgia');
-Route::post('/dulieudanhgia','frontendController@dulieudanhgia');
 Route::get('/chinhsachquyenriengtu','frontendController@chinhsachquyenriengtu');
 Route::get('/dieukhoandichvu','frontendController@dieukhoandichvu');
 
@@ -98,6 +100,7 @@ Route::group(['prefix' => 'admin','middleware'=>'checkRole'], function() {
 
 //contact
 	Route::get('contact','admin\contact@contact');
+	Route::post('xuly','admin\contact@xuly');
 
 //users
 	Route::get('dsuser', 'admin\userController@dsuser');

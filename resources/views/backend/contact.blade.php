@@ -22,6 +22,7 @@
                                 <th>Tiêu đề</th>
                                 <th>Nội dung</th>
                                 <th>Ngày gửi</th>
+                                <th>Trạng thái</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,7 +33,8 @@
                                 <td>{{$ct->email}}</td>
                                 <td>{{$ct->subject}}</td>
                                 <td>{{$ct->message}}</td>
-                                 <td>{{date('d-m-Y'),$ct->date}}</td>
+                                <td>{{date('d-m-Y'),$ct->date}}</td>
+                                <td><button type="button" class="bg-success btn-sm" onclick="xuly(event)" id="{{$ct->id}}">{{($ct->status)==1?"Đã xử lý":"Xử lý"}}</button></td>
                             </tr>
                             @endforeach   
                             </tbody>
@@ -44,4 +46,5 @@
     </div>
     <!-- #END# Exportable Table -->
 </div>
+
 @endsection
