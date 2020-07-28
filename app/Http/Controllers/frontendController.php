@@ -25,11 +25,38 @@ class frontendController extends Controller
 
   public function trangchu()
   {
-   
-    $trangchu= DB::select("select * from users JOIN  post ON users.id =post.id where public=1 or (public=0 and post.id=".Auth::id().") ORDER BY date DESC ");
-    $banbe=User::where('id','!=',Auth::id())->where('role',0)->get();
 
-    return view('frontend.trangchu', compact(['trangchu','banbe']));
+    $trangchu= DB::select(
+      "select * from users JOIN  post ON users.id =post.id where post.public=1 and post.id 
+       in
+     (select users.id from users where users.id in(select friends.user_id_1 as fr FROM friends WHERE friends.user_id_2 = ".Auth::id()." and friends.approved=1 union SELECT friends.user_id_2 as fr FROM friends WHERE friends.user_id_1 = ".Auth::id()." and friends.approved=1 union SELECT users.id FROM users WHERE users.id = ".Auth::id()."  ) )
+      or (post.public=0 and post.id=".Auth::id().")  ORDER BY date DESC  ");
+
+
+
+    $users=DB::select("select * from users where users.role=0 and users.id!=".Auth::id()." and users.id not in(select
+      friends.user_id_1 as fr 
+
+      FROM
+      friends
+      WHERE
+      friends.user_id_2 = ".Auth::id()." and friends.approved=1 
+
+      union
+
+      SELECT
+      friends.user_id_2 as fr 
+
+
+      FROM
+      friends
+      WHERE
+      friends.user_id_1 = ".Auth::id()." and friends.approved=1
+    )");
+
+   
+    
+    return view('frontend.trangchu', compact(['trangchu','users']));
 
   }
 
@@ -215,7 +242,7 @@ public function dulieuanh(Request $request)
 
   //   'abumanh.image'=>'Vui lòng chọn đúng file hình'
   // ]);
- 
+
 
  if($request->hasFile('abumanh'))
  {

@@ -13,7 +13,7 @@
     </div>
 
     <div class="owl-carousel testimonials-carousel">
-     @foreach($banbe as $b)
+     @foreach($users as $b)
      <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
       <p>
         <i class="bx bxs-quote-alt-left quote-icon-left"></i>
@@ -106,6 +106,7 @@
 @section('js')
 <script>
 
+//ketban
   function friend(event)
   {
     event.preventDefault();
@@ -122,6 +123,7 @@
       success: function (data)
       {
         console.log(data);
+       
       }
 
     }); 

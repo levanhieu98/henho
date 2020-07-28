@@ -17,47 +17,35 @@ class messagesController extends Controller
   //     where role= 0 and users.id != " . Auth::id().  " and users.gender!=".Auth::user()->gender."
   //     group by users.id, users.name, users.img, users.email");
 
-    // $fr=DB::table('friends')->select('user_id_1','user_id_2')->where('approved',1)->where('user_id_1', Auth::id())->orwhere('user_id_2', Auth::id())->where('approved',1)->get();
-    // $arr=[];
-    // foreach ($fr as $value) {
-    //   if($value->user_id_1==Auth::id()){
-    //     unset($value->user_id_1);
-    //     $arr[]=$value->user_id_2;
-    //   }else if($value->user_id_2==Auth::id()){
-    //     unset($value->user_id_2);
-    //     $arr[]=$value->user_id_1;
-    //   }
-    // }
+   $users=DB::select(" select users.id, users.name, users.img, users.email, count(is_read) as unread  from users LEFT JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to =".Auth::id()."
+     where users.id in(select
+     friends.user_id_1 as fr 
+
+     FROM
+     friends
+     WHERE
+     friends.user_id_2 = ".Auth::id()." and friends.approved=1
+
+     union
+
+     SELECT
+     friends.user_id_2 as fr 
 
 
-$users= DB::select("select b.id, b.name, b.img, b.email, count(is_read) as unread 
-FROM friends i
-JOIN users a
-ON a.id=i.user_id_1
-JOIN users b 
-ON  b.id=i.user_id_2 LEFT JOIN  messages ON b.id = messages.from and is_read = 0 and messages.to = ".Auth::id() ."     WHERE  i.approved=1 AND  (i.user_id_1=".Auth::id()."  ) group by b.id, b.name, b.img, b.email ");
+     FROM
+     friends
+     WHERE
+     friends.user_id_1 = ".Auth::id()." and friends.approved=1
 
+   ) group by users.id, users.name, users.img, users.email");
 
-    // $users= DB::select("select *
-    //   FROM friends i
-    //   JOIN users a
-    //   ON a.id=i.user_id_1
-    //   JOIN users b 
-    //   ON  b.id=i.user_id_2  and i.approved=1");
+   // dd($users);
 
-    dd($users);
+    return view('frontend/messages',compact('users'));
+ }
 
-    
-
-
-    // return response()->json($users);
-
-
-    // return view('frontend/messages',compact('users'));
-  }
-
-  public function contentmassage($user_id)
-  {	 $my_id = Auth::id();
+ public function contentmassage($user_id)
+ {	 $my_id = Auth::id();
     	 // $messages =Message::where(function ($query) use ($user_id, $my_id) {
       //       $query->where('from', $user_id)->where('to', $my_id);
       //   })->oRwhere(function ($query) use ($user_id, $my_id) {

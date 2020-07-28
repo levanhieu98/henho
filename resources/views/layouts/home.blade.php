@@ -43,7 +43,7 @@
       <div class="profile">
         @if (strpos(Auth::user()->img, 'https://graph.facebook.com') !== false) 
         <img src="{{Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
-         @elseif (strpos(Auth::user()->img, 'https://lh3.googleusercontent.com') !== false) 
+        @elseif (strpos(Auth::user()->img, 'https://lh3.googleusercontent.com') !== false) 
         <img src="{{Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
         @else
         <img src="{{'/frontend/'.Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
@@ -72,8 +72,7 @@
             <li><a href="/messages"><i class="bx bxs-message-rounded-dots"></i> <span>Messages</span></a></li>
             <li><a href="/thuvienanh"><i class="bx bx-photo-album"></i>Thư viện ảnh</a></li>
             <li><a href="/status"><i class="bx bx-edit"></i> Status</a></li>  
-            <li><a href="/danhgia"><i class="bx bx-comment-dots"></i>Đánh giá</a></li> 
-            <li><a href="/caidat"><i class="bx bx-cog"></i>Cài đặt</a></li>  
+            <li><a href="/danhgia"><i class="bx bx-comment-dots"></i>Đánh giá</a></li>  
           </ul>
         </nav><!-- .nav-menu -->
         <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>

@@ -1,44 +1,54 @@
  @extends('layouts.home')
  @section('content')
  <style >
-       .active {
-            background: #eeeeee;
-        }
- </style>
- <div class="container-fluid">
-   <div class="row">
-     <div class="col-md-4">
-       {{-- <div class="mb-1"><input type="text" name="search" id="search" value="" placeholder="tìm kiếm"></div> --}}
-       <div class="user-wrapper"  id="kq"  >
-        <ul class="users"  >
-          @foreach($users as $us)
-          <li class="user" id="{{$us->id}}">
-           @if($us->unread)
-           <span class="pending">{{ $us->unread }}</span>
-           @endif
-           <div class="media" >
-            <div class="media-left">
-             @if (strpos($us->img, 'https://graph.facebook.com') !== false) 
-             <img src="{{$us->img}}" class="media-object" alt="">
-             @elseif (strpos($us->img, 'https://lh3.googleusercontent.com') !== false) 
-             <img src="{{$us->img}}" class="media-object" alt="">
-             @else
-             <img src="{{'frontend/'.$us->img}}" class="img-fluid" alt="">
-             @endif
-            </div>
-            <div class="media-body">
-              <p class="name">{{$us->name}}</p>
-              <p class="email">{{$us->email}}</p>
-            </div>
-          </div>
-        </li>
-        @endforeach
-      </ul>
-    </div>
-  </div>
-  <div class="col-md-8" id="messages">
+   .active {
+    background: #eeeeee;
+  }
+</style>
+<div class="container-fluid">
+ <div class="row">
+   <div class="col-md-4">
+     {{-- <div class="mb-1"><input type="text" name="search" id="search" value="" placeholder="tìm kiếm"></div> --}}
+     <div class="user-wrapper"  id="kq"  >
+      <ul class="users"  >
+        @foreach($users as $us)
+       {{--  @if(Cache::has('user-is-online-' . $us->id))
+        <span class="text-success">Online</span>
+        @else
+        <span class="text-secondary">Offline</span>
+        @endif --}}
+        <li class="user" id="{{$us->id}}">
+         @if($us->unread)
+         <span class="pending">{{ $us->unread }}</span>
+         @endif
 
-  </div>
+         @if(Cache::has('user-is-online-' . $us->id))
+         <span class="online">.</span>
+         @endif
+
+         <div class="media" >
+          <div class="media-left">
+           @if (strpos($us->img, 'https://graph.facebook.com') !== false) 
+           <img src="{{$us->img}}" class="media-object" alt="">
+           @elseif (strpos($us->img, 'https://lh3.googleusercontent.com') !== false) 
+           <img src="{{$us->img}}" class="media-object" alt="">
+           @else
+           <img src="{{'frontend/'.$us->img}}" class="img-fluid" alt="">
+           @endif
+         </div>
+         <div class="media-body">
+          <p class="name">{{$us->name}}</p>
+          <p class="email">{{$us->email}}</p>
+        </div>
+      </div>
+    </li>
+    @endforeach
+  </ul>
+</div>
+</div>
+<div class="col-md-8" id="messages">
+
+</div>
 </div>
 
 </div>
@@ -156,21 +166,21 @@
 </script>
 
 <script>
-   $('#search').on('keyup',function(){
-        $value = $(this).val();
-        $.ajax({
-            type: 'POST',
-            url: '/ketquatimkiem',
-            headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-            data: {
-                'key': $value,
-            },
-            success:function(result){
-                $('#kq').html(result);     
-            }
-        });
-    })
+ $('#search').on('keyup',function(){
+  $value = $(this).val();
+  $.ajax({
+    type: 'POST',
+    url: '/ketquatimkiem',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+      'key': $value,
+    },
+    success:function(result){
+      $('#kq').html(result);     
+    }
+  });
+})
 </script>
 @endsection

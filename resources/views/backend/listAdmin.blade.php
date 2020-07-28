@@ -12,8 +12,8 @@
                  @if(Session::has('alert'))
                  <p class="alert alert-success">{{Session::get('alert')}}</p>
                  @endif
-            </div>
-            <div class="body">
+             </div>
+             <div class="body">
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover dataTable js-exportable">
                         <thead>
@@ -22,6 +22,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Gender</th>
+                                <th></th>
                                 <th>Khóa tài khoản</th>
                             </tr>
                         </thead>
@@ -32,6 +33,11 @@
                                 <td>{{$us->name}}</td>
                                 <td>{{$us->email}}</td>
                                 <td>{{($us->gender)==1?'Nam':'Nữ'}}</td>
+                                <td> @if(Cache::has('user-is-online-' . $us->id))
+                                    <span class="text-success" style="color: blue">Online</span>
+                                    @else
+                                    <span class="text-secondary">Offline</span>
+                                @endif</td>
                                 <td><a href="/admin/xoaadmin/{{$us->id}}" class="btn bg-red waves-effect" onClick="return confirm ('Bạn có muốn xóa không')">Xóa tài khoản</a></td>
                             </tr>  
                             @endforeach 

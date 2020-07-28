@@ -23,29 +23,37 @@
                                 <th>Email</th>
                                 <th>Gender</th>
                                 <th>Status</th>
+                                <th></th>
                                 <th>Khóa tài khoản</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($user as $us)
+
                             <tr>
+
                                 <td>{{$us->id}}</td>
                                 <td>{{$us->name}}</td>
                                 <td>{{$us->email}}</td>
                                 <td>{{($us->gender)==1?'Nam':'Nữ'}}</td>
-                                 <td>{{$us->status}}</td>
+                                <td>{{$us->status}}</td>
+                                <td> @if(Cache::has('user-is-online-' . $us->id))
+                                    <span class="text-success" style="color: blue">Online</span>
+                                    @else
+                                    <span class="text-secondary">Offline</span>
+                                @endif</td>
 
                                 <td> <a href="/admin/khoataikhoan/{{$us->id}}" class="btn bg-red waves-effect btn-sm" onClick="return confirm ('Bạn muốn khóa tài khoản ')">Khóa tài khoản</a> 
                                     <a href="/admin/motaikhoan/{{$us->id}}" class="btn bg-blue btn-sm waves-effect" onClick="return confirm ('Bạn muổn mỏ tài khoản')">Mở tài khoản</a></td>
-                            </tr>  
-                            @endforeach 
-                        </tbody>
-                    </table>
+                                </tr>  
+                                @endforeach 
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- #END# Exportable Table -->
+    <!-- #END# Exportable Table -->
 </div>
 @endsection
