@@ -15,6 +15,9 @@ use App\contact;
 use App\review;
 use App\Post;
 use App\comment;
+use App\Friend;
+use App\Like;
+use App\Image;
 class frontendController extends Controller
 {
   public function index()
@@ -28,8 +31,8 @@ class frontendController extends Controller
 
     $trangchu= DB::select(
       "select * from users JOIN  post ON users.id =post.id where post.public=1 and post.id 
-       in
-     (select users.id from users where users.id in(select friends.user_id_1 as fr FROM friends WHERE friends.user_id_2 = ".Auth::id()." and friends.approved=1 union SELECT friends.user_id_2 as fr FROM friends WHERE friends.user_id_1 = ".Auth::id()." and friends.approved=1 union SELECT users.id FROM users WHERE users.id = ".Auth::id()."  ) )
+      in
+      (select users.id from users where users.id in(select friends.user_id_1 as fr FROM friends WHERE friends.user_id_2 = ".Auth::id()." and friends.approved=1 union SELECT friends.user_id_2 as fr FROM friends WHERE friends.user_id_1 = ".Auth::id()." and friends.approved=1 union SELECT users.id FROM users WHERE users.id = ".Auth::id()."  ) )
       or (post.public=0 and post.id=".Auth::id().")  ORDER BY date DESC  ");
 
 
@@ -54,9 +57,13 @@ class frontendController extends Controller
       friends.user_id_1 = ".Auth::id()." and friends.approved=1
     )");
 
-   
     
-    return view('frontend.trangchu', compact(['trangchu','users']));
+
+    $like=Like::select('id_post','id_user')->get();
+    $friend=Friend::select('user_id_2','user_id_1')->Where('approved',0)->get();;
+// dd($friend);
+
+    return view('frontend.trangchu', compact(['trangchu','users','like','friend']));
 
   }
 
@@ -220,43 +227,70 @@ public function dulieusua(Request $request)
   return redirect('/canhan');
 }
 
-public function banbe(Request $rq)
+public function banbe()
 {
- return view('frontend.banbe');
+ $yc=DB::select("select * from users where users.id in(select
+   friends.user_id_1 as fr 
+
+   FROM
+   friends
+   WHERE
+   friends.user_id_2 = ".Auth::id()." and friends.approved=0
+ )");
+   // dd($yc);
+ return view('frontend.banbe',compact('yc'));
 
 }
 
 public function thuvienanh(Request $rq)
 {
- return view('frontend.thuvienanh');
+  $albums=DB::table('albums')->where('id',Auth::id())->get();
+  // $albums_id=DB::table('albums')->select('id_album')->where('id',Auth::id())->get();
+  // $images=DB::table('images')->where('id_album',$albums_id)->get();
+
+  return view('frontend.thuvienanh',compact('albums'));
+
 
 }
 
-public function dulieuanh(Request $request)
+public function taoAlbum(Request $request)
 {
-  // $request->validate([
+  $request->validate([
 
+    'albumName'=>'required|min:6',
+    'albumDescription'=>'required|min:10',
+    'img_logo[]'=>'image',  
+    'img_logo[]'=>'required',
+  ],[
 
-  //   'abumanh'=>'image',  
-  // ],[
+    'img_logo[].image'=>'Vui lòng chọn đúng file hình',
+    'albumDescription.required'=>'Vui lòng nhập nội dung mô tả',
+    'albumName.required'=>'Vui lòng nhập  tên album',
+    'img_logo[].required'=>'Vui lòng chọn ảnh cho  album',
+    'albumDescription.min'=>'Nhập nội dung mô tả ít nhất 10 kí tự',
+    'albumName.min'=>'Nhập tên album ít nhất 6 kí tự',
+  ]);
 
-  //   'abumanh.image'=>'Vui lòng chọn đúng file hình'
-  // ]);
+  $id_album=DB::table('albums')->insertGetId(['name_album'=>$request->albumName,'dateCreated'=>now(),'description'=>$request->albumDescription,'id'=>Auth::id()]);
 
+  if($request->hasFile('img_logo'))
+  {
 
- if($request->hasFile('abumanh'))
- {
-  $hinh = $request->file('abumanh');
-  foreach ($hinh as $file) {
-   $name=$file->getClientOriginalName(); 
-   $ten='img/'.str::random(4)."_".$name;   
-    // unlink("frontend/img/".$image->img);  
-    // $hinh->move("frontend/img/",$ten);
-   var_dump($ten);
- }
+   foreach ($request->file('img_logo') as $key => $value) {
+    $name=$value->getClientOriginalName(); 
+    $ten=str::random(4)."_".$name;   
+    $value->move("frontend/img/ima2",$ten);
+
+    $image=new Image();
+    $image->name_image=$ten;
+    $image->id_album=$id_album;
+    $image->save();
+  }
 }
- // return redirect('/thuvienanh');
+
+return redirect('/thuvienanh');
 }
+
 
 public function status(Request $rq)
 {

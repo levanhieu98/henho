@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Blog;
 use App\Friend;
+use App\Like;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
@@ -39,7 +40,11 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     public function posts() {
-        return $this->hasMany(Post::class,'id','id');
+        return $this->hasMany(Post::class,'id_post','id_post');
+    }
+
+    public function likes() {
+        return $this->hasMany('App\Like');
     }
 
     public function friends() {

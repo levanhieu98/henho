@@ -85,10 +85,10 @@
              } 
              else if (my_id == data.to) {
               if (receiver_id == data.from) {
-                    // if receiver is selected, reload the selected user ...
+                    // nếu người nhận được chọn, tải lại người dùng đã chọn 
                     $('#' + data.from).click();
                   } else {
-                    // if receiver is not seleted, add notification for that user
+                   // nếu người nhận không được chọn, hãy thêm thông báo cho người dùng đó
                     var pending = parseInt($('#' + data.from).find('.pending').html());
                     if (pending) {
                       $('#' + data.from).find('.pending').html(pending + 1);

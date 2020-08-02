@@ -72,6 +72,7 @@ class userController extends Controller
 		$data->gender=$request->gt;
 		$data->password=Hash::make($request->password);
 		// $data->email_verified_at=now();
+		$data->img='img/user.jpg';
 		$data->role=1;
 		$data->save();
 		return redirect('admin/themquantri')->with('alert','Thêm thành công');

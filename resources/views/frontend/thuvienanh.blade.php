@@ -1,159 +1,189 @@
  @extends('layouts.home')
  @section('content')
+
  <!-- ======= Portfolio Section ======= -->
+
  <section id="portfolio" class="portfolio section-bg">
   <div class="container">
 
     <div class="section-title">
       <h2>Thư viện ảnh</h2>
-      <form action="/dulieuanh" method="POST" accept-charset="utf-8"  multiple enctype="multipart/form-data">
-        @csrf
-        <input type="file" multiple id="gallery-photo-add" name="abumanh[]"  class="@error('abumanh') is-invalid @enderror">
-        @error('abumanh')
-        <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-        <button type="submit" class="btn btn-sm bg-success" >Upload</button>
-
-      </form>
-      
+      <p>Hãy lưu trữ những kỷ niệm tuyệt vời tại WhoToDate.
+        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#createAlbum">Tạo Album</button>
+      </p>
     </div>
+    <!-- Modal -->
+    <div  class="modal fade  ml-5" id="createAlbum" tabindex="-1" role="dialog" aria-labelledby="createAlbum" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="AlbumTitle">Tạo album</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="/taoAlbum" method="POST" enctype="multipart/form-data">
+              @csrf
+              <input type="text" name="albumName" placeholder="Nhập tên cho album" class=" @error('albumName') is-invalid @enderror">
+              @error('albumName')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+              <textarea class="form-control mt-3  @error('albumDescription') is-invalid @enderror" rows="5" name="albumDescription" placeholder="Mô tả cho album"></textarea>
+              @error('albumDescription')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+              @enderror
+
+
+              <!-- Dropzone -->
+
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+
+                      <div class="preview-zone hidden">
+                        <div class="box box-solid">
+                          <div class="box-header with-border">
+                            <div><b>Preview</b></div>
+                            <div class="box-tools pull-right">
+                              <button type="button" class="btn btn-danger btn-xs remove-preview">
+                                <i class="fa fa-times"></i> Reset
+                              </button>
+                            </div>
+                          </div>
+                          <div class="box-body d-flex flex-row row">
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="dropzone-wrapper">
+                        <div class="dropzone-desc">
+                          <i class="glyphicon glyphicon-download-alt"></i>
+                          <p>Click vào đây để chọn hình hoặc kéo thả.</p>
+                        </div>
+                        <input type="file" name="img_logo[]" class="dropzone @error('img_logo[]') is-invalid @enderror" multiple  accept="image/*">
+                        @error('img_logo[]')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">     
+              <button type="submit" class="btn btn-primary">Tạo album</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
 
     <div class="gallery mt-2"></div>
 
     <div class="row" data-aos="fade-up">
       <div class="col-lg-12 d-flex justify-content-center">
         <ul id="portfolio-flters">
-          <li data-filter="*" class="filter-active">All</li>
+          <li data-filter="*" class="filter-active">Tất cả ảnh</li>
+          @foreach($albums as $a)
+          <li id="{{$a->id_album}}" title="{{date('d-m-Y'),$a->dateCreated}}" data-container="body" data-toggle="popover" data-placement="top" data-content="{{$a->description}}">{{$a->name_album}}</li>
+          @endforeach
         </ul>
       </div>
+      <p>Đang làm chỗ hiển thị ảnh khi click vào id Album = AJAX</p>
     </div>
-
-    <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
-
-      <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-        <div class="portfolio-wrap">
-          <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">
-          <div class="portfolio-links">
-            <a href="assets/img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" class="venobox" title="App 1"><i class="bx bx-plus"></i></a>
-            <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-          </div>
+    <!--  Image By ID -->
+    <div class="col-lg-4 col-md-6 portfolio-item">
+      <div class="portfolio-wrap">
+        <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
+        <div class="portfolio-links">
+          <a href="assets/img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" class="venobox" title="Web 3"><i class="bx bx-plus"></i></a>
+          <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
         </div>
       </div>
-
-      <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-        <div class="portfolio-wrap">
-          <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
-          <div class="portfolio-links">
-            <a href="assets/img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" class="venobox" title="Web 3"><i class="bx bx-plus"></i></a>
-            <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-        <div class="portfolio-wrap">
-          <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">
-          <div class="portfolio-links">
-            <a href="assets/img/portfolio/portfolio-3.jpg" data-gall="portfolioGallery" class="venobox" title="App 2"><i class="bx bx-plus"></i></a>
-            <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-        <div class="portfolio-wrap">
-          <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
-          <div class="portfolio-links">
-            <a href="assets/img/portfolio/portfolio-4.jpg" data-gall="portfolioGallery" class="venobox" title="Card 2"><i class="bx bx-plus"></i></a>
-            <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-        <div class="portfolio-wrap">
-          <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">
-          <div class="portfolio-links">
-            <a href="assets/img/portfolio/portfolio-5.jpg" data-gall="portfolioGallery" class="venobox" title="Web 2"><i class="bx bx-plus"></i></a>
-            <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-        <div class="portfolio-wrap">
-          <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">
-          <div class="portfolio-links">
-            <a href="assets/img/portfolio/portfolio-6.jpg" data-gall="portfolioGallery" class="venobox" title="App 3"><i class="bx bx-plus"></i></a>
-            <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-        <div class="portfolio-wrap">
-          <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">
-          <div class="portfolio-links">
-            <a href="assets/img/portfolio/portfolio-7.jpg" data-gall="portfolioGallery" class="venobox" title="Card 1"><i class="bx bx-plus"></i></a>
-            <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-        <div class="portfolio-wrap">
-          <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">
-          <div class="portfolio-links">
-            <a href="assets/img/portfolio/portfolio-8.jpg" data-gall="portfolioGallery" class="venobox" title="Card 3"><i class="bx bx-plus"></i></a>
-            <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-        <div class="portfolio-wrap">
-          <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
-          <div class="portfolio-links">
-            <a href="assets/img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" class="venobox" title="Web 3"><i class="bx bx-plus"></i></a>
-            <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-          </div>
-        </div>
-      </div>
-
     </div>
 
   </div>
+
+</div>
+
 </section><!-- End Portfolio Section -->
+
+
 @endsection
 
 @section('js')
-<script >
-  $(function() {
-    // Multiple images preview in browser
-    var imagesPreview = function(input, placeToInsertImagePreview) {
+<script>
+  function readFile(input) {
+    if (input.files) { 
+      var htmlPreview='';
+      var filesAmount = input.files.length;
+      for (let i = 0; i < filesAmount; i++) {
+        var reader = new FileReader();
 
-      if (input.files) {
-        var filesAmount = input.files.length;
+        reader.onload = function(e) {
+         htmlPreview +=
+         '<div class="mt-1  mb-1"><img width=200px height=150px class="mr-2 mb-2" src="' + e.target.result + '" />' +'</div>';
+         var wrapperZone = $(input).parent();
+         var previewZone = $(input).parent().parent().find('.preview-zone');
+         var boxZone = $(input).parent().parent().find('.preview-zone').find('.box').find('.box-body');
 
-        for (i = 0; i < filesAmount; i++) {
-          var reader = new FileReader();
+         wrapperZone.removeClass('dragover');
+         previewZone.removeClass('hidden');
+         boxZone.empty();
+         boxZone.append(htmlPreview);
+       };
 
-          reader.onload = function(event) {
-            $($.parseHTML('<img width=200px height=150px class="mr-2 mb-2">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
-          }
+       reader.readAsDataURL(input.files[i]);
+     }
 
-          reader.readAsDataURL(input.files[i]);
-        }
-      }
+   }
+ }
 
-    };
+ function reset(e) {
+  e.wrap('<form>').closest('form').get(0).reset();
+  e.unwrap();
+}
 
-    $('#gallery-photo-add').on('change', function() {
-      imagesPreview(this, 'div.gallery');
-      $("div.gallery").html("");
-    });
-  });  
+$(".dropzone").change(function() {
+  readFile(this);
+});
+
+$('.dropzone-wrapper').on('dragover', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  $(this).addClass('dragover');
+});
+
+$('.dropzone-wrapper').on('dragleave', function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  $(this).removeClass('dragover');
+});
+
+$('.remove-preview').on('click', function() {
+  var boxZone = $(this).parents('.preview-zone').find('.box-body');
+  var previewZone = $(this).parents('.preview-zone');
+  var dropzone = $(this).parents('.form-group').find('.dropzone');
+  boxZone.empty();
+  previewZone.addClass('hidden');
+  reset(dropzone);
+});
+
+
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();
+});
 </script>
 @endsection

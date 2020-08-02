@@ -28,7 +28,17 @@
       <a href="/chitietcanhan/{{$b->id}}"> <img src="{{'frontend/'.$b->img}}" class="testimonial-img" alt=""></a>
       @endif
       {{-- <div id="heart"  ><a href="" ><i onclick="friend(event)" id="{{$b->id}}" class="bx bxs-heart " style="font-size:50px"></i></a></div> --}}
-      <div id="heart" ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$b->id}}" type="button">Kết bạn</button></div>
+      <div id="heart" ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$b->id}}" type="button"> @if($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2')>0)
+        {{"Đồng ý"}}
+        @elseif($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
+        {{"Đã gửi"}}
+        @else
+        {{"Kết Bạn"}}
+      @endif</button></div>
+      
+      {{-- {{($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2'))>0?"Đã gửi":"Kết Bạn"}}
+      {{($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2'))>0?"Đồng ý":""}} --}}
+
     </div>
     @endforeach
   </div>
@@ -80,26 +90,27 @@
       </p>
     </div>  
     <div class="row clearfix pb-2 border-bottom ">
-     <img src="{{'frontend/'.$tc->image}}" alt="" class="rounded mx-auto d-block" height="500" >
+     <img src="{{'/frontend/'.$tc->image}}" alt="" class="rounded mx-auto d-block" height="500" >
    </div> 
-
+   
    <div class="row clearfix text-center mt-2 border-bottom form-inline ">
-     <div class="col-lg-6 mb-2 "><i class=" bx bx-like" style="font-size:30px"><button type="submit" class="form-control" >Thích</button></i></div>
-     <div class="col-lg-6 mb-2 "><li><i class=" bx bx-message-rounded-dots" style="font-size:30px"><button type="submit" class="form-control binhluan" value="{{$tc->id_post}}" >Bình luận</button></i> </li></div>
-   </div>  
-   <div class="row clearfix form-inline d-flex justify-content-center " id="show{{$index}}">
+    <div class="col-lg-6 mb-3 "><i class=" bx bx-like  " id="thich{{$index}}" style="font-size:30px @foreach($like as $l){{$l->id_user==Auth::id() && $l->id_post==$tc->id_post?";color:blue":""}} @endforeach "></i><button type="submit" class="form-control like " value="{{$tc->id_post}}"  >Thích<p id="count{{$index}}"  style="margin-left:-100px; margin-top: -10px">{{$like->where('id_post',$tc->id_post)->count('id_post')}}</p></button></div>
+    <div class="col-lg-6 mb-3 "><li><i class=" bx bx-message-rounded-dots" style="font-size:30px"><button type="submit" class="form-control binhluan" value="{{$tc->id_post}}" >Bình luận</button></i> </li></div>
 
-   </div>
-   <div class="row clearfix form-inline d-flex justify-content-end  "  id="showbl{{$tc->id_post}}">
+  </div>  
+  <div class="row clearfix form-inline d-flex justify-content-center " id="show{{$index}}">
 
-   </div>
+  </div>
+  <div class="row clearfix form-inline d-flex justify-content-end  "  id="showbl{{$tc->id_post}}">
+
+  </div>
 
 
-   <div class="row bg-white ">
-     &emsp;
-   </div>
-   @endforeach 
+  <div class="row bg-white ">
+   &emsp;
  </div>
+ @endforeach 
+</div>
 
 </section>
 @endsection
@@ -107,27 +118,69 @@
 <script>
 
 //ketban
-  function friend(event)
-  {
-    event.preventDefault();
-    $.ajax({
-      url:'/ketban',
-      type:'POST',
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      data:{
-        'id_user1':{{Auth::id()}},
-        'id_user2':event.target.id,
-      },
-      success: function (data)
-      {
-        console.log(data);
-       
-      }
+function friend(event)
+{
+  event.preventDefault();
+  $.ajax({
+    url:'/ketban',
+    type:'POST',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data:{
+      'id_user1':{{Auth::id()}},
+      'id_user2':event.target.id,
+    },
+    success: function (data)
+    {
+      console.log(data);
+      event.target.innerText="Đã gửi";
+      
+    }
 
-    }); 
-  }
+  }); 
+}
+
+//like
+$(document).ready(function()
+  { $('.like').each(function(index,like)
+    {      var count='#count'+index;
+    var thich='thich'+index;
+    $(like).click(function(event)
+    {
+     
+      $.ajax({
+        url:'/api/like',
+        type:'POST',
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data:{
+          'id_user':{{Auth::id()}},
+          'id_post':event.target.value,
+        },
+        success: function (data)
+        {
+          console.log(data);
+
+          document.getElementById(thich).style.color="blue";
+
+          $.get('/api/like/'+data.id_post,function(kq)
+          { 
+            $(count).html(kq);
+            if(data.id_user=={{Auth::id()}} && data.id_post== event.target.value && data.id==null)
+            {
+              document.getElementById(thich).style.color="black";
+            }
+          });
+        }
+      }); 
+    });
+  }) 
+});
+
+
+
 
 
 
@@ -259,27 +312,27 @@ function myFunction(event) {
 
 //xem binh luan 
 
-  function tatxbl(event)
-      {
-        var str='{{Auth::user()->img}}';
-        if(str.indexOf('https://graph.facebook.com')!==-1)
-        {
-          var img='{{Auth::user()->img}}';
-        }
-        else if(str.indexOf('https://lh3.googleusercontent.com')!==-1)
-        {
-          var img='{{Auth::user()->img}}';
-        }
-        else
-        {
-          var img='/frontend/{{Auth::user()->img}}';
+function tatxbl(event)
+{
+  var str='{{Auth::user()->img}}';
+  if(str.indexOf('https://graph.facebook.com')!==-1)
+  {
+    var img='{{Auth::user()->img}}';
+  }
+  else if(str.indexOf('https://lh3.googleusercontent.com')!==-1)
+  {
+    var img='{{Auth::user()->img}}';
+  }
+  else
+  {
+    var img='/frontend/{{Auth::user()->img}}';
                   // console.log(img);
-        }
-            event.preventDefault();
-            var idcomment=event.target.id.split('-').pop();
-            var httl='#httl-'+idcomment;
-            $(httl).removeClass('d-none');
-            var id_post=$('.idPost').attr('id');
+                }
+                event.preventDefault();
+                var idcomment=event.target.id.split('-').pop();
+                var httl='#httl-'+idcomment;
+                $(httl).removeClass('d-none');
+                var id_post=$('.idPost').attr('id');
             // alert(id_post);
             $.get('/api/traloibl/'+idcomment, function(data) 
             {
@@ -295,9 +348,9 @@ function myFunction(event) {
                 $(httl).html(ht);
               });   
             });
-      }
+          }
 
- </script>
+        </script>
 
 
-      @endsection
+        @endsection

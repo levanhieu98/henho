@@ -22,12 +22,12 @@ Route::group(['middleware' => ['checkstatus','checkadmin']], function() {
 	Route::get('/canhan', 'frontendController@canhan');
 	Route::get('/banbe', 'frontendController@banbe');
 	Route::get('/thuvienanh', 'frontendController@thuvienanh');
+	Route::post('/taoAlbum','frontendController@taoAlbum');
 	Route::get('/status', 'frontendController@status');
 	Route::get('/caidat', 'frontendController@caidat');
 	Route::get('/doimatkhau','frontendController@doimk');
 	Route::post('/capnhat','frontendController@capnhat');
 	Route::get('/messages','messagesController@messages');
-	Route::post('/dulieuanh','frontendController@dulieuanh');
 	Route::get('/contentmassage/{id}','messagesController@contentmassage');
 	Route::post('/ketquatimkiem', 'messagesController@ketquatimkiem')->name('search');
 	Route::post('/sentmessages','messagesController@sendmassges');
