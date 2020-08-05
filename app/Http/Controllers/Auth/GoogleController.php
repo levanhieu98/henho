@@ -33,6 +33,7 @@ class GoogleController extends Controller
                     'email_verified_at' =>now(),
                     'img'=>$user->avatar,
                     'role'=>0,
+                    'status'=>0,
                 ]);
                 Auth::login($user, true);
                 return redirect('/trangchu');

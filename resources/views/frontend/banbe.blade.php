@@ -55,27 +55,29 @@
   <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
     <h3 class="resume-title">Danh sách bạn bè</h3>
     <div class="resume-item">
-      <h4>Senior graphic design specialist</h4>
-      <h5>2019 - Present</h5>
-      <p><em>Experion, New York, NY </em></p>
       <ul>
-        <li>Lead in the design, development, and implementation of the graphic, layout, and production communication materials</li>
-        <li>Delegate tasks to the 7 members of the design team and provide counsel on all aspects of the project. </li>
-        <li>Supervise the assessment of all graphic materials in order to ensure quality and accuracy of the design</li>
-        <li>Oversee the efficient use of production project budgets ranging from $2,000 - $25,000</li>
+        @foreach($fr as $tc)
+            <li> 
+             <div class="media col-lg-12 float-left mt-2"  >
+              <div class="media-left">
+               @if (strpos($tc->img, 'https://graph.facebook.com') !== false) 
+               <a href="/chitietcanhan/{{$tc->id}}"><img src="{{$tc->img}}" class="media-object "  alt=""></a>
+               @elseif (strpos($tc->img, 'https://lh3.googleusercontent.com') !== false) 
+               <a href="/chitietcanhan/{{$tc->id}}"> <img src="{{$tc->img}}" class="media-object " alt=""></a>
+               @else
+               <a href="/chitietcanhan/{{$tc->id}}"><img src="{{'frontend/'.$tc->img}}"  alt=""></a>
+               @endif
+             </div>
+             <div class="media-body mt-3">
+              <p class="name" >{{$tc->name}}</p>
+            </div>
+            <div id="heart" class="mt-4" > <a href="/chitietcanhan/{{$tc->id}}">Xem thông tin</a></div>
+          </div>
+        </li>
+        @endforeach 
       </ul>
     </div>
-    <div class="resume-item">
-      <h4>Graphic design specialist</h4>
-      <h5>2017 - 2018</h5>
-      <p><em>Stepping Stone Advertising, New York, NY</em></p>
-      <ul>
-        <li>Developed numerous marketing programs (logos, brochures,infographics, presentations, and advertisements).</li>
-        <li>Managed up to 5 projects or tasks at a given time while under pressure</li>
-        <li>Recommended and consulted with clients on the most appropriate graphic design</li>
-        <li>Created 4+ design presentations and proposals a month for clients and account managers</li>
-      </ul>
-    </div>
+   
   </div>
 </div>
 

@@ -161,7 +161,8 @@ public function chitietcanhan($id)
 {
   $profile=User::where('id',$id)->get();
   $post= DB::select("select * from users JOIN  post ON users.id =post.id where users.id=".$id." and public=1   ORDER BY date DESC ");
-  return view('frontend.chitietcanhan',compact(['profile','post']));
+   $like=Like::select('id_post','id_user')->get();
+  return view('frontend.chitietcanhan',compact(['profile','post','like']));
 }
 
 public function doianhdaidien( request $request )
@@ -237,8 +238,28 @@ public function banbe()
    WHERE
    friends.user_id_2 = ".Auth::id()." and friends.approved=0
  )");
+
+ $fr=DB::select("select * from users where users.id in(select
+       friends.user_id_1 as fr 
+
+       FROM
+       friends
+      WHERE
+       friends.user_id_2 =".Auth::id()." and friends.approved=1
+
+       union
+
+       SELECT
+       friends.user_id_2 as fr 
+
+
+       FROM
+       friends
+       WHERE
+       friends.user_id_1 = ".Auth::id()." and friends.approved=1
+     )");
    // dd($yc);
- return view('frontend.banbe',compact('yc'));
+ return view('frontend.banbe',compact(['yc','fr']));
 
 }
 
@@ -259,14 +280,14 @@ public function taoAlbum(Request $request)
 
     'albumName'=>'required|min:6',
     'albumDescription'=>'required|min:10',
-    'img_logo[]'=>'image',  
-    'img_logo[]'=>'required',
+    'img_logo'=>'image',  
+    'img_logo'=>'required',
   ],[
 
-    'img_logo[].image'=>'Vui lòng chọn đúng file hình',
+    'img_logo.image'=>'Vui lòng chọn đúng file hình',
     'albumDescription.required'=>'Vui lòng nhập nội dung mô tả',
     'albumName.required'=>'Vui lòng nhập  tên album',
-    'img_logo[].required'=>'Vui lòng chọn ảnh cho  album',
+    'img_logo.required'=>'Vui lòng chọn ảnh cho  album',
     'albumDescription.min'=>'Nhập nội dung mô tả ít nhất 10 kí tự',
     'albumName.min'=>'Nhập tên album ít nhất 6 kí tự',
   ]);
@@ -280,7 +301,6 @@ public function taoAlbum(Request $request)
     $name=$value->getClientOriginalName(); 
     $ten=str::random(4)."_".$name;   
     $value->move("frontend/img/ima2",$ten);
-
     $image=new Image();
     $image->name_image=$ten;
     $image->id_album=$id_album;
@@ -385,8 +405,10 @@ public function dulieusuabaidang( Request $request,$id)
 public function xoabaidang($id)
 {
   $kt =DB::table('comment')->where('id_post',$id)->first();
-  if($kt!=null)
+  $ktlike=DB::table('likes')->where('id_post',$id)->first();
+  if($kt!=null && $ktlike!=null ||$kt!=null && $ktlike==null ||$kt==null && $ktlike!=null)
   {
+    $xoalike=Like::where('id_post',$id)->delete();
     $xoabl=comment::where('id_post',$id)->delete();
     $xoa=Post::where('id',Auth::id())->where('id_post',$id)->delete();
 
