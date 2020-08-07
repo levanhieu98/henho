@@ -60,7 +60,7 @@ class frontendController extends Controller
     
 
     $like=Like::select('id_post','id_user')->get();
-    $friend=Friend::select('user_id_2','user_id_1')->Where('approved',0)->get();;
+    $friend=Friend::select('user_id_2','user_id_1')->Where('approved',0)->get();
 // dd($friend);
 
     return view('frontend.trangchu', compact(['trangchu','users','like','friend']));
@@ -161,8 +161,10 @@ public function chitietcanhan($id)
 {
   $profile=User::where('id',$id)->get();
   $post= DB::select("select * from users JOIN  post ON users.id =post.id where users.id=".$id." and public=1   ORDER BY date DESC ");
-   $like=Like::select('id_post','id_user')->get();
-  return view('frontend.chitietcanhan',compact(['profile','post','like']));
+  $like=Like::select('id_post','id_user')->get();
+  $friend=Friend::select('user_id_2','user_id_1')->Where('approved',0)->get();
+  $friends=Friend::select('user_id_2','user_id_1')->Where('approved',1)->get();
+  return view('frontend.chitietcanhan',compact(['profile','post','like','friend','friends']));
 }
 
 public function doianhdaidien( request $request )
@@ -240,24 +242,24 @@ public function banbe()
  )");
 
  $fr=DB::select("select * from users where users.id in(select
-       friends.user_id_1 as fr 
+   friends.user_id_1 as fr 
 
-       FROM
-       friends
-      WHERE
-       friends.user_id_2 =".Auth::id()." and friends.approved=1
+   FROM
+   friends
+   WHERE
+   friends.user_id_2 =".Auth::id()." and friends.approved=1
 
-       union
+   union
 
-       SELECT
-       friends.user_id_2 as fr 
+   SELECT
+   friends.user_id_2 as fr 
 
 
-       FROM
-       friends
-       WHERE
-       friends.user_id_1 = ".Auth::id()." and friends.approved=1
-     )");
+   FROM
+   friends
+   WHERE
+   friends.user_id_1 = ".Auth::id()." and friends.approved=1
+ )");
    // dd($yc);
  return view('frontend.banbe',compact(['yc','fr']));
 
@@ -508,6 +510,74 @@ public function search(Request $request)
 
 }
 
+
+public function searchtrangchu(Request $request)
+{
+  if($request->ajax())
+  {
+    $friend=Friend::select('user_id_2','user_id_1')->Where('approved',0)->get();;
+    $output = '';
+    $result=DB::select("select * from users where  users.name LIKE '%".$request->search."%' and users.role=0 and users.id!=".Auth::id()." and users.id not in(select
+      friends.user_id_1 as fr 
+
+      FROM
+      friends
+      WHERE
+      friends.user_id_2 = ".Auth::id()." and friends.approved=1 
+
+      union
+
+      SELECT
+      friends.user_id_2 as fr 
+
+
+      FROM
+      friends
+      WHERE
+      friends.user_id_1 = ".Auth::id()." and friends.approved=1
+    )");
+
+
+    foreach ($result as $value) 
+    {
+     if (strpos($value->img, 'img/') !== false)
+     {
+      $img='frontend/'. $value->img;
+    }
+    else
+    {
+      $img=$value->img;
+    }
+
+    if($friend->where('user_id_2',Auth::id())->where('user_id_1',$value->id)->count('user_id_2')>0)
+    { 
+      $btn="Đồng ý";
+    }
+    else if($friend->where('user_id_2',$value->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
+    { 
+      $btn="Đã gửi";
+    }
+    else
+    { 
+      $btn="Kết bạn";
+    }
+    $output .='<div class="testimonial-item >" data-aos="fade-up" data-aos-delay="100">'.
+    ' <p>
+    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+    <a href="#">'.$value->name.'</a>
+    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+    </p>'.
+    ' <a href="/chitietcanhan/'.$value->id.'">'.'<img src="'.$img.'" class="testimonial-img" alt=""></a>'.
+    '<div id="heart" ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="'.$value->id.'" type="button">     
+    '.$btn.'</button></div>'.
+    '</div>';
+  }
+
+  return Response($output);
+
+}
+
+}
 
 public function chinhsachquyenriengtu()
 {

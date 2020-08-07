@@ -5,37 +5,47 @@
      color:red;
    }
  </style>
+
+
  <!-- ======= About Section ======= -->
  <section id="testimonials" class="testimonials section-bg">
   <div class="container">
-    <div class="section-title">
-      <h2>Gợi ý bạn bè</h2>
-    </div>
+    <h2>Gợi ý bạn bè</h2>
 
-    <div class="owl-carousel testimonials-carousel">
-     @foreach($users as $b)
-     <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
-      <p>
-        <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-        <a href="#">{{$b->name}}</a>
-        <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-      </p>
-      @if (strpos($b->img, 'https://graph.facebook.com') !== false) 
-      <a href="/chitietcanhan/{{$b->id}}">  <img src="{{$b->img}}" class="testimonial-img" alt=""></a>
-      @elseif (strpos($b->img, 'https://lh3.googleusercontent.com') !== false) 
-      <a href="/chitietcanhan/{{$b->id}}"><img src="{{$b->img}}" class="testimonial-img" alt=""></a>
+    <div class="section-title">
+     <!-- Search form -->
+     <form class="form-inline d-flex justify-content-center md-form form-sm active-pink active-pink-2 mt-2">
+      <i class="fas fa-search" aria-hidden="true"></i>
+      <input class="form-control form-control-sm ml-3 w-75 border-success" type="text" placeholder="Tìm kiếm theo tên"
+      aria-label="Search" name="Search" id="Search">
+    </form>
+    <!-- End Search form -->
+  </div>
+  <div class="owl-carousel testimonials-carousel " id="tk">
+   @foreach($users as $b)
+   <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
+    <p>
+      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+      <a href="#">{{$b->name}}</a>
+      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+    </p>
+    @if (strpos($b->img, 'https://graph.facebook.com') !== false) 
+    <a href="/chitietcanhan/{{$b->id}}">  <img src="{{$b->img}}" class="testimonial-img" alt=""></a>
+    @elseif (strpos($b->img, 'https://lh3.googleusercontent.com') !== false) 
+    <a href="/chitietcanhan/{{$b->id}}"><img src="{{$b->img}}" class="testimonial-img" alt=""></a>
+    @else
+    <a href="/chitietcanhan/{{$b->id}}"> <img src="{{'frontend/'.$b->img}}" class="testimonial-img" alt=""></a>
+    @endif
+    {{-- <div id="heart"  ><a href="" ><i onclick="friend(event)" id="{{$b->id}}" class="bx bxs-heart " style="font-size:50px"></i></a></div> --}}
+    <div id="heart" ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$b->id}}" type="button"> 
+      @if($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2')>0)
+      {{"Đồng ý"}}
+      @elseif($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
+      {{"Đã gửi"}}
       @else
-      <a href="/chitietcanhan/{{$b->id}}"> <img src="{{'frontend/'.$b->img}}" class="testimonial-img" alt=""></a>
-      @endif
-      {{-- <div id="heart"  ><a href="" ><i onclick="friend(event)" id="{{$b->id}}" class="bx bxs-heart " style="font-size:50px"></i></a></div> --}}
-      <div id="heart" ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$b->id}}" type="button"> @if($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2')>0)
-        {{"Đồng ý"}}
-        @elseif($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
-        {{"Đã gửi"}}
-        @else
-        {{"Kết Bạn"}}
-      @endif</button></div>
-      
+      {{"Kết Bạn"}}
+    @endif</button></div>
+
       {{-- {{($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2'))>0?"Đã gửi":"Kết Bạn"}}
       {{($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2'))>0?"Đồng ý":""}} --}}
 
@@ -48,47 +58,47 @@
 
 
 <!-- ======= Facts Section ======= -->
-    <section id="services" class="services">
-      <div class="container">
+<section id="services" class="services">
+  <div class="container">
 
-        <div class="section-title">
-          <h2>Bài đăng</h2>
-          <p>Chào {{Auth::user()->name}} !!</p>
-        </div>
-        <form action="/baidang" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-          @csrf
-          <div class="form-inline mb-2">
-             <label>Bảng tin</label>
-          <select name="bangtin" class="form-control  col-lg-5 ml-2" >
-            <option value="1">Bạn bè</option>
-            <option value="0">Chỉ mình tôi</option>
-          </select>
-          </div>
-         
-          <textarea class="form-control  @error('status') is-invalid @enderror" name="status"  placeholder="Hôm nay bạn thấy thế nào?"></textarea>
-          @error('status')
-        <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-          <div class="row clearfix container-fluid form-inline">
-            <input type="file" name="anhstatus"  class="form-control mt-2 mb-2 col-lg-6 @error('anhstatus') is-invalid @enderror"  onchange="readURL(this)" id="anh"  /> <i class="bx bx-image col-lg-6" style="font-size:50px"></i>
-              @error('anhstatus')
-        <span class="invalid-feedback" role="alert">
-          <strong>{{ $message }}</strong>
-        </span>
-        @enderror
-          </div>
-         <div class="mb-2 " id='show'>
-           
-         </div>
-          <div class=" d-flex justify-content-center">
-           <button type="submit" class="btn btn-info form-control  ">Đăng</button>
-          </div> 
-        </form>
-        
-      </div>
-    </section><!-- End Services Section -->
+    <div class="section-title">
+      <h2>Bài đăng</h2>
+      <p>Chào {{Auth::user()->name}} !!</p>
+    </div>
+    <form action="/baidang" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+      @csrf
+      <div class="form-inline mb-2">
+       <label>Bảng tin</label>
+       <select name="bangtin" class="form-control  col-lg-5 ml-2" >
+        <option value="1">Bạn bè</option>
+        <option value="0">Chỉ mình tôi</option>
+      </select>
+    </div>
+
+    <textarea class="form-control  @error('status') is-invalid @enderror" name="status"  placeholder="Hôm nay bạn thấy thế nào?"></textarea>
+    @error('status')
+    <span class="invalid-feedback" role="alert">
+      <strong>{{ $message }}</strong>
+    </span>
+    @enderror
+    <div class="row clearfix container-fluid form-inline">
+      <input type="file" name="anhstatus"  class="form-control mt-2 mb-2 col-lg-6 @error('anhstatus') is-invalid @enderror"  onchange="readURL(this)" id="anh"  /> <i class="bx bx-image col-lg-6" style="font-size:50px"></i>
+      @error('anhstatus')
+      <span class="invalid-feedback" role="alert">
+        <strong>{{ $message }}</strong>
+      </span>
+      @enderror
+    </div>
+    <div class="mb-2 " id='show'>
+
+    </div>
+    <div class=" d-flex justify-content-center">
+     <button type="submit" class="btn btn-info form-control  ">Đăng</button>
+   </div> 
+ </form>
+
+</div>
+</section><!-- End Services Section -->
 <section id="facts" class="facts ">
   <div class="container-fluid">
     <div class="section-title">
@@ -158,22 +168,47 @@
 @section('js')
 <script>
 
+//search
+$('#Search').on('keyup',function(){
+  $value = $(this).val();
+  $.ajax({
+    type: 'POST',
+     headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    url: '/searchtrangchu',
+    data: {
+      'search': $value
+    },
+    success:function(data){
+      $('#tk').html(data);
+      console.log(data);
+    }
+  });
+  // alert($value);
+})
+
+
+
+
+
+
 //hinhanh
-  $('#anh').change(function(){
-      var kq='<img id="blah" src="" alt="your image" style="max-width:180px" />';
-      $('#show').html(kq);
-    });
-       
-    function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#blah')
-                        .attr('src', e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+$('#anh').change(function(){
+  var kq='<img id="blah" src="" alt="your image" style="max-width:180px" />';
+  $('#show').html(kq);
+});
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      $('#blah')
+      .attr('src', e.target.result);
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
 
 //ketban
 function friend(event)
@@ -206,7 +241,7 @@ $(document).ready(function()
     var thich='thich'+index;
     $(like).click(function(event)
     {
-     
+
       $.ajax({
         url:'/api/like',
         type:'POST',

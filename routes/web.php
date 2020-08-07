@@ -44,8 +44,9 @@ Route::group(['middleware' => ['checkstatus','checkadmin']], function() {
 	Route::post('/ketban','friendsController@ketban');
 	Route::get('/danhgia', 'frontendController@danhgia');
 	Route::post('/dulieudanhgia','frontendController@dulieudanhgia');
-	//Kiem tra trang thai online hay offline cua tat cua user
+	//Kiem tra tat ca trang thai online hay offline cua tat cua user
 	Route::get('/check', 'UserController@userOnlineStatus');
+	Route::post('/searchtrangchu','frontendController@searchtrangchu');
 });
 
 

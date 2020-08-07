@@ -82,8 +82,8 @@
       success: function (data)
        {
           console.log(data);
-        // $kq='#'+event.target.id
-        //   $($kq).html('da gui')
+        $kq='#'+event.target.id
+          $($kq).html('da gui')
         }
 
     });

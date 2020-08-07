@@ -5,20 +5,19 @@
   <div class="container">
 
     <div class="section-title">
+      <h4 id="alert" style="color:#00BFFF"></h4>
       <h2>Bạn bè</h2>
-      <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+      <p>Hãy đếm tuổi của bạn bằng số bạn bè chứ không phải số năm. Ai cũng lắng nghe điều bạn phải nói. Bạn bè lắng nghe điều bạn nói. Bạn thân lắng nghe điều bạn không nói.Không ai có thể hạnh phúc mà không có bạn bè, hay chắc chắn về bạn bè mình cho tới khi gặp bất hạnh.</p>
     </div>
 
     <div class="row">
       <div class="col-lg-6" data-aos="fade-up">
         <h3 class="resume-title">Yêu cầu kết bạn</h3>
-        <h4 id="alert" style="color:#00BFFF"></h4>
-        <div class="resume-item  ">
           <h4>Danh sách</h4>
           <ul >
             @foreach($yc as $tc)
             <li> 
-             <div class="media col-lg-12 float-left mt-2"  >
+             <div class="media col-lg-12 float-left mt-2 resume-item "  >
               <div class="media-left">
                @if (strpos($tc->img, 'https://graph.facebook.com') !== false) 
                <a href="/chitietcanhan/{{$tc->id}}"><img src="{{$tc->img}}" class="media-object "  alt=""></a>
@@ -36,29 +35,13 @@
         </li>
         @endforeach 
       </ul>
-    </div>
-
-    <h3 class="resume-title">Danh sách đen - chặn</h3>
-    <div class="resume-item">
-      <h4>Master of Fine Arts &amp; Graphic Design</h4>
-      <h5>2015 - 2016</h5>
-      <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-      <p>Qui deserunt veniam. Et sed aliquam labore tempore sed quisquam iusto autem sit. Ea vero voluptatum qui ut dignissimos deleniti nerada porti sand markend</p>
-    </div>
-    <div class="resume-item">
-      <h4>Bachelor of Fine Arts &amp; Graphic Design</h4>
-      <h5>2010 - 2014</h5>
-      <p><em>Rochester Institute of Technology, Rochester, NY</em></p>
-      <p>Quia nobis sequi est occaecati aut. Repudiandae et iusto quae reiciendis et quis Eius vel ratione eius unde vitae rerum voluptates asperiores voluptatem Earum molestiae consequatur neque etlon sader mart dila</p>
-    </div>
   </div>
   <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
     <h3 class="resume-title">Danh sách bạn bè</h3>
-    <div class="resume-item">
       <ul>
         @foreach($fr as $tc)
             <li> 
-             <div class="media col-lg-12 float-left mt-2"  >
+             <div class="media col-lg-12 float-left mt-2 resume-item"  >
               <div class="media-left">
                @if (strpos($tc->img, 'https://graph.facebook.com') !== false) 
                <a href="/chitietcanhan/{{$tc->id}}"><img src="{{$tc->img}}" class="media-object "  alt=""></a>
@@ -71,13 +54,11 @@
              <div class="media-body mt-3">
               <p class="name" >{{$tc->name}}</p>
             </div>
-            <div id="heart" class="mt-4" > <a href="/chitietcanhan/{{$tc->id}}">Xem thông tin</a></div>
+            <div id="heart" class="mt-3 " ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$tc->id}}" type="button">Hủy kết bạn </button></div>
           </div>
         </li>
         @endforeach 
       </ul>
-    </div>
-   
   </div>
 </div>
 
@@ -102,7 +83,7 @@
     success: function (data)
     {
       console.log(data);
-      $('#alert').html('Đồng ý kết bạn thành công');
+      $('#alert').html('Thao tác thành công');
     }
     
   }); 

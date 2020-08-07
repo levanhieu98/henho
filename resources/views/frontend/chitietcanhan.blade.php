@@ -27,22 +27,31 @@
               <li><i class="icofont-rounded-right"></i> <strong>Giới tính: </strong>{{($profile[0]->gender==1)?'Nam':'Nữ'}}</li>
               <li><i class="icofont-rounded-right"></i> <strong>Số điện thoại:</strong> {{$profile[0]->phone}}</li>
               <li><i class="icofont-rounded-right"></i> <strong>Quê quán:</strong> <span id="city"></span><span id="district"></span><span id="ward"></span></li>
-            </ul>
-          </div>
-          <div class="col-lg-6 ">
-            <ul>
-              <li><i class="icofont-rounded-right"></i> <strong>Tuổi:</strong> {{date('Y')-date('Y',strtotime($profile[0]->dob))}}</li>
-              <li><i class="icofont-rounded-right"></i> <strong>Tôn giáo:</strong>{{($profile[0]->religion==''?'Không':$profile[0]->religion)}}</li>
-              <li><i class="icofont-rounded-right"></i> <strong>Nghề nghiệp:</strong> {{$profile[0]->job}}</li>
-            </ul>
-          </div>
+              <li><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$profile[0]->id}}" type="button"> 
+                @if($friend->where('user_id_2',Auth::id())->where('user_id_1',$profile[0]->id)->count('user_id_2')>0)
+                {{"Đồng ý"}}
+                @elseif($friend->where('user_id_2',$profile[0]->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
+                {{"Đã gửi"}}
+                @elseif($friends->where('user_id_2',$profile[0]->id)->where('user_id_1',Auth::id())->count('user_id_2')>0||$friends->where('user_id_1',$profile[0]->id)->where('user_id_2',Auth::id())->count('user_id_2')>0)
+                {{"Hủy kết bạn"}}
+                @else
+                {{"Kết bạn"}}
+                @endif
+              </button>
+            </li>
+          </ul>
         </div>
-        
+        <div class="col-lg-6 ">
+          <ul>
+            <li><i class="icofont-rounded-right"></i> <strong>Tuổi:</strong> {{date('Y')-date('Y',strtotime($profile[0]->dob))}}</li>
+            <li><i class="icofont-rounded-right"></i> <strong>Tôn giáo:</strong>{{($profile[0]->religion==''?'Không':$profile[0]->religion)}}</li>
+            <li><i class="icofont-rounded-right"></i> <strong>Nghề nghiệp:</strong> {{$profile[0]->job}}</li>
+          </ul>
+        </div>
       </div>
-      
     </div>
-
   </div>
+</div>
 </section><!-- End About Section -->
 
 <!-- ======= Facts Section ======= -->
@@ -117,21 +126,21 @@
 
    <div class="row clearfix text-center mt-2 border-bottom form-inline ">
     <div class="col-lg-6 mb-3 "><i class=" bx bx-like  " id="thich{{$index}}" style="font-size:30px @foreach($like as $l){{$l->id_user==Auth::id() && $l->id_post==$tc->id_post?";color:blue":""}} @endforeach "></i><button type="submit" class="form-control like " value="{{$tc->id_post}}"  >Thích<p id="count{{$index}}"  style="margin-left:-100px; margin-top: -10px">{{$like->where('id_post',$tc->id_post)->count('id_post')}}</p></button></div>
-     <div class="col-lg-6 mb-2 "><li><i class=" bx bx-message-rounded-dots" style="font-size:30px"><button type="submit" class="form-control binhluan" value="{{$tc->id_post}}" >Bình luận</button></i> </li></div>
-   </div>  
-   <div class="row clearfix form-inline d-flex justify-content-center " id="show{{$index}}">
+    <div class="col-lg-6 mb-2 "><li><i class=" bx bx-message-rounded-dots" style="font-size:30px"><button type="submit" class="form-control binhluan" value="{{$tc->id_post}}" >Bình luận</button></i> </li></div>
+  </div>  
+  <div class="row clearfix form-inline d-flex justify-content-center " id="show{{$index}}">
 
-   </div>
-   <div class="row clearfix form-inline d-flex justify-content-end  "  id="showbl{{$tc->id_post}}">
+  </div>
+  <div class="row clearfix form-inline d-flex justify-content-end  "  id="showbl{{$tc->id_post}}">
 
-   </div>
+  </div>
 
 
-   <div class="row bg-white ">
-     &emsp;
-   </div>
-   @endforeach 
+  <div class="row bg-white ">
+   &emsp;
  </div>
+ @endforeach 
+</div>
 
 </section>
 
@@ -141,13 +150,42 @@
 @section('js')
 <script >
 
+
+//ketban
+function friend(event)
+{
+  event.preventDefault();
+  $.ajax({
+    url:'/ketban',
+    type:'POST',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data:{
+      'id_user1':{{Auth::id()}},
+      'id_user2':event.target.id,
+    },
+    success: function (data)
+    {
+      console.log(data);
+      event.target.innerText="Đã gửi";
+      
+    }
+
+  }); 
+}
+
+
+
+
+
 $(document).ready(function()
   { $('.like').each(function(index,like)
     {      var count='#count'+index;
     var thich='thich'+index;
     $(like).click(function(event)
     {
-     
+
       $.ajax({
         url:'/api/like',
         type:'POST',
@@ -183,8 +221,8 @@ $(document).ready(function()
 
 
 
-  
- $(document).ready(function(){
+
+$(document).ready(function(){
   var city=""
   $.get('/api/city/'+{{$profile[0]->city}},function(data){
     city=data.Title +',';
@@ -192,7 +230,7 @@ $(document).ready(function()
   });
 });
 
- $(document).ready(function(){
+$(document).ready(function(){
   var district=""
   $.get('/api/id_district/'+{{$profile[0]->district}},function(data){
     district=data.Title +',';
@@ -200,7 +238,7 @@ $(document).ready(function()
   });
 });
 
- $(document).ready(function(){
+$(document).ready(function(){
   var ward=""
   $.get('/api/id_ward/'+{{$profile[0]->ward}},function(data){
     ward=data.Title ;
@@ -376,5 +414,5 @@ function tatxbl(event)
         });
       }
 
-</script>
-@endsection
+    </script>
+    @endsection

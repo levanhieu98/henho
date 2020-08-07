@@ -18,7 +18,7 @@ class messagesController extends Controller
   //     group by users.id, users.name, users.img, users.email");
 
    $users=DB::select(" select users.id, users.name, users.img, users.email, count(is_read) as unread  from users LEFT JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to =".Auth::id()."
-     where users.id in(select
+     where  users.id in(select
      friends.user_id_1 as fr 
 
      FROM
