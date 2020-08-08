@@ -65,7 +65,7 @@
         </div>
         <nav class="nav-menu">
           <ul>
-            <li><a href="/trangchu"><i class="bx bx-home"></i> <span>Trang chủ</span></a></li>
+            <li><a href="/trangchu" target="_self"><i class="bx bx-home"></i> <span>Trang chủ</span></a></li>
             <li><a href="/canhan"><i class="bx bx-user"></i> <span>Trang cá nhân</span></a></li>
             <li><a href="/trangtimkiem"><i class="bx bx-search"></i> <span>Tìm kiếm</span></a></li>
             <li><a href="/banbe"><i class="bx bx-group"></i> <span>Bạn bè</span></a></li>

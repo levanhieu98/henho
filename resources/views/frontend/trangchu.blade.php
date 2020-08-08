@@ -8,43 +8,47 @@
 
 
  <!-- ======= About Section ======= -->
- <section id="testimonials" class="testimonials section-bg">
+ <section id="testimonials" class="testimonials section-bg" >
   <div class="container">
     <h2>Gợi ý bạn bè</h2>
 
-    <div class="section-title">
+    <div class="section-title" style="position: relative;">
      <!-- Search form -->
      <form class="form-inline d-flex justify-content-center md-form form-sm active-pink active-pink-2 mt-2">
       <i class="fas fa-search" aria-hidden="true"></i>
       <input class="form-control form-control-sm ml-3 w-75 border-success" type="text" placeholder="Tìm kiếm theo tên"
       aria-label="Search" name="Search" id="Search">
+
     </form>
-    <!-- End Search form -->
+    <div id="danhsachtimduoc" class="mb-5" style="position: absolute; left: 15%; z-index: 88888888; width:100%; height: 224px; overflow: auto" >
+
   </div>
-  <div class="owl-carousel testimonials-carousel " id="tk">
-   @foreach($users as $b)
-   <div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
-    <p>
-      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-      <a href="#">{{$b->name}}</a>
-      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-    </p>
-    @if (strpos($b->img, 'https://graph.facebook.com') !== false) 
-    <a href="/chitietcanhan/{{$b->id}}">  <img src="{{$b->img}}" class="testimonial-img" alt=""></a>
-    @elseif (strpos($b->img, 'https://lh3.googleusercontent.com') !== false) 
-    <a href="/chitietcanhan/{{$b->id}}"><img src="{{$b->img}}" class="testimonial-img" alt=""></a>
+  <!-- End Search form -->
+</div>
+<div class="owl-carousel testimonials-carousel mt-5 " >
+ @foreach($users as $b)
+ <div class="testimonial-item tenban tenban-{{$b->name}}"  data-aos="fade-up" data-aos-delay="100">
+  <p>
+    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+    <a href="#">{{$b->name}}</a>
+    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+  </p>
+  @if (strpos($b->img, 'https://graph.facebook.com') !== false) 
+  <a href="/chitietcanhan/{{$b->id}}">  <img src="{{$b->img}}" class="testimonial-img" alt=""></a>
+  @elseif (strpos($b->img, 'https://lh3.googleusercontent.com') !== false) 
+  <a href="/chitietcanhan/{{$b->id}}"><img src="{{$b->img}}" class="testimonial-img" alt=""></a>
+  @else
+  <a href="/chitietcanhan/{{$b->id}}"> <img src="{{'frontend/'.$b->img}}" class="testimonial-img" alt=""></a>
+  @endif
+  {{-- <div id="heart"  ><a href="" ><i onclick="friend(event)" id="{{$b->id}}" class="bx bxs-heart " style="font-size:50px"></i></a></div> --}}
+  <div id="heart" ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$b->id}}" type="button"> 
+    @if($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2')>0)
+    {{"Đồng ý"}}
+    @elseif($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
+    {{"Đã gửi"}}
     @else
-    <a href="/chitietcanhan/{{$b->id}}"> <img src="{{'frontend/'.$b->img}}" class="testimonial-img" alt=""></a>
-    @endif
-    {{-- <div id="heart"  ><a href="" ><i onclick="friend(event)" id="{{$b->id}}" class="bx bxs-heart " style="font-size:50px"></i></a></div> --}}
-    <div id="heart" ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$b->id}}" type="button"> 
-      @if($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2')>0)
-      {{"Đồng ý"}}
-      @elseif($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
-      {{"Đã gửi"}}
-      @else
-      {{"Kết Bạn"}}
-    @endif</button></div>
+    {{"Kết Bạn"}}
+  @endif</button></div>
 
       {{-- {{($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2'))>0?"Đã gửi":"Kết Bạn"}}
       {{($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2'))>0?"Đồng ý":""}} --}}
@@ -171,20 +175,25 @@
 //search
 $('#Search').on('keyup',function(){
   $value = $(this).val();
-  $.ajax({
-    type: 'POST',
-     headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    url: '/searchtrangchu',
-    data: {
-      'search': $value
-    },
-    success:function(data){
-      $('#tk').html(data);
-      console.log(data);
-    }
-  });
+  if($value=="")
+  {
+   $('#danhsachtimduoc').html('');
+   return;
+ }
+ $.ajax({
+  type: 'POST',
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  },
+  url: '/searchtrangchu',
+  data: {
+    'search': $value
+  },
+  success:function(data){
+    $('#danhsachtimduoc').html(data);
+    console.log(data);
+  }
+});
   // alert($value);
 })
 

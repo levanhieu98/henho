@@ -13,7 +13,7 @@
  <div class=" container-fluid">
       <form action="" accept-charset="UTF-8" method="get">
         <div class="col-md-12 form-inline mb-2 mr-2 ml-3">
-          <input type="text" name="search" id="search" placeholder="Bạn đang cần tìm kiếm điều gì?" class="form-control col-8 ">
+          <input type="text" name="search" id="search" placeholder="Tìm kiếm theo sở thích?" class="form-control col-8 ">
             <button class="btn btn-primary col-2 mt-3 ml-1" disabled><i class='bx bx-search-alt'>  </i></button>
        <!--  </div> -->
       </div>
@@ -83,7 +83,7 @@
        {
           console.log(data);
         $kq='#'+event.target.id
-          $($kq).html('da gui')
+          $($kq).html('Đã gửi')
         }
 
     });
