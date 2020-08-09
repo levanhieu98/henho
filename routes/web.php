@@ -22,6 +22,7 @@ Route::group(['middleware' => ['checkstatus','checkadmin']], function() {
 	Route::get('/canhan', 'frontendController@canhan');
 	Route::get('/banbe', 'frontendController@banbe');
 	Route::get('/thuvienanh', 'frontendController@thuvienanh');
+	Route::post('/hienthiAlbum','frontendController@hienthiAlbum');
 	Route::post('/taoAlbum','frontendController@taoAlbum');
 	Route::get('/status', 'frontendController@status');
 	Route::get('/caidat', 'frontendController@caidat');

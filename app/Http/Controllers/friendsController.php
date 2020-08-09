@@ -9,27 +9,27 @@ use App\Friend;
 
 class friendsController extends Controller
 {
-    public function ketban(Request $request)
+  public function ketban(Request $request)
+  {
+    $fr=new Friend();
+    $fr->user_id_1=$request->id_user1;
+    $fr->user_id_2=$request->id_user2;
+    $user = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->first();
+    $unfriend = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->where('approved',1)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',1)->first();
+    if($unfriend)
     {
-      $fr=new Friend();
-      $fr->user_id_1=$request->id_user1;
-      $fr->user_id_2=$request->id_user2;
-      $user = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->first();
-      $unfriend = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->where('approved',1)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',1)->first();
-      if($unfriend)
-      {
-           $fr=Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->where('approved',1)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',1)->delete();
-      } 
-      else if($user )
-      {
-        $fr=Friend::where('user_id_2', '=', Auth::user()->id)->update(['approved'=>1]);
-    }
-    else
-    {
-        $fr->save();
-    }
-    return response()->json($fr);
+     $fr=Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->where('approved',1)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',1)->delete();
+   } 
+   else if($user )
+   {
+    $fr=Friend::where('user_id_2', Auth::user()->id)->where('user_id_1', '=', $request->id_user2)->update(['approved'=>1]);
+  }
+  else
+  {
+    $fr->save();
+  }
+  return response()->json($fr);
 }
 
-    // 
+  
 }

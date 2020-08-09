@@ -95,24 +95,20 @@
     <div class="row" data-aos="fade-up">
       <div class="col-lg-12 d-flex justify-content-center">
         <ul id="portfolio-flters">
-          <li data-filter="*" class="filter-active">Tất cả ảnh</li>
+
           @foreach($albums as $a)
-          <li id="{{$a->id_album}}" title="{{date('d-m-Y'),$a->dateCreated}}" data-container="body" data-toggle="popover" data-placement="top" data-content="{{$a->description}}">{{$a->name_album}}</li>
+          <li id="{{$a->id_album}}"  data-container="body" data-toggle="popover" data-placement="top" onclick="image(event)" >{{$a->name_album}}</li>
           @endforeach
         </ul>
       </div>
-      <p>Đang làm chỗ hiển thị ảnh khi click vào id Album = AJAX</p>
+
     </div>
     <!--  Image By ID -->
-    <div class="col-lg-4 col-md-6 portfolio-item">
-      <div class="portfolio-wrap">
-        <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
-        <div class="portfolio-links">
-          <a href="assets/img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" class="venobox" title="Web 3"><i class="bx bx-plus"></i></a>
-          <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-        </div>
-      </div>
+    
+    <div class="row col-lg-12 portfolio-item  " id="result">
+
     </div>
+    
 
   </div>
 
@@ -185,5 +181,36 @@ $('.remove-preview').on('click', function() {
 $(document).ready(function(){
   $('[data-toggle="popover"]').popover();
 });
+
+
+function image()
+{
+  $.ajax({
+    url:'/hienthiAlbum',
+    type:'POST',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data:{
+
+     'id_album':event.target.id,
+   }, success: function (data)
+   {
+    var kq=''
+    $.each(data,function(k,v){
+      kq+='<div class="portfolio-wrap mb-2 col-4">'+
+      '<img src="frontend/img/ima2/'+v.name_image+'" style="width:333px;height:300px" alt="">'+
+      '<div class="portfolio-links">'+
+      '<a href="frontend/img/ima2/'+v.name_image+'" data-gall="portfolioGallery" class="venobox" title="Web 3"><i class="bx bx-plus"></i></a>'+
+      '</div>'+
+      '</div>';
+      $("#result").html(kq);
+    });
+
+    // console.log(data);
+  }
+
+});
+}
 </script>
 @endsection

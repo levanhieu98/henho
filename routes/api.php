@@ -21,6 +21,7 @@ Route::apiResource('id_ward','api\id_ward');
 Route::apiResource('binhluan','api\BinhluanController');
 Route::apiResource('like','api\likeController');
 Route::apiResource('traloibl','api\tlbinhluan');
+Route::apiResource('thongbao','api\thongbaoketban');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

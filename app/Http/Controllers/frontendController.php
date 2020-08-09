@@ -268,12 +268,16 @@ public function banbe()
 public function thuvienanh(Request $rq)
 {
   $albums=DB::table('albums')->where('id',Auth::id())->get();
-  // $albums_id=DB::table('albums')->select('id_album')->where('id',Auth::id())->get();
-  // $images=DB::table('images')->where('id_album',$albums_id)->get();
+ 
 
   return view('frontend.thuvienanh',compact('albums'));
 
+}
 
+public function hienthiAlbum(Request $request)
+{
+  $image=image::where('id_album',$request->id_album)->get();
+  return response()->json($image);
 }
 
 public function taoAlbum(Request $request)
@@ -606,6 +610,8 @@ public function searchtrangchu(Request $request)
 }
 
 }
+
+
 
 public function chinhsachquyenriengtu()
 {

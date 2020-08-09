@@ -16,11 +16,11 @@
      <!-- Search form -->
      <form class="form-inline d-flex justify-content-center md-form form-sm active-pink active-pink-2 mt-2">
       <i class="fas fa-search" aria-hidden="true"></i>
-      <input class="form-control form-control-sm ml-3 w-75 border-success" type="text" placeholder="Tìm kiếm theo tên"
+      <input class="form-control form-control-sm ml-3 w-75 border-success " type="text" placeholder="Tìm kiếm theo tên"
       aria-label="Search" name="Search" id="Search">
 
     </form>
-    <div id="danhsachtimduoc" class="mb-5" style="position: absolute; left: 15%; z-index: 88888888; width:100%; height: 224px; overflow: auto" >
+    <div id="danhsachtimduoc" class="mb-5 d-none result" style="position: absolute; left: 15%; z-index: 88888888; width:100%; height: 224px; overflow: auto" >
 
   </div>
   <!-- End Search form -->
@@ -174,6 +174,7 @@
 
 //search
 $('#Search').on('keyup',function(){
+  $(".result").addClass('d-inline');
   $value = $(this).val();
   if($value=="")
   {

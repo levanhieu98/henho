@@ -13,53 +13,53 @@
     <div class="row">
       <div class="col-lg-6" data-aos="fade-up">
         <h3 class="resume-title">Yêu cầu kết bạn</h3>
-          <h4>Danh sách</h4>
-          <ul >
-            @foreach($yc as $tc)
-            <li> 
-             <div class="media col-lg-12 float-left mt-2 resume-item "  >
-              <div class="media-left">
-               @if (strpos($tc->img, 'https://graph.facebook.com') !== false) 
-               <a href="/chitietcanhan/{{$tc->id}}"><img src="{{$tc->img}}" class="media-object "  alt=""></a>
-               @elseif (strpos($tc->img, 'https://lh3.googleusercontent.com') !== false) 
-               <a href="/chitietcanhan/{{$tc->id}}"> <img src="{{$tc->img}}" class="media-object " alt=""></a>
-               @else
-               <a href="/chitietcanhan/{{$tc->id}}"><img src="{{'frontend/'.$tc->img}}"  alt=""></a>
-               @endif
-             </div>
-             <div class="media-body mt-3">
-              <p class="name" >{{$tc->name}}</p>
-            </div>
-            <div id="heart" ><button class="btn-success mt-3 rounded" style="margin-left:-150px" onclick="friend(event)" id="{{$tc->id}}" type="button">Đồng ý</button></div>
+        <h4>Danh sách</h4>
+        <ul >
+          @foreach($yc as $tc)
+          <li> 
+           <div class="media col-lg-12 float-left mt-2 resume-item "  >
+            <div class="media-left">
+             @if (strpos($tc->img, 'https://graph.facebook.com') !== false) 
+             <a href="/chitietcanhan/{{$tc->id}}"><img src="{{$tc->img}}" class="media-object "  alt=""></a>
+             @elseif (strpos($tc->img, 'https://lh3.googleusercontent.com') !== false) 
+             <a href="/chitietcanhan/{{$tc->id}}"> <img src="{{$tc->img}}" class="media-object " alt=""></a>
+             @else
+             <a href="/chitietcanhan/{{$tc->id}}"><img src="{{'frontend/'.$tc->img}}"  alt=""></a>
+             @endif
+           </div>
+           <div class="media-body mt-3">
+            <p class="name" >{{$tc->name}}</p>
           </div>
-        </li>
-        @endforeach 
-      </ul>
+          <div id="heart" ><button class="btn-success mt-3 rounded" style="margin-left:-150px" onclick="friend(event)" id="{{$tc->id}}" type="button">Đồng ý</button></div>
+        </div>
+      </li>
+      @endforeach 
+    </ul>
   </div>
   <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
     <h3 class="resume-title">Danh sách bạn bè</h3>
-      <ul>
-        @foreach($fr as $tc)
-            <li> 
-             <div class="media col-lg-12 float-left mt-2 resume-item"  >
-              <div class="media-left">
-               @if (strpos($tc->img, 'https://graph.facebook.com') !== false) 
-               <a href="/chitietcanhan/{{$tc->id}}"><img src="{{$tc->img}}" class="media-object "  alt=""></a>
-               @elseif (strpos($tc->img, 'https://lh3.googleusercontent.com') !== false) 
-               <a href="/chitietcanhan/{{$tc->id}}"> <img src="{{$tc->img}}" class="media-object " alt=""></a>
-               @else
-               <a href="/chitietcanhan/{{$tc->id}}"><img src="{{'frontend/'.$tc->img}}"  alt=""></a>
-               @endif
-             </div>
-             <div class="media-body mt-3">
-              <p class="name" >{{$tc->name}}</p>
-            </div>
-            <div id="heart" class="mt-3 " ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$tc->id}}" type="button">Hủy kết bạn </button></div>
-          </div>
-        </li>
-        @endforeach 
-      </ul>
-  </div>
+    <ul>
+      @foreach($fr as $index=>$tc)
+      <li> 
+       <div class="media col-lg-12 float-left mt-2 resume-item"  >
+        <div class="media-left">
+         @if (strpos($tc->img, 'https://graph.facebook.com') !== false) 
+         <a href="/chitietcanhan/{{$tc->id}}"><img src="{{$tc->img}}" class="media-object "  alt=""></a>
+         @elseif (strpos($tc->img, 'https://lh3.googleusercontent.com') !== false) 
+         <a href="/chitietcanhan/{{$tc->id}}"> <img src="{{$tc->img}}" class="media-object " alt=""></a>
+         @else
+         <a href="/chitietcanhan/{{$tc->id}}"><img src="{{'frontend/'.$tc->img}}"  alt=""></a>
+         @endif
+       </div>
+       <div class="media-body mt-3">
+        <p class="name" >{{$tc->name}}</p>
+      </div>
+      <div id="heart" class="mt-3 " ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$tc->id}}" type="button">Hủy kết bạn </button></div>
+    </div>
+  </li>
+  @endforeach 
+</ul>
+</div>
 </div>
 
 </div>
@@ -68,8 +68,9 @@
 @section('js')
 <script>
   function friend(event)
-  { $('#alert').html("");
-  event.preventDefault();
+  { //$('#alert').html("");
+  // alert(event.target.id);
+  // event.preventDefault();
   $.ajax({
     url:'/ketban',
     type:'POST',
