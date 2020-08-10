@@ -78,6 +78,8 @@ Route::group(['prefix' => 'admin','middleware'=>'checkRole'], function() {
 	Route::get('home', 'admin\homeController@index')->name('home')->middleware('verified');
 	Route::get('doimatkhau','admin\adminController@doimatkhau' );
 	Route::post('matkhaumoi','admin\adminController@matkhaumoi');
+	Route::get('suathongtin','admin\adminController@suathongtin' );
+	Route::post('dulieusuathongtin','admin\adminController@dulieusuathongtin' );
 
 // Category_blog
 	Route::get('loaiBlog','admin\category_blog@loaiBlog');

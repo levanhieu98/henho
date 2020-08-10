@@ -31,124 +31,168 @@
 
    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
    <link href="css/themes/all-themes.css" rel="stylesheet" />
-</head>
+ </head>
 
-<body class="theme-red">
-    <!-- Page Loader -->
-    <div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
-            <p>Vui lòng đợi</p>
+ <body class="theme-red">
+  <!-- Page Loader -->
+  <div class="page-loader-wrapper">
+    <div class="loader">
+      <div class="preloader">
+        <div class="spinner-layer pl-red">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
         </div>
+      </div>
+      <p>Vui lòng đợi</p>
     </div>
+  </div>
 
-    <!-- Top Bar -->
-    <nav class="navbar">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
-                <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="/admin/home">Quản trị website - henhoSTU</a>
-            </div>
-            <div class="collapse navbar-collapse" id="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- #END# Tasks -->
-                    <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
-                </ul>
-            </div>
+  <!-- Top Bar -->
+  <nav class="navbar">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+        <a href="javascript:void(0);" class="bars"></a>
+        <a class="navbar-brand" href="/admin/home">Quản trị website - henhoSTU</a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <!-- #END# Tasks -->
+          <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- #Top Bar -->
+  <section>
+    <!-- Left Sidebar -->
+    <aside id="leftsidebar" class="sidebar">
+      <!-- User Info -->
+      @include('layoutsadmin.user')
+      <!-- #User Info -->
+      <!-- Menu -->
+      @include('layoutsadmin.menu')
+      <!-- #Menu -->
+      <!-- Footer -->
+      <div class="legal">
+        <div class="copyright">
+          &copy; 2019 - 2020<strong>LVH-NBNL</strong>
         </div>
-    </nav>
-    <!-- #Top Bar -->
-    <section>
-        <!-- Left Sidebar -->
-        <aside id="leftsidebar" class="sidebar">
-            <!-- User Info -->
-            @include('layoutsadmin.user')
-            <!-- #User Info -->
-            <!-- Menu -->
-            @include('layoutsadmin.menu')
-            <!-- #Menu -->
-            <!-- Footer -->
-            <div class="legal">
-                <div class="copyright">
-                    &copy; 2019 - 2020<strong>LVH-NBNL</strong>
-                </div>
 
-            </div>
-            <!-- #Footer -->
-        </aside>
+      </div>
+      <!-- #Footer -->
+    </aside>
 
-    </section>
+  </section>
 
-    <section class="content">
-       @yield('content')
-   </section>
+  <section class="content">
+   @yield('content')
+ </section>
 
-   <!-- Jquery Core Js -->
-   <script src="plugins/jquery/jquery.min.js"></script>
+ <!-- Jquery Core Js -->
+ <script src="plugins/jquery/jquery.min.js"></script>
 
-   <!-- Bootstrap Core Js -->
-   <script src="plugins/bootstrap/js/bootstrap.js"></script>
+ <!-- Bootstrap Core Js -->
+ <script src="plugins/bootstrap/js/bootstrap.js"></script>
 
-   <!-- Select Plugin Js -->
-   <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
+ <!-- Select Plugin Js -->
+ <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
-   <!-- Slimscroll Plugin Js -->
-   <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+ <!-- Slimscroll Plugin Js -->
+ <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
-   <!-- Waves Effect Plugin Js -->
-   <script src="plugins/node-waves/waves.js"></script>
+ <!-- Waves Effect Plugin Js -->
+ <script src="plugins/node-waves/waves.js"></script>
 
-   <!-- Jquery DataTable Plugin Js -->
-   <script src="plugins/jquery-datatable/jquery.dataTables.js"></script>
-   <script src="plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
-   <script src="plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
-   <script src="plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
-   <script src="plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
-   <script src="plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
-   <script src="plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
-   <script src="plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
-   <script src="plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+ <!-- Jquery DataTable Plugin Js -->
+ <script src="plugins/jquery-datatable/jquery.dataTables.js"></script>
+ <script src="plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+ <script src="plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+ <script src="plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+ <script src="plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+ <script src="plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+ <script src="plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+ <script src="plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+ <script src="plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
-   <!-- Custom Js -->
-   <script src="js/admin.js"></script>
-   <script src="js/pages/tables/jquery-datatable.js"></script>
+ <!-- Custom Js -->
+ <script src="js/admin.js"></script>
+ <script src="js/pages/tables/jquery-datatable.js"></script>
 
-   <!-- Demo Js -->
-   <script src="js/demo.js"></script>
+ <!-- Demo Js -->
+ <script src="js/demo.js"></script>
 
-   {{-- ckeditor --}}
-   <script src="ckeditor/ckeditor.js" type="text/javascript" charset="utf-8" async defer></script>
-   <script src="ckfinder/ckfinder.js" type="text/javascript" charset="utf-8" async defer></script>
-   <script>
-     function xuly(event)
-     { $id=event.target.id;
-        $kq='#'+$id
-         $.ajax({
-            type: 'POST',
-            url: '/admin/xuly',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                'id': $id,
-            },
-            success:function(result){
-             $($kq).html('Đã xử lý'); 
+ {{-- ckeditor --}}
+ <script src="ckeditor/ckeditor.js" type="text/javascript" charset="utf-8" async defer></script>
+ <script src="ckfinder/ckfinder.js" type="text/javascript" charset="utf-8" async defer></script>
+ <script>
+   function xuly(event)
+   { $id=event.target.id;
+    $kq='#'+$id
+    $.ajax({
+      type: 'POST',
+      url: '/admin/xuly',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: {
+        'id': $id,
+      },
+      success:function(result){
+       $($kq).html('Đã xử lý'); 
              // console.log(result);
-         }
-     });
-     }
- </script>
+           }
+         });
+  }
+
+     // -- apitp --
+
+     $(document).ready(function(){
+      var city=""
+      $.get('/api/city',function(data){
+        $.each(data,function(k,v){
+          city+='<option value="'+v.ID+'">'+v.Title+'</option>';    
+        })
+        $('#tp').html(city);
+      });
+    });
+
+//-- api quan --
+
+$('#tp').change(function() {
+ var country = $('select[name="thanhpho"] option').filter(':selected').val();
+ $.ajax({
+  url: "/api/district/"+country,
+  type:"GET"
+}).done(function(data) {
+  var quan="";
+  $.each(data,function(k,v){
+    quan+='<option value="'+v.ID+'">'+v.Title+'</option>'; 
+  });
+  $('#quan').html(quan);
+});
+}); 
+
+//-- api phuong --
+
+$('#quan').change(function() {
+ var quan = $('select[name="quan"] option').filter(':selected').val();
+ $.ajax({
+  url: "/api/ward/"+quan,
+  type:"GET"
+}).done(function(data) {
+  var phuong="";
+  $.each(data,function(k,v){
+    phuong+='<option value="'+v.ID+'">'+v.Title+'</option>'; 
+  });
+  $('#phuong').html(phuong);
+});
+}); 
+</script>
 
 </body>
 

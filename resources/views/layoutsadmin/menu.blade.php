@@ -92,6 +92,10 @@
                     <a href="/admin/dsadmin">Danh sách</a>
                 </li>
 
+                 <li>
+                    <a href="/admin/themquantri">Thêm quản trị</a>
+                </li>
+
             </ul>
         </li>
     </ul>
