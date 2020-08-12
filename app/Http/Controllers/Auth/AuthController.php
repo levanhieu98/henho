@@ -31,6 +31,9 @@ class AuthController extends Controller
 			'email_verified_at' =>now(),
 			'img'=>$user->avatar,
 			'role'=>0,
+			'city'=>4,
+			'district'=>12,
+			'ward'=>14140,
 			'status'=>0,
 		]);
 		Auth::login($user, true);

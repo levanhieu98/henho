@@ -390,29 +390,43 @@ function tatxbl(event)
   else
   {
     var img='/frontend/{{Auth::user()->img}}';
-          // console.log(img);
-        }
-        event.preventDefault();
-        var idcomment=event.target.id.split('-').pop();
-        var httl='#httl-'+idcomment;
-        $(httl).removeClass('d-none');
-        var id_post=$('.idPost').attr('id');
-        // alert(id_post);
-        $.get('/api/traloibl/'+idcomment, function(data) 
-        {
-          var ht=''
-          $.each(data,function(k,v)
-          {
-            ht+='<div class="form-inline container-fluid form-inline d-flex justify-content-center" style="border-left: 2px solid blue" ><img src="'+v.images+'" alt="" class="media  rounded-circle mr-2   " style="width:50px;height:50px" >'+
-            '<input type="text" class="form-control col-lg-10 mb-2 hienthibl" disabled value="'+v.content+'"></div>'+
-            '<div class="mr-5"><a href=""  class="mr-2 " id="xbl-'+v.id_comment+'" onclick="tatxbl(event)">Xem bình luận</a>'+
-            '<a href=""  class="traloi" id="traloi-'+v.id_comment+'" onclick="tat(event)">Trả lời</a></div>'+
-            '<div class="d-none form-inline container-fluid justify-content-center traloibl  " id="otl-'+v.id_comment+'" ><img src="'+img+'" alt="" class="media  rounded-circle mr-2 idPost " id="'+v.id_post+'" style="width:50px;height:50px" ><input type="text"  class="form-control col-lg-8 mb-2 otlbl"  onchange="myFunction(event)" id="'+v.id_comment+'"></div>'+'<div class="d-none form-inline container-fluid justify-content-end   " id="httl-'+v.id_comment+'"  ></div>'+
-            '</div>';
-            $(httl).html(ht);
-          });   
-        });
-      }
+                  // console.log(img);
+                }
+                event.preventDefault();
+                var idcomment=event.target.id.split('-').pop();
+                var httl='#httl-'+idcomment;
+                $(httl).removeClass('d-none');
+                var id_post=$('.idPost').attr('id');
+            // alert(id_post);
+            $.get('/api/traloibl/'+idcomment, function(data) 
+            {
+              var ht=''
+              if(data.length=="")
+              {
+                 $(httl).html('<div class="text-warning phanhoi">Không có phản hồi bình luận</div>');
+                 setTimeout(function(){
+
+                    $('.phanhoi').addClass('d-none');
+
+                 },2000);
+              }
+              else
+              {
+              $.each(data,function(k,v)
+              {
+                ht+='<div class="form-inline container-fluid form-inline d-flex justify-content-center" style="border-left: 2px solid blue" ><img src="'+v.images+'" alt="" class="media  rounded-circle mr-2   " style="width:50px;height:50px" >'+
+                '<input type="text" class="form-control col-lg-10 mb-2 hienthibl" disabled value="'+v.content+'"></div>'+
+                '<div class="mr-5"><a href=""  class="mr-2 " id="xbl-'+v.id_comment+'" onclick="tatxbl(event)">Xem bình luận</a>'+
+                '<a href=""  class="traloi" id="traloi-'+v.id_comment+'" onclick="tat(event)">Trả lời</a></div>'+
+                '<div class="d-none form-inline container-fluid justify-content-center traloibl  " id="otl-'+v.id_comment+'" ><img src="'+img+'" alt="" class="media  rounded-circle mr-2 idPost " id="'+v.id_post+'" style="width:50px;height:50px" ><input type="text"  class="form-control col-lg-8 mb-2 otlbl"  onchange="myFunction(event)" id="'+v.id_comment+'"></div>'+'<div class="d-none form-inline container-fluid justify-content-end   " id="httl-'+v.id_comment+'"  ></div>'+
+                '</div>';
+                $(httl).html(ht);
+              });   
+            }
+            });
+
+          }
+
 
     </script>
     @endsection

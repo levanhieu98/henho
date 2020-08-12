@@ -22,33 +22,33 @@
     </form>
     <div id="danhsachtimduoc" class="mb-5 d-none result" style="position: absolute; left: 15%; z-index: 88888888; width:100%; height: 224px; overflow: auto" >
 
+    </div>
+    <!-- End Search form -->
   </div>
-  <!-- End Search form -->
-</div>
-<div class="owl-carousel testimonials-carousel mt-5 " >
- @foreach($users as $b)
- <div class="testimonial-item tenban tenban-{{$b->name}}"  data-aos="fade-up" data-aos-delay="100">
-  <p>
-    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-    <a href="#">{{$b->name}}</a>
-    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-  </p>
-  @if (strpos($b->img, 'https://graph.facebook.com') !== false) 
-  <a href="/chitietcanhan/{{$b->id}}">  <img src="{{$b->img}}" class="testimonial-img" alt=""></a>
-  @elseif (strpos($b->img, 'https://lh3.googleusercontent.com') !== false) 
-  <a href="/chitietcanhan/{{$b->id}}"><img src="{{$b->img}}" class="testimonial-img" alt=""></a>
-  @else
-  <a href="/chitietcanhan/{{$b->id}}"> <img src="{{'frontend/'.$b->img}}" class="testimonial-img" alt=""></a>
-  @endif
-  {{-- <div id="heart"  ><a href="" ><i onclick="friend(event)" id="{{$b->id}}" class="bx bxs-heart " style="font-size:50px"></i></a></div> --}}
-  <div id="heart" ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$b->id}}" type="button"> 
-    @if($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2')>0)
-    {{"Đồng ý"}}
-    @elseif($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
-    {{"Đã gửi"}}
+  <div class="owl-carousel testimonials-carousel mt-5 " >
+   @foreach($users as $b)
+   <div class="testimonial-item tenban tenban-{{$b->name}}"  data-aos="fade-up" data-aos-delay="100">
+    <p>
+      <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+      <a href="#">{{$b->name}}</a>
+      <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+    </p>
+    @if (strpos($b->img, 'https://graph.facebook.com') !== false) 
+    <a href="/chitietcanhan/{{$b->id}}">  <img src="{{$b->img}}" class="testimonial-img" alt=""></a>
+    @elseif (strpos($b->img, 'https://lh3.googleusercontent.com') !== false) 
+    <a href="/chitietcanhan/{{$b->id}}"><img src="{{$b->img}}" class="testimonial-img" alt=""></a>
     @else
-    {{"Kết Bạn"}}
-  @endif</button></div>
+    <a href="/chitietcanhan/{{$b->id}}"> <img src="{{'frontend/'.$b->img}}" class="testimonial-img" alt=""></a>
+    @endif
+    {{-- <div id="heart"  ><a href="" ><i onclick="friend(event)" id="{{$b->id}}" class="bx bxs-heart " style="font-size:50px"></i></a></div> --}}
+    <div id="heart" ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$b->id}}" type="button"> 
+      @if($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2')>0)
+      {{"Đồng ý"}}
+      @elseif($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
+      {{"Đã gửi"}}
+      @else
+      {{"Kết Bạn"}}
+    @endif</button></div>
 
       {{-- {{($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2'))>0?"Đã gửi":"Kết Bạn"}}
       {{($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2'))>0?"Đồng ý":""}} --}}
@@ -157,9 +157,11 @@
 
   </div>
   <div class="row clearfix form-inline d-flex justify-content-end  "  id="showbl{{$tc->id_post}}">
-
+        
   </div>
-
+  <div class="row clearfix form-inline d-none justify-content-center xemthem-{{$tc->id_post}} ">
+    <a href="" onclick="xthem(event)" id="{{$tc->id_post}}">Xem thêm</a>
+  </div>
 
   <div class="row bg-white ">
    &emsp;
@@ -171,6 +173,50 @@
 @endsection
 @section('js')
 <script>
+//xemthem
+function xthem(event)
+{
+  var aaa=event.target.id;
+  var binhluan='.dembl-'+aaa;
+  var count=$(binhluan).length;
+  event.preventDefault();
+  var str='{{Auth::user()->img}}';
+        if(str.indexOf('https://graph.facebook.com')!==-1)
+        {
+          var img='{{Auth::user()->img}}';
+        }
+        else if(str.indexOf('https://lh3.googleusercontent.com')!==-1)
+        {
+          var img='{{Auth::user()->img}}';
+        }
+        else
+        {
+          var img='/frontend/{{Auth::user()->img}}';
+          // console.log(img);
+        }
+       // hien thi tat ca binh luan co id_cha la null
+       $.get('/api/binhluan/'+aaa+'?kq='+count, function(data) 
+       {
+        var ht=''
+        $.each(data,function(k,v)
+        {
+          ht='<div class="form-inline container-fluid form-inline d-flex justify-content-center" style="border-left: 2px solid black"><img src="'+v.images+'" alt="" class="media  rounded-circle mr-2   " style="width:50px;height:50px"  >'+
+          '<input type="text" class="form-control col-lg-11 mb-2 hienthibl  dembl-'+v.id_post+'" disabled value="'+v.content+'"></div>'+
+          '<div class="mr-5"><a href=""  class="mr-2 " id="xbl-'+v.id_comment+'" onclick="tatxbl(event)">Xem bình luận</a>'+
+          '<a href=""  class="traloi" id="traloi-'+v.id_comment+'" onclick="tat(event)">Trả lời</a></div>'+
+          '<div class="d-none form-inline container-fluid justify-content-center traloibl  " id="otl-'+v.id_comment+'" ><img src="'+img+'" alt="" class="media  rounded-circle mr-2 idPost " id="'+v.id_post+'" style="width:50px;height:50px" ><input type="text"  class="form-control col-lg-8 mb-2 otlbl"  onchange="myFunction(event)" id="'+v.id_comment+'"></div>'+'<div  class="d-none form-inline container-fluid justify-content-end   " id="httl-'+v.id_comment+'" ></div>'+
+          '</div>';
+          var show='#showbl'+v.id_post;
+          $(show).append(ht);
+        });   
+        console.log(data);
+      });
+
+}
+
+
+
+
 
 //search
 $('#Search').on('keyup',function(){
@@ -284,10 +330,6 @@ $(document).ready(function()
 
 
 
-
-
-
-
   //Hien thi o nhap binh luan
   $(document).ready(function() {
     $('.binhluan').each(function(index, binhluanBtn){
@@ -317,7 +359,7 @@ $(document).ready(function()
           $.each(data,function(k,v)
           {
             ht+='<div class="form-inline container-fluid form-inline d-flex justify-content-center" style="border-left: 2px solid black"><img src="'+v.images+'" alt="" class="media  rounded-circle mr-2   " style="width:50px;height:50px"  >'+
-            '<input type="text" class="form-control col-lg-11 mb-2 hienthibl" disabled value="'+v.content+'"></div>'+
+            '<input type="text" class="form-control col-lg-11 mb-2 hienthibl  dembl-'+v.id_post+'" disabled value="'+v.content+'"></div>'+
             '<div class="mr-5"><a href=""  class="mr-2 " id="xbl-'+v.id_comment+'" onclick="tatxbl(event)">Xem bình luận</a>'+
             '<a href=""  class="traloi" id="traloi-'+v.id_comment+'" onclick="tat(event)">Trả lời</a></div>'+
             '<div class="d-none form-inline container-fluid justify-content-center traloibl  " id="otl-'+v.id_comment+'" ><img src="'+img+'" alt="" class="media  rounded-circle mr-2 idPost " id="'+v.id_post+'" style="width:50px;height:50px" ><input type="text"  class="form-control col-lg-8 mb-2 otlbl"  onchange="myFunction(event)" id="'+v.id_comment+'"></div>'+'<div  class="d-none form-inline container-fluid justify-content-end   " id="httl-'+v.id_comment+'" ></div>'+
@@ -325,7 +367,15 @@ $(document).ready(function()
             var show='#showbl'+v.id_post;
             $(show).html(ht);
           });   
+        var binhluan='.dembl-'+idPost;
+        var count=$(binhluan).length;
+        var xt='.xemthem-'+idPost;
+        if(count>=5)
+        {
+          $(xt).addClass('d-flex'); 
+        }
         });
+
       });
     })
   });
@@ -358,7 +408,7 @@ $(document).ready(function()
         $.each(data,function(k,v)
         {
           ht+='<div class="form-inline container-fluid form-inline d-flex justify-content-center"><img src="'+v.images+'" alt="" class="media  rounded-circle mr-2   " style="width:50px;height:50px" >'+
-          '<input type="text" class="form-control col-lg-11 mb-2 hienthibl" disabled value="'+v.content+'"></div>'+
+          '<input type="text" class="form-control col-lg-11 mb-2 hienthibl dembl-'+v.id_post+'" disabled value="'+v.content+'"></div>'+
           '<div class="mr-5"><a href="" class="mr-2" id="xbl-'+v.id_comment+'"  onclick="tatxbl(event)">Xem bình luận</a>'+
           '<a href=""  class="traloi" id="traloi-'+v.id_comment+'" onclick="tat(event)">Trả lời</a></div>'+
           '<div class="d-none form-inline container-fluid justify-content-center traloibl  " id="otl-'+v.id_comment+'" ><img src="'+img+'" alt="" class="media  rounded-circle mr-2 idPost " id="'+v.id_post+'" style="width:50px;height:50px" ><input type="text"  class="form-control col-lg-8 mb-2 otlbl"  onchange="myFunction(event)" id="'+v.id_comment+'"></div>'+'<div  class="d-none form-inline container-fluid justify-content-end   " id="httl-'+v.id_comment+'" ></div>'+
@@ -440,6 +490,17 @@ function tatxbl(event)
             $.get('/api/traloibl/'+idcomment, function(data) 
             {
               var ht=''
+              if(data.length=="")
+              {
+                 $(httl).html('<div class="text-warning phanhoi">Không có phản hồi bình luận</div>');
+                 setTimeout(function(){
+
+                    $('.phanhoi').addClass('d-none');
+
+                 },2000);
+              }
+              else
+              {
               $.each(data,function(k,v)
               {
                 ht+='<div class="form-inline container-fluid form-inline d-flex justify-content-center" style="border-left: 2px solid blue" ><img src="'+v.images+'" alt="" class="media  rounded-circle mr-2   " style="width:50px;height:50px" >'+
@@ -450,7 +511,9 @@ function tatxbl(event)
                 '</div>';
                 $(httl).html(ht);
               });   
+            }
             });
+
           }
 
         </script>

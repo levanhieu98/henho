@@ -31,7 +31,7 @@ class BinhluanController extends Controller
      */
     public function store(Request $request)
     {
-
+    
 
       $data=new comment();
       $data->content=$request->content;
@@ -40,7 +40,7 @@ class BinhluanController extends Controller
       $data->id_user=$request->id_user;
       $data->images=$request->img;
       $data->save();
-      $binhluan=comment::where('id_cha',null)->where('id_post',$request->id_post)->get();
+      $binhluan=comment::where('id_cha',null)->where('id_post',$request->id_post)->skip($request->kq)->take(5)->get();
         return response()->json($binhluan);
 
   }
@@ -51,9 +51,9 @@ class BinhluanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        $binhluan=comment::where('id_cha',null)->where('id_post',$id)->get();
+        $binhluan=comment::where('id_cha',null)->where('id_post',$id)->skip($request->kq)->take(5)->get();
         return response()->json($binhluan);
     
     }

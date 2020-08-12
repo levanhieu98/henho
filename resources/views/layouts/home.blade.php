@@ -56,7 +56,7 @@
               <ul class="dropdown-menu">
                 <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="bx bx-images mr-50"></i>Đổi ảnh đại diện</a></li>
                 <li><a href="/suathongtin"><i class="bx bx-user mr-50"></i>Sửa thông tin</a></li>
-                <li><a href="/doimatkhau"><i class=" bx bx-hive mr-50"></i>Đổi mật khẩu</a></li>
+                <li class="{{(strpos(Auth::user()->img, 'img'))!==false?"":"d-none"}}"><a href="/doimatkhau"><i class=" bx bx-hive mr-50 "></i>Đổi mật khẩu</a></li>
                 <li class="divider"></li>
                 <li><a href="/logout"><i class="bx bx-power-off mr-50"></i>Đăng xuất</a></li>  
               </ul>

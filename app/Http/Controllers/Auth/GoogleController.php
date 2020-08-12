@@ -13,30 +13,33 @@ use Illuminate\Support\Str;
 
 class GoogleController extends Controller
 {
-     public function redirect()
-    {
-        return Socialite::driver('google')->redirect();
-    }
+   public function redirect()
+   {
+    return Socialite::driver('google')->redirect();
+}
 /**
      * Return a callback method from google api.
      *
      * @return callback URL from google
      */
-    public function callback()
-    {
-        $user = Socialite::driver('google')->user();
-      $user = User::firstOrCreate([
-                    'email' => $user->email
-                ], [
-                    'name' => $user->name,
-                    'password' => Hash::make(Str::random(24)),
-                    'email_verified_at' =>now(),
-                    'img'=>$user->avatar,
-                    'role'=>0,
-                    'status'=>0,
-                ]);
-                Auth::login($user, true);
-                return redirect('/trangchu');
-        
-    }
+public function callback()
+{
+    $user = Socialite::driver('google')->user();
+    $user = User::firstOrCreate([
+        'email' => $user->email
+    ], [
+        'name' => $user->name,
+        'password' => Hash::make(Str::random(24)),
+        'email_verified_at' =>now(),
+        'img'=>$user->avatar,
+        'role'=>0,
+        'city'=>4,
+        'district'=>12,
+        'ward'=>14140,
+        'status'=>0,
+    ]);
+    Auth::login($user, true);
+    return redirect('/trangchu');
+    
+}
 }

@@ -19,35 +19,34 @@ use Illuminate\Support\Facades\Route;
 Route::get('/','frontendController@index')->middleware(['guest'])->name('giaodien');
 Route::get('/trangchu', 'frontendController@trangchu')->middleware(['verified','checkadmin','checkstatus'])->name('personal');
 Route::group(['middleware' => ['checkstatus','checkadmin']], function() {
-	Route::get('/canhan', 'frontendController@canhan');
-	Route::get('/banbe', 'frontendController@banbe');
-	Route::get('/thuvienanh', 'frontendController@thuvienanh');
-	Route::post('/hienthiAlbum','frontendController@hienthiAlbum');
-	Route::post('/taoAlbum','frontendController@taoAlbum');
-	Route::get('/status', 'frontendController@status');
-	Route::get('/caidat', 'frontendController@caidat');
-	Route::get('/doimatkhau','frontendController@doimk');
-	Route::post('/capnhat','frontendController@capnhat');
+	Route::get('/canhan', 'UserController@canhan');
+	Route::get('/banbe', 'UserController@banbe');
+	Route::get('/thuvienanh', 'UserController@thuvienanh');
+	Route::post('/hienthiAlbum','UserController@hienthiAlbum');
+	Route::post('/taoAlbum','UserController@taoAlbum');
+	Route::get('/status', 'UserController@status');
+	Route::get('/doimatkhau','UserController@doimk');
+	Route::post('/capnhat','UserController@capnhat');
 	Route::get('/messages','messagesController@messages');
 	Route::get('/contentmassage/{id}','messagesController@contentmassage');
 	Route::post('/ketquatimkiem', 'messagesController@ketquatimkiem')->name('search');
 	Route::post('/sentmessages','messagesController@sendmassges');
-	Route::post('/doianhdaidien','frontendController@doianhdaidien');
-	Route::get('/suathongtin', 'frontendController@suathongtin');
-	Route::post('/dulieusua', 'frontendController@dulieusua');
-	Route::post('/baidang','frontendController@baidang');
-	Route::get('/suabaidang/{id_post}/{id_user}','frontendController@suabaidang');
-	Route::post('/dulieusuabaidang/{id_post}','frontendController@dulieusuabaidang');
-	Route::get('/xoabaidang/{id_post}','frontendController@xoabaidang');
-	Route::get('/trangtimkiem', 'frontendController@trangtimkiem');
-	Route::get('/trangtimkiem/search', 'frontendController@search');
-	Route::get('/chitietcanhan/{id}','frontendController@chitietcanhan');
+	Route::post('/doianhdaidien','UserController@doianhdaidien');
+	Route::get('/suathongtin', 'UserController@suathongtin');
+	Route::post('/dulieusua', 'UserController@dulieusua');
+	Route::post('/baidang','UserController@baidang');
+	Route::get('/suabaidang/{id_post}/{id_user}','UserController@suabaidang');
+	Route::post('/dulieusuabaidang/{id_post}','UserController@dulieusuabaidang');
+	Route::get('/xoabaidang/{id_post}','UserController@xoabaidang');
+	Route::get('/trangtimkiem', 'SearchController@trangtimkiem');
+	Route::get('/trangtimkiem/search', 'SearchController@search');
+	Route::get('/chitietcanhan/{id}','UserController@chitietcanhan');
 	Route::post('/ketban','friendsController@ketban');
-	Route::get('/danhgia', 'frontendController@danhgia');
-	Route::post('/dulieudanhgia','frontendController@dulieudanhgia');
+	Route::get('/danhgia', 'UserController@danhgia');
+	Route::post('/dulieudanhgia','UserController@dulieudanhgia');
 	//Kiem tra tat ca trang thai online hay offline cua tat cua user
 	Route::get('/check', 'UserController@userOnlineStatus');
-	Route::post('/searchtrangchu','frontendController@searchtrangchu');
+	Route::post('/searchtrangchu','SearchController@searchtrangchu');
 });
 
 
@@ -108,14 +107,14 @@ Route::group(['prefix' => 'admin','middleware'=>'checkRole'], function() {
 	Route::post('xuly','admin\contact@xuly');
 
 //users
-	Route::get('dsuser', 'admin\userController@dsuser');
-	Route::get('khoataikhoan/{id}', 'admin\userController@khoataikhoan');
-	Route::get('motaikhoan/{id}', 'admin\userController@motaikhoan');
+	Route::get('dsuser', 'admin\adminController@dsuser');
+	Route::get('khoataikhoan/{id}', 'admin\adminController@khoataikhoan');
+	Route::get('motaikhoan/{id}', 'admin\adminController@motaikhoan');
 //admin
-	Route::get('dsadmin','admin\userController@dsadmin')->middleware('checkroleadmin');
-	Route::get('themquantri', 'admin\userController@themquantri')->middleware('checkroleadmin');
-	Route::post('dthemquantri','admin\userController@dthemquantri')->middleware('checkroleadmin');
-	Route::get('xoaadmin/{id}','admin\userController@xoaadmin');
+	Route::get('dsadmin','admin\adminController@dsadmin')->middleware('checkroleadmin');
+	Route::get('themquantri', 'admin\adminController@themquantri')->middleware('checkroleadmin');
+	Route::post('dthemquantri','admin\adminController@dthemquantri')->middleware('checkroleadmin');
+	Route::get('xoaadmin/{id}','admin\adminController@xoaadmin');
 
 });
 
