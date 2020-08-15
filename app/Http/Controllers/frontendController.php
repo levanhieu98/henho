@@ -58,12 +58,12 @@ class frontendController extends Controller
     )");
 
     
-
+    $comment=comment::select('id_post')->get();
     $like=Like::select('id_post','id_user')->get();
     $friend=Friend::select('user_id_2','user_id_1')->Where('approved',0)->get();
 // dd($friend);
 
-    return view('frontend.trangchu', compact(['trangchu','users','like','friend']));
+    return view('frontend.trangchu', compact(['trangchu','users','like','friend','comment']));
 
   }
 

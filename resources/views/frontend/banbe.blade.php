@@ -16,21 +16,19 @@
         <h4>Danh sách</h4>
         <ul >
           @foreach($yc as $tc)
-          <li> 
+          <li class="tt-{{$tc->id}}"> 
            <div class="media col-lg-12 float-left mt-2 resume-item "  >
             <div class="media-left">
-             @if (strpos($tc->img, 'https://graph.facebook.com') !== false) 
-             <a href="/chitietcanhan/{{$tc->id}}"><img src="{{$tc->img}}" class="media-object "  alt=""></a>
-             @elseif (strpos($tc->img, 'https://lh3.googleusercontent.com') !== false) 
-             <a href="/chitietcanhan/{{$tc->id}}"> <img src="{{$tc->img}}" class="media-object " alt=""></a>
-             @else
+             @if (strpos($tc->img, 'img') !== false) 
              <a href="/chitietcanhan/{{$tc->id}}"><img src="{{'frontend/'.$tc->img}}"  alt=""></a>
+             @else
+             <a href="/chitietcanhan/{{$tc->id}}"> <img src="{{$tc->img}}" class="media-object " alt=""></a>
              @endif
            </div>
            <div class="media-body mt-3">
             <p class="name" >{{$tc->name}}</p>
           </div>
-          <div id="heart" ><button class="btn-success mt-3 rounded" style="margin-left:-150px" onclick="friend(event)" id="{{$tc->id}}" type="button">Đồng ý</button></div>
+          <div id="heart" ><button class="btn-success mt-3 rounded  " style="margin-left:-150px" onclick="friend(event)" id="{{$tc->id}}" type="button">Đồng ý</button></div>
         </div>
       </li>
       @endforeach 
@@ -40,21 +38,19 @@
     <h3 class="resume-title">Danh sách bạn bè</h3>
     <ul>
       @foreach($fr as $index=>$tc)
-      <li> 
+      <li class="tt-{{$tc->id}}"> 
        <div class="media col-lg-12 float-left mt-2 resume-item"  >
         <div class="media-left">
-         @if (strpos($tc->img, 'https://graph.facebook.com') !== false) 
-         <a href="/chitietcanhan/{{$tc->id}}"><img src="{{$tc->img}}" class="media-object "  alt=""></a>
-         @elseif (strpos($tc->img, 'https://lh3.googleusercontent.com') !== false) 
-         <a href="/chitietcanhan/{{$tc->id}}"> <img src="{{$tc->img}}" class="media-object " alt=""></a>
-         @else
+         @if (strpos($tc->img, 'img') !== false) 
          <a href="/chitietcanhan/{{$tc->id}}"><img src="{{'frontend/'.$tc->img}}"  alt=""></a>
+         @else
+         <a href="/chitietcanhan/{{$tc->id}}"> <img src="{{$tc->img}}" class="media-object " alt=""></a>
          @endif
        </div>
        <div class="media-body mt-3">
         <p class="name" >{{$tc->name}}</p>
       </div>
-      <div id="heart" class="mt-3 " ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$tc->id}}" type="button">Hủy kết bạn </button></div>
+      <div id="heart" class="mt-3 " ><button class="btn-success mt-1 rounded" onclick="unfriend(event)" id="{{$tc->id}}" type="button">Hủy kết bạn </button></div>
     </div>
   </li>
   @endforeach 
@@ -85,6 +81,33 @@
     {
       console.log(data);
       $('#alert').html('Thao tác thành công');
+      var kq='.tt-'+event.target.id;
+      $(kq).addClass('d-none');
+    }
+    
+  }); 
+}
+
+function unfriend(event)
+  { //$('#alert').html("");
+  // alert(event.target.id);
+  // event.preventDefault();
+  $.ajax({
+    url:'/huyketban',
+    type:'POST',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data:{
+      'id_user1':{{Auth::id()}},
+      'id_user2':event.target.id,
+    },
+    success: function (data)
+    {
+      console.log(data);
+      $('#alert').html('Thao tác thành công');
+      var kq='.tt-'+event.target.id;
+      $(kq).addClass('d-none');
     }
     
   }); 

@@ -10,12 +10,10 @@
 
     <div class="row">
       <div class="col-lg-4" data-aos="fade-right">
-        @if (strpos($profile[0]->img, 'https://graph.facebook.com') !== false) 
-        <img src="{{$profile[0]->img}}" class="img-fluid" alt="" style="width:300px;height:250px">
-        @elseif (strpos($profile[0]->img, 'https://lh3.googleusercontent.com') !== false) 
-        <img src="{{$profile[0]->img}}" class="img-fluid" alt="" style="width:300px;height:250px">
-        @else
+        @if (strpos($profile[0]->img, 'img') !== false) 
         <img src="{{'/frontend/'.$profile[0]->img}}" class="img-fluid" alt="" style="width:300px;height:250px">
+        @else
+        <img src="{{$profile[0]->img}}" class="img-fluid" alt="" style="width:300px;height:250px">
         @endif
       </div>
       <div class="col-lg-8 pt-4 pt-lg-0 content " data-aos="fade-left">
@@ -89,12 +87,10 @@
         <div class="row clearfix border-bottom">
           <div class="media col-lg-10 float-left mt-2"  >
             <div class="media-left">
-             @if (strpos($tc->img, 'https://graph.facebook.com') !== false) 
-             <a href="/chitietcanhan/{{$tc->id}}"><img src="{{$tc->img}}" class="media-object "  alt=""></a>
-             @elseif (strpos($tc->img, 'https://lh3.googleusercontent.com') !== false) 
-             <a href="/chitietcanhan/{{$tc->id}}"> <img src="{{$tc->img}}" class="media-object " alt=""></a>
-             @else
+             @if (strpos($tc->img, 'img') !== false) 
              <a href="/chitietcanhan/{{$tc->id}}"><img src="{{'/frontend/'.$tc->img}}"  alt=""></a>
+             @else
+             <a href="/chitietcanhan/{{$tc->id}}"> <img src="{{$tc->img}}" class="media-object " alt=""></a>
              @endif
              
            </div>
@@ -134,7 +130,9 @@
   <div class="row clearfix form-inline d-flex justify-content-end  "  id="showbl{{$tc->id_post}}">
 
   </div>
-
+  <div class="row clearfix form-inline d-none justify-content-center xemthem-{{$tc->id_post}} ">
+    <a href="" onclick="xthem(event)" id="{{$tc->id_post}}">Xem thêm</a>
+  </div>
 
   <div class="row bg-white ">
    &emsp;
@@ -150,6 +148,43 @@
 @section('js')
 <script >
 
+//xemthem
+function xthem(event)
+{
+  var idp=event.target.id;
+  var binhluan='.dembl-'+idp;
+  var count=$(binhluan).length;
+  event.preventDefault();
+  var str='{{Auth::user()->img}}';
+  if(str.indexOf('img')!==-1)
+  {
+    var img='/frontend/{{Auth::user()->img}}';
+  }
+  else
+  {
+   var img='{{Auth::user()->img}}';
+          // console.log(img);
+        }
+       // hien thi tat ca binh luan co id_cha la null
+       $.get('/api/binhluan/'+idp+'?kq='+count, function(data) 
+       {
+        var ht=''
+        $.each(data,function(k,v)
+        {
+
+          ht='<div class="form-inline container-fluid form-inline d-flex justify-content-center" style="border-left: 2px solid black"><img src="'+v.images+'" alt="" class="media  rounded-circle mr-2   " style="width:50px;height:50px"  >'+
+          '<input type="text" class="form-control col-lg-11 mb-2 hienthibl  dembl-'+v.id_post+'" disabled value="'+v.content+'"></div>'+
+          '<div class="mr-5"><a href=""  class="mr-2 " id="xbl-'+v.id_comment+'" onclick="tatxbl(event)">Xem bình luận</a>'+
+          '<a href=""  class="traloi" id="traloi-'+v.id_comment+'" onclick="tat(event)">Trả lời</a></div>'+
+          '<div class="d-none form-inline container-fluid justify-content-center traloibl  " id="otl-'+v.id_comment+'" ><img src="'+img+'" alt="" class="media  rounded-circle mr-2 idPost " id="'+v.id_post+'" style="width:50px;height:50px" ><input type="text"  class="form-control col-lg-8 mb-2 otlbl"  onchange="myFunction(event)" id="'+v.id_comment+'"></div>'+'<div  class="d-none form-inline container-fluid justify-content-end   " id="httl-'+v.id_comment+'" ></div>'+
+          '</div>';
+          var show='#showbl'+v.id_post;
+          $(show).append(ht);
+        });   
+        console.log(data);
+      });
+
+     }
 
 //ketban
 function friend(event)
@@ -249,23 +284,19 @@ $(document).ready(function(){
 
 
 
-  //Hien thi o nhap binh luan
-  $(document).ready(function() {
-    $('.binhluan').each(function(index, binhluanBtn){
-      $(binhluanBtn).click(function(event) {
-        var idPost=event.target.value;
-        var str='{{Auth::user()->img}}';
-        if(str.indexOf('https://graph.facebook.com')!==-1)
-        {
-          var img='{{Auth::user()->img}}';
-        }
-        else if(str.indexOf('https://lh3.googleusercontent.com')!==-1)
-        {
-          var img='{{Auth::user()->img}}';
-        }
-        else
-        {
-          var img='/frontend/{{Auth::user()->img}}';
+ //Hien thi o nhap binh luan
+ $(document).ready(function() {
+  $('.binhluan').each(function(index, binhluanBtn){
+    $(binhluanBtn).click(function(event) {
+      var idPost=event.target.value;
+      var str='{{Auth::user()->img}}';
+      if(str.indexOf('img')!==-1)
+      {
+        var img='/frontend/{{Auth::user()->img}}';
+      }
+      else
+      {
+       var img='{{Auth::user()->img}}';
           // console.log(img);
         }
         var show='<img src="'+img+'" alt="" class="media  rounded-circle mr-2  " style="width:50px;height:50px" >'+' <input type="text" name="content" id="binhluanpost-'+event.target.value+'" class="form-control rounded mb-2 col-lg-8 bl" placeholder="Nhập bình luận"  >';
@@ -278,7 +309,7 @@ $(document).ready(function(){
           $.each(data,function(k,v)
           {
             ht+='<div class="form-inline container-fluid form-inline d-flex justify-content-center" style="border-left: 2px solid black"><img src="'+v.images+'" alt="" class="media  rounded-circle mr-2   " style="width:50px;height:50px"  >'+
-            '<input type="text" class="form-control col-lg-11 mb-2 hienthibl" disabled value="'+v.content+'"></div>'+
+            '<input type="text" class="form-control col-lg-11 mb-2 hienthibl  dembl-'+v.id_post+'" disabled value="'+v.content+'"></div>'+
             '<div class="mr-5"><a href=""  class="mr-2 " id="xbl-'+v.id_comment+'" onclick="tatxbl(event)">Xem bình luận</a>'+
             '<a href=""  class="traloi" id="traloi-'+v.id_comment+'" onclick="tat(event)">Trả lời</a></div>'+
             '<div class="d-none form-inline container-fluid justify-content-center traloibl  " id="otl-'+v.id_comment+'" ><img src="'+img+'" alt="" class="media  rounded-circle mr-2 idPost " id="'+v.id_post+'" style="width:50px;height:50px" ><input type="text"  class="form-control col-lg-8 mb-2 otlbl"  onchange="myFunction(event)" id="'+v.id_comment+'"></div>'+'<div  class="d-none form-inline container-fluid justify-content-end   " id="httl-'+v.id_comment+'" ></div>'+
@@ -286,10 +317,18 @@ $(document).ready(function(){
             var show='#showbl'+v.id_post;
             $(show).html(ht);
           });   
+          var binhluan='.dembl-'+idPost;
+          var count=$(binhluan).length;
+          var xt='.xemthem-'+idPost;
+          if(count>=5)
+          {
+            $(xt).addClass('d-flex'); 
+          }
         });
+
       });
-    })
-  });
+  })
+});
 
   // binhluan
   $(document).on('keyup', '.bl', function(event) {
@@ -319,7 +358,7 @@ $(document).ready(function(){
         $.each(data,function(k,v)
         {
           ht+='<div class="form-inline container-fluid form-inline d-flex justify-content-center"><img src="'+v.images+'" alt="" class="media  rounded-circle mr-2   " style="width:50px;height:50px" >'+
-          '<input type="text" class="form-control col-lg-11 mb-2 hienthibl" disabled value="'+v.content+'"></div>'+
+          '<input type="text" class="form-control col-lg-11 mb-2 hienthibl dembl-'+v.id_post+'" disabled value="'+v.content+'"></div>'+
           '<div class="mr-5"><a href="" class="mr-2" id="xbl-'+v.id_comment+'"  onclick="tatxbl(event)">Xem bình luận</a>'+
           '<a href=""  class="traloi" id="traloi-'+v.id_comment+'" onclick="tat(event)">Trả lời</a></div>'+
           '<div class="d-none form-inline container-fluid justify-content-center traloibl  " id="otl-'+v.id_comment+'" ><img src="'+img+'" alt="" class="media  rounded-circle mr-2 idPost " id="'+v.id_post+'" style="width:50px;height:50px" ><input type="text"  class="form-control col-lg-8 mb-2 otlbl"  onchange="myFunction(event)" id="'+v.id_comment+'"></div>'+'<div  class="d-none form-inline container-fluid justify-content-end   " id="httl-'+v.id_comment+'" ></div>'+
@@ -328,6 +367,13 @@ $(document).ready(function(){
           $(show).html(ht);
 
         });
+        var binhluan='.dembl-'+idPost;
+        var count=$(binhluan).length;
+        var xt='.xemthem-'+idPost;
+        if(count>=5)
+        {
+          $(xt).addClass('d-flex'); 
+        }
       }
     })
     }
@@ -379,19 +425,15 @@ function myFunction(event) {
 function tatxbl(event)
 {
   var str='{{Auth::user()->img}}';
-  if(str.indexOf('https://graph.facebook.com')!==-1)
+  if(str.indexOf('img')!==-1)
   {
-    var img='{{Auth::user()->img}}';
-  }
-  else if(str.indexOf('https://lh3.googleusercontent.com')!==-1)
-  {
-    var img='{{Auth::user()->img}}';
+    var img='/frontend/{{Auth::user()->img}}';
   }
   else
   {
-    var img='/frontend/{{Auth::user()->img}}';
-                  // console.log(img);
-                }
+     var img='{{Auth::user()->img}}';
+          // console.log(img);
+  }
                 event.preventDefault();
                 var idcomment=event.target.id.split('-').pop();
                 var httl='#httl-'+idcomment;
@@ -403,15 +445,15 @@ function tatxbl(event)
               var ht=''
               if(data.length=="")
               {
-                 $(httl).html('<div class="text-warning phanhoi">Không có phản hồi bình luận</div>');
-                 setTimeout(function(){
+               $(httl).html('<div class="text-warning phanhoi">Không có phản hồi bình luận</div>');
+               setTimeout(function(){
 
-                    $('.phanhoi').addClass('d-none');
+                $('.phanhoi').addClass('d-none');
 
-                 },2000);
-              }
-              else
-              {
+              },2000);
+             }
+             else
+             {
               $.each(data,function(k,v)
               {
                 ht+='<div class="form-inline container-fluid form-inline d-flex justify-content-center" style="border-left: 2px solid blue" ><img src="'+v.images+'" alt="" class="media  rounded-circle mr-2   " style="width:50px;height:50px" >'+
@@ -423,10 +465,10 @@ function tatxbl(event)
                 $(httl).html(ht);
               });   
             }
-            });
+          });
 
           }
 
 
-    </script>
-    @endsection
+        </script>
+        @endsection

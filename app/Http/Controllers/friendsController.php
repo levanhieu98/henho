@@ -14,7 +14,7 @@ class friendsController extends Controller
     $fr=new Friend();
     $fr->user_id_1=$request->id_user1;
     $fr->user_id_2=$request->id_user2;
-    $user = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->first();
+    $user = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->first();
     $unfriend = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->where('approved',1)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',1)->first();
     if($unfriend)
     {
@@ -31,5 +31,14 @@ class friendsController extends Controller
   return response()->json($fr);
 }
 
-  
+public function huyketban(Request $request)
+{
+ $unfriend = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->where('approved',1)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',1)->first();
+ if($unfriend)
+ {
+   $fr=Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->where('approved',1)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',1)->delete();
+ } 
+}
+
+
 }

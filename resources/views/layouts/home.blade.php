@@ -41,12 +41,10 @@
   <header id="header">
     <div class="d-flex flex-column">
       <div class="profile">
-        @if (strpos(Auth::user()->img, 'https://graph.facebook.com') !== false) 
-        <img src="{{Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
-        @elseif (strpos(Auth::user()->img, 'https://lh3.googleusercontent.com') !== false) 
-        <img src="{{Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
+        @if (strpos(Auth::user()->img, 'img') !== false) 
+       <img src="{{'/frontend/'.Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
         @else
-        <img src="{{'/frontend/'.Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
+         <img src="{{Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
         @endif
         <div class="form-inline">
           <h1 class="text-light col-10 "><a href="index.html">{{Auth::user()->name}}</a></h1>
@@ -128,6 +126,24 @@
       // alert( data);
     });
   </script>
+
+  <script >    
+    $('#anh').change(function(){
+      var kq='<img id="blah" src="" alt="your image" style="max-width:180px" />';
+      $('#show').html(kq);
+    });
+    
+    function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#blah')
+                        .attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script>
 </body>
 
 </html>

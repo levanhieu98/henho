@@ -28,12 +28,10 @@
 
          <div class="media" >
           <div class="media-left">
-           @if (strpos($us->img, 'https://graph.facebook.com') !== false) 
-           <img src="{{$us->img}}" class="media-object" alt="">
-           @elseif (strpos($us->img, 'https://lh3.googleusercontent.com') !== false) 
-           <img src="{{$us->img}}" class="media-object" alt="">
-           @else
+           @if (strpos($us->img, 'img') !== false) 
            <img src="{{'frontend/'.$us->img}}" class="img-fluid" alt="">
+           @else
+           <img src="{{$us->img}}" class="media-object" alt="">
            @endif
          </div>
          <div class="media-body">

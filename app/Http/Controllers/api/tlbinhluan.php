@@ -43,9 +43,10 @@ class tlbinhluan extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
-         $binhluan=comment::where('id_cha',$id)->get();
+         // $binhluan=comment::where('id_cha',$id)->skip($request->kq1)->take(5)->get();
+          $binhluan=comment::where('id_cha',$id)->get();
         return response()->json($binhluan);
     }
 

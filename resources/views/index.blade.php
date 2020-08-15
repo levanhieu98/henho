@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="home">  
+<div class="home">  
     <div class="home_slider_container">
         <div class="owl-carousel owl-theme home_slider">
             <!-- Slider Item -->
@@ -260,7 +260,12 @@
                         @foreach($review as $rv)
                         <div class="owl-item">
                             <div class="test_item">
+                                @if (strpos($rv->img, 'img') !== false) 
+                                <div class="test_image"><img src="{{'/frontend/'.$rv->img}}" alt="https://unsplash.com/@anniegray" height="400"></div>
+                                @else
                                 <div class="test_image"><img src="{{$rv->img}}" alt="https://unsplash.com/@anniegray" height="400"></div>
+                                @endif
+
                                 <div class="test_icon"><img src="img/3920d71d13c859d49b8f51bdf2675082.jpg" alt=""></div>
                                 <div class="test_content_container">
                                     <div class="test_content">
@@ -269,7 +274,7 @@
                                             <div class="test_date">{{date('d-m-Y',strtotime($rv->date))}}</div>
                                         </div>
                                         <div class="test_quote_title">" {{$rv->content}} "</div>
-                                      {{--   <p class="test_quote_text"></p> --}}
+                                        {{--   <p class="test_quote_text"></p> --}}
                                     </div>
                                 </div>
                             </div>

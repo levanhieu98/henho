@@ -42,6 +42,8 @@ Route::group(['middleware' => ['checkstatus','checkadmin']], function() {
 	Route::get('/trangtimkiem/search', 'SearchController@search');
 	Route::get('/chitietcanhan/{id}','UserController@chitietcanhan');
 	Route::post('/ketban','friendsController@ketban');
+	Route::post('/huyketban','friendsController@huyketban');
+
 	Route::get('/danhgia', 'UserController@danhgia');
 	Route::post('/dulieudanhgia','UserController@dulieudanhgia');
 	//Kiem tra tat ca trang thai online hay offline cua tat cua user
