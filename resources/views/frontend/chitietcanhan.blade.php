@@ -25,17 +25,15 @@
               <li><i class="icofont-rounded-right"></i> <strong>Giới tính: </strong>{{($profile[0]->gender==1)?'Nam':'Nữ'}}</li>
               <li><i class="icofont-rounded-right"></i> <strong>Số điện thoại:</strong> {{$profile[0]->phone}}</li>
               <li><i class="icofont-rounded-right"></i> <strong>Quê quán:</strong> <span id="city"></span><span id="district"></span><span id="ward"></span></li>
-              <li><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$profile[0]->id}}" type="button"> 
-                @if($friend->where('user_id_2',Auth::id())->where('user_id_1',$profile[0]->id)->count('user_id_2')>0)
-                {{"Đồng ý"}}
-                @elseif($friend->where('user_id_2',$profile[0]->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
-                {{"Đã gửi"}}
+              <li class="btkb-{{$profile[0]->id}}">
+                @if($friend->where('user_id_2',$profile[0]->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
+                <button class="btn-success mt-1 rounded" onclick="unrequest(event)" id="{{$profile[0]->id}}" type="button">Hủy Yêu Cầu</button>
                 @elseif($friends->where('user_id_2',$profile[0]->id)->where('user_id_1',Auth::id())->count('user_id_2')>0||$friends->where('user_id_1',$profile[0]->id)->where('user_id_2',Auth::id())->count('user_id_2')>0)
-                {{"Hủy kết bạn"}}
+                <button class="btn-success mt-1 rounded " onclick="unfriend(event)" id="{{$profile[0]->id}}" type="button">Hủy Kết Bạn</button>
                 @else
-                {{"Kết bạn"}}
+                 <button class="btn-success mt-1 rounded " onclick="friend(event)" id="{{$profile[0]->id}}" type="button"> Kết Bạn</button>
                 @endif
-              </button>
+              
             </li>
           </ul>
         </div>
@@ -203,14 +201,62 @@ function friend(event)
     success: function (data)
     {
       console.log(data);
-      event.target.innerText="Đã gửi";
+      var vt='.btkb-'+event.target.id;
+     $(vt).html('<button class="btn-success mt-1 rounded " onclick="unrequest(event)" id="'+event.target.id+'"  type="button">Hủy Yêu Cầu </button>')
       
     }
 
   }); 
 }
 
+//huy ket ban 
+function unfriend(event)
+  { 
+  $.ajax({
+    url:'/huyketban',
+    type:'POST',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data:{
+      'id_user1':{{Auth::id()}},
+      'id_user2':event.target.id,
+    },
+    success: function (data)
+    {
+      console.log(data);
+      var vt='.btkb-'+event.target.id;
+     $(vt).html('<button class="btn-success mt-1 rounded " onclick="friend(event)" id="'+event.target.id+'"  type="button">Kết Bạn </button>')
+    }
+    
+  }); 
+}
 
+//huy yeu cau 
+
+function unrequest(event)
+ {
+  $.ajax({
+    url:'/huyyeucau',
+    type:'POST',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data:{
+      'id_user1':{{Auth::id()}},
+      'id_user2':event.target.id,
+    },
+    success: function (data)
+    {
+      console.log(data);
+     //  var vt='.bt-'+event.target.id;
+     // $(vt).addClass('d-none');
+     var vt='.btkb-'+event.target.id;
+     $(vt).html('<button class="btn-success mt-1 rounded " onclick="friend(event)" id="'+event.target.id+'"  type="button">Kết Bạn </button>')
+    }
+
+  }); 
+}
 
 
 

@@ -27,7 +27,7 @@
   </div>
   <div class="owl-carousel testimonials-carousel mt-5 " >
    @foreach($users as $b)
-   <div class="testimonial-item tenban tenban-{{$b->name}}"  data-aos="fade-up" data-aos-delay="100">
+   <div class="testimonial-item tenban tenban-{{$b->name}} "  data-aos="fade-up" data-aos-delay="100">
     <p>
       <i class="bx bxs-quote-alt-left quote-icon-left"></i>
       <a href="#">{{$b->name}}</a>
@@ -39,14 +39,14 @@
     <a href="/chitietcanhan/{{$b->id}}"><img src="{{$b->img}}" class="testimonial-img" alt=""></a>
     @endif
     {{-- <div id="heart"  ><a href="" ><i onclick="friend(event)" id="{{$b->id}}" class="bx bxs-heart " style="font-size:50px"></i></a></div> --}}
-    <div id="heart" ><button class="btn-success mt-1 rounded" onclick="friend(event)" id="{{$b->id}}" type="button"> 
+    <div id="heart" class="btkb-{{$b->id}}" >
       @if($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2')>0)
-      {{"Đồng ý"}}
-      @elseif($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
-      {{"Đã gửi"}}
+      <button class="btn-success mt-1 rounded bt-{{$b->id}} " onclick="friend(event)" id="{{$b->id}}" type="button"> Đồng ý</button>
+       @elseif($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2')>0)
+           <button class="btn-success mt-1 rounded " onclick="unrequest(event)" id="{{$b->id}}" type="button">Hủy Yêu Cầu</button>
       @else
-      {{"Kết Bạn"}}
-    @endif</button></div>
+       <button class="btn-success mt-1 rounded " onclick="friend(event)" id="{{$b->id}}" type="button">Kết Bạn</button>
+    @endif</div>
 
       {{-- {{($friend->where('user_id_2',$b->id)->where('user_id_1',Auth::id())->count('user_id_2'))>0?"Đã gửi":"Kết Bạn"}}
       {{($friend->where('user_id_2',Auth::id())->where('user_id_1',$b->id)->count('user_id_2'))>0?"Đồng ý":""}} --}}
@@ -319,8 +319,35 @@ function friend(event)
     success: function (data)
     {
       console.log(data);
-      event.target.innerText="Đã gửi";
+      var vt='.btkb-'+event.target.id;
       
+        $(vt).html('<button class="btn-success mt-1 rounded " onclick="unrequest(event)" id="'+data.user_id_2+'"  type="button">Hủy yêu cầu </button>');
+    }
+
+  }); 
+}
+
+//huy yeu cau 
+
+function unrequest(event)
+ {
+  $.ajax({
+    url:'/huyyeucau',
+    type:'POST',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data:{
+      'id_user1':{{Auth::id()}},
+      'id_user2':event.target.id,
+    },
+    success: function (data)
+    {
+      console.log(data);
+     //  var vt='.bt-'+event.target.id;
+     // $(vt).addClass('d-none');
+     var vt='.btkb-'+event.target.id;
+     $(vt).html('<button class="btn-success mt-1 rounded " onclick="friend(event)" id="'+event.target.id+'"  type="button">Kết Bạn </button>')
     }
 
   }); 

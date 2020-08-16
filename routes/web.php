@@ -43,7 +43,8 @@ Route::group(['middleware' => ['checkstatus','checkadmin']], function() {
 	Route::get('/chitietcanhan/{id}','UserController@chitietcanhan');
 	Route::post('/ketban','friendsController@ketban');
 	Route::post('/huyketban','friendsController@huyketban');
-
+	Route::post('/huyyeucau','friendsController@huyyeucau');
+	
 	Route::get('/danhgia', 'UserController@danhgia');
 	Route::post('/dulieudanhgia','UserController@dulieudanhgia');
 	//Kiem tra tat ca trang thai online hay offline cua tat cua user
