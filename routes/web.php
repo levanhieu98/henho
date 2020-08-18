@@ -44,6 +44,7 @@ Route::group(['middleware' => ['checkstatus','checkadmin']], function() {
 	Route::post('/ketban','friendsController@ketban');
 	Route::post('/huyketban','friendsController@huyketban');
 	Route::post('/huyyeucau','friendsController@huyyeucau');
+	Route::post('/huybo','friendsController@huybo');
 	
 	Route::get('/danhgia', 'UserController@danhgia');
 	Route::post('/dulieudanhgia','UserController@dulieudanhgia');

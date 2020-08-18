@@ -49,4 +49,10 @@ public function huyyeucau(Request $request)
   return response()->json($fr);
 }
 
+public function huybo(Request $request)
+{
+   $fr=Friend::where('user_id_1',$request->id_user2)->where('user_id_2', $request->id_user1)->where('approved',0)->delete();
+  return response()->json($fr);
+}
+
 }

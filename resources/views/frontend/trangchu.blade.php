@@ -213,7 +213,7 @@ function xthem(event)
           var show='#showbl'+v.id_post;
           $(show).append(ht);
         });   
-        console.log(data);
+        // console.log(data);
       });
      }
 

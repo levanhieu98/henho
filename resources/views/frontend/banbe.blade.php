@@ -28,7 +28,9 @@
            <div class="media-body mt-3">
             <p class="name" >{{$tc->name}}</p>
           </div>
-          <div id="heart" ><button class="btn-success mt-3 rounded  " style="margin-left:-150px" onclick="friend(event)" id="{{$tc->id}}" type="button">Đồng ý</button></div>
+          <div id="heart" ><button class="btn-success mt-3 btn-sm rounded  " style="margin-left:-150px" onclick="unrequest(event)" id="{{$tc->id}}" type="button">Hủy bỏ</button>
+            <button class="btn-success mt-3  btn-sm  rounded  " style="margin-left:-150px" onclick="friend(event)" id="{{$tc->id}}" type="button">Đồng ý</button>
+           </div>
         </div>
       </li>
       @endforeach 
@@ -50,7 +52,7 @@
        <div class="media-body mt-3">
         <p class="name" >{{$tc->name}}</p>
       </div>
-      <div id="heart" class="mt-3 " ><button class="btn-success mt-1 rounded" onclick="unfriend(event)" id="{{$tc->id}}" type="button">Hủy kết bạn </button></div>
+      <div id="heart" class="mt-3 " ><button class="btn-success mt-1 btn-sm rounded" onclick="unfriend(event)" id="{{$tc->id}}" type="button">Hủy kết bạn </button></div>
     </div>
   </li>
   @endforeach 
@@ -110,6 +112,29 @@ function unfriend(event)
       $(kq).addClass('d-none');
     }
     
+  }); 
+}
+
+function unrequest(event)
+ {
+  $.ajax({
+    url:'/huybo',
+    type:'POST',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data:{
+      'id_user1':{{Auth::id()}},
+      'id_user2':event.target.id,
+    },
+    success: function (data)
+    {
+      console.log(data);
+        var kq='.tt-'+event.target.id;
+      $(kq).addClass('d-none');
+       $('#alert').html('Thao tác thành công');
+    }
+
   }); 
 }
 </script>

@@ -167,6 +167,17 @@ function xthem(event)
        $.get('/api/binhluan/'+idp+'?kq='+count, function(data) 
        {
         var ht=''
+        var show='#showbl'+idp;
+        if(data.length==0)
+        { 
+          $(show).append('<div class="text-warning phanhoi form-inline container-fluid form-inline  justify-content-center">Không còn bình luận</div>');
+          setTimeout(function(){
+
+            $('.phanhoi').addClass('d-none');
+
+
+          },2000);
+        }
         $.each(data,function(k,v)
         {
 
@@ -179,7 +190,7 @@ function xthem(event)
           var show='#showbl'+v.id_post;
           $(show).append(ht);
         });   
-        console.log(data);
+        // console.log(data);
       });
 
      }

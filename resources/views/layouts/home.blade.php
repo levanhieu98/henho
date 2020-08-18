@@ -116,7 +116,8 @@
   @include('frontend.doianhdaidien')
 
   <script>
-    $.get( "api/thongbao/"+{{Auth::id()}}, function( data ) {
+    $(document).ready(function(){
+      $.get( "api/thongbao/"+{{Auth::id()}}, function( data ) {
       if(data>0)
       {
         $(".thongbao").addClass("d-flex");
@@ -125,6 +126,8 @@
       
       // alert( data);
     });
+    });
+    
   </script>
 
   <script >    
