@@ -51,6 +51,7 @@ Route::group(['middleware' => ['checkstatus','checkadmin']], function() {
 	//Kiem tra tat ca trang thai online hay offline cua tat cua user
 	Route::get('/check', 'UserController@userOnlineStatus');
 	Route::post('/searchtrangchu','SearchController@searchtrangchu');
+
 });
 
 
@@ -109,6 +110,7 @@ Route::group(['prefix' => 'admin','middleware'=>'checkRole'], function() {
 //contact
 	Route::get('contact','admin\contact@contact');
 	Route::post('xuly','admin\contact@xuly');
+	Route::get('xoalienhe/{id}','admin\contact@xoalienhe');
 
 //users
 	Route::get('dsuser', 'admin\adminController@dsuser');

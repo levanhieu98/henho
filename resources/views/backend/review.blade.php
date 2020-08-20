@@ -30,7 +30,7 @@
                             @foreach($review as $rv)
                             <tr>
                                 <td>{{$rv->Id_review}}</td>
-                                <td>{{date('d-m-Y'),$rv->date}}</td>
+                                <td>{{date("d-m-Y", strtotime($rv->date))}}</td>
                                 <td>{{$rv->content}}</td>
                                 <td>{{$rv->status}}</td>
                                 <td>{{$rv->id}}</td>

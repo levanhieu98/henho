@@ -102,7 +102,7 @@ public function khoataikhoan($id)
 public function motaikhoan($id)
 {
   user::where('id',$id)->update(['status'=>0]);
-  return redirect('admin/dsuser')->with('alert','Đã khóa tài khoản');
+  return redirect('admin/dsuser')->with('alert','Đã mở tài khoản');
 }
 
 public function dsadmin()

@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head><link rel="stylesheet" href="https://cdn.rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.js"></script>
+  <link rel="stylesheet" href="stylesheet.css">
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -27,7 +30,8 @@
   <!-- Template Main CSS File -->
   <link href="/assets/css/style.css" rel="stylesheet">
 
-
+  <!-- emoji -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.css">
   
 
 </head>
@@ -42,9 +46,9 @@
     <div class="d-flex flex-column">
       <div class="profile">
         @if (strpos(Auth::user()->img, 'img') !== false) 
-       <img src="{{'/frontend/'.Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
+        <img src="{{'/frontend/'.Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
         @else
-         <img src="{{Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
+        <img src="{{Auth::user()->img}}" class="img-fluid rounded-circle" alt="">
         @endif
         <div class="form-inline">
           <h1 class="text-light col-10 "><a href="index.html">{{Auth::user()->name}}</a></h1>
@@ -109,8 +113,11 @@
   <script src="/assets/vendor/aos/aos.js"></script>
   {{-- pusher_chat --}}
   <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
+  {{--Emoji --}}
+  <script type="text/javascript" src="https://cdn.rawgit.com/mervick/emojionearea/master/dist/emojionearea.min.js"></script>
   <!-- Template Main JS File -->
   <script src="/assets/js/main.js"></script>
+
   @yield('js')
   {{-- Thay doi anh --}}
   @include('frontend.doianhdaidien')
@@ -118,12 +125,12 @@
   <script>
     $(document).ready(function(){
       $.get( "api/thongbao/"+{{Auth::id()}}, function( data ) {
-      if(data>0)
-      {
-        $(".thongbao").addClass("d-flex");
-        $( "#tbketban" ).html( data );
-      }
-      
+        if(data>0)
+        {
+          $(".thongbao").addClass("d-flex");
+          $( "#tbketban" ).html( data );
+        }
+
       // alert( data);
     });
     });
@@ -137,16 +144,16 @@
     });
     
     function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#blah')
-                        .attr('src', e.target.result);
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-</script>
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#blah')
+          .attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
 </body>
 
 </html>

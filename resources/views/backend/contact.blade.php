@@ -33,8 +33,8 @@
                                 <td>{{$ct->email}}</td>
                                 <td>{{$ct->subject}}</td>
                                 <td>{{$ct->message}}</td>
-                                <td>{{date('d-m-Y'),$ct->date}}</td>
-                                <td><button type="button" class="bg-success btn-sm" onclick="xuly(event)" id="{{$ct->id}}">{{($ct->status)==1?"Đã xử lý":"Xử lý"}}</button></td>
+                                <td>{{date("d-m-Y", strtotime($ct->date))}}</td>
+                                <td><button type="button" class="bg-success btn-sm " onclick="xuly(event)" id="{{$ct->id}}">{{($ct->status)==1?"Đã xử lý":"Xử lý"}}</button> <a href="/admin/xoalienhe/{{$ct->id}}" class="btn bg-red waves-effect an-{{$ct->id}} {{$ct->status==1?'hidden':''}}" >Xoá</a></td>
                             </tr>
                             @endforeach   
                             </tbody>

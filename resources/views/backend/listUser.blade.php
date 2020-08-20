@@ -43,8 +43,8 @@
                                     <span class="text-secondary">Offline</span>
                                 @endif</td>
 
-                                <td> <a href="/admin/khoataikhoan/{{$us->id}}" class="btn bg-red waves-effect btn-sm" onClick="return confirm ('Bạn muốn khóa tài khoản ')">Khóa tài khoản</a> 
-                                    <a href="/admin/motaikhoan/{{$us->id}}" class="btn bg-blue btn-sm waves-effect" onClick="return confirm ('Bạn muổn mỏ tài khoản')">Mở tài khoản</a></td>
+                                <td> <a href="/admin/khoataikhoan/{{$us->id}}" class="btn bg-red waves-effect btn-sm {{$us->status==0?'':'hidden'}}" onClick="return confirm ('Bạn muốn khóa tài khoản ')">Khóa tài khoản</a> 
+                                    <a href="/admin/motaikhoan/{{$us->id}}" class="btn bg-blue btn-sm waves-effect {{$us->status==1?'':'hidden'}}" onClick="return confirm ('Bạn muổn mở tài khoản')">Mở tài khoản</a></td>
                                 </tr>  
                                 @endforeach 
                             </tbody>

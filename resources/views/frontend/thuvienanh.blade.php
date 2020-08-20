@@ -97,7 +97,7 @@
         <ul id="portfolio-flters">
 
           @foreach($albums as $a)
-          <li id="{{$a->id_album}}"  data-container="body" data-toggle="popover" data-placement="top" onclick="image(event)" >{{$a->name_album}}</li>
+          <li id="{{$a->id_album}}"  data-container="body" data-toggle="popover" data-placement="top" onclick="image(event)" title="{{date("d-m-Y", strtotime($a->dateCreated))}}" data-content="{{$a->description}}" >{{$a->name_album}}</li>
           @endforeach
         </ul>
       </div>

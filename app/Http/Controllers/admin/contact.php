@@ -32,4 +32,9 @@ class contact extends Controller
         // return redirect('/admin/contact');
 
     }
+
+    public function xoalienhe($id)
+    {    DB::table('contact')->where('id',$id)->where('status',0)->delete();
+        return redirect('admin/contact');
+    }
 }

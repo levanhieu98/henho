@@ -144,7 +144,8 @@
       },
       success:function(result){
        $($kq).html('Đã xử lý'); 
-             // console.log(result);
+        var an='.an-'+$id;
+        $(an).addClass('hidden');
            }
          });
   }
