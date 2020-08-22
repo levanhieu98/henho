@@ -32,7 +32,7 @@ class frontendController extends Controller
     $trangchu= DB::select(
       "select * from users JOIN  post ON users.id =post.id where post.public=1 and post.id 
       in
-      (select users.id from users where users.id in(select friends.user_id_1 as fr FROM friends WHERE friends.user_id_2 = ".Auth::id()." and friends.approved=1 union SELECT friends.user_id_2 as fr FROM friends WHERE friends.user_id_1 = ".Auth::id()." and friends.approved=1 union SELECT users.id FROM users WHERE users.id = ".Auth::id()."  ) )
+      (select users.id from users where users.id in(select friends.user_id_1 as fr FROM friends WHERE friends.user_id_2 = ".Auth::id()." and friends.approved=1 and friends.block=0 union SELECT friends.user_id_2 as fr FROM friends WHERE friends.user_id_1 = ".Auth::id()." and friends.approved=1 and friends.block=0 union SELECT users.id FROM users WHERE users.id = ".Auth::id()."  ) )
       or (post.public=0 and post.id=".Auth::id().")  ORDER BY date DESC  ");
 
 

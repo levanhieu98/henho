@@ -68,8 +68,8 @@ class UserController extends Controller
 		$profile=User::where('id',Auth::id())->get();
 		$post= DB::select("select * from users JOIN  post ON users.id =post.id where users.id=".Auth::id()."   ORDER BY date DESC ");
 		$like=Like::select('id_post','id_user')->get();
-		
-		return view('frontend.trangcanhan',compact(['profile','post','like']));
+		$comment=comment::select('id_post')->get();
+		return view('frontend.trangcanhan',compact(['profile','post','like','comment']));
 
 	}
 
@@ -86,7 +86,8 @@ class UserController extends Controller
 			$like=Like::select('id_post','id_user')->get();
 			$friend=Friend::select('user_id_2','user_id_1')->Where('approved',0)->get();
 			$friends=Friend::select('user_id_2','user_id_1')->Where('approved',1)->get();
-			return view('frontend.chitietcanhan',compact(['profile','post','like','friend','friends']));
+			$comment=comment::select('id_post')->get();
+			return view('frontend.chitietcanhan',compact(['profile','post','like','friend','friends','comment']));
 		}
 	}
 
@@ -183,8 +184,10 @@ class UserController extends Controller
 			WHERE
 			friends.user_id_1 = ".Auth::id()." and friends.approved=1
 		)");
-   // dd($yc);
-		return view('frontend.banbe',compact(['yc','fr']));
+
+		 $friend=Friend::select('user_id_2','user_id_1','block')->Where('approved',1)->get();
+   // dd($fr);
+		return view('frontend.banbe',compact(['yc','fr','friend']));
 
 	}
 

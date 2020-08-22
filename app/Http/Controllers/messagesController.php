@@ -24,7 +24,7 @@ class messagesController extends Controller
      FROM
      friends
      WHERE
-     friends.user_id_2 = ".Auth::id()." and friends.approved=1
+     friends.user_id_2 = ".Auth::id()." and friends.approved=1 and friends.block=0
 
      union
 
@@ -35,7 +35,7 @@ class messagesController extends Controller
      FROM
      friends
      WHERE
-     friends.user_id_1 = ".Auth::id()." and friends.approved=1
+     friends.user_id_1 = ".Auth::id()." and friends.approved=1 and friends.block=0
 
    ) group by users.id, users.name, users.img, users.email");
 

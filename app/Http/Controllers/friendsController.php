@@ -14,6 +14,7 @@ class friendsController extends Controller
     $fr=new Friend();
     $fr->user_id_1=$request->id_user1;
     $fr->user_id_2=$request->id_user2;
+    $fr->block=0;
     $user = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->first();
     $unrequest = Friend::where('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',0)->first();
     $unfriend = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->where('approved',1)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',1)->first();
@@ -53,6 +54,31 @@ public function huybo(Request $request)
 {
    $fr=Friend::where('user_id_1',$request->id_user2)->where('user_id_2', $request->id_user1)->where('approved',0)->delete();
   return response()->json($fr);
+}
+
+
+public function chan(Request $request)
+{
+  $block = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->where('approved',1)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',1)->first();
+  if($block)
+  {
+     $block = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->where('approved',1)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',1)->update(['block'=>Auth::id()]);
+  }
+  
+  return response()->json('chan');
+
+}
+
+public function huychan(Request $request)
+{
+  $block = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->where('approved',1)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',1)->first();
+  if($block)
+  {
+     $block = Friend::where('user_id_2',Auth::id())->where('user_id_1', '=', $request->id_user2)->where('approved',1)->orwhere('user_id_1',Auth::id())->where('user_id_2', '=', $request->id_user2)->where('approved',1)->update(['block'=>0]);
+  }
+  
+  return response()->json('huychan');
+
 }
 
 }

@@ -30,7 +30,7 @@
           </div>
           <div id="heart" ><button class="btn-success mt-3 btn-sm rounded  " style="margin-left:-150px" onclick="unrequest(event)" id="{{$tc->id}}" type="button">Hủy bỏ</button>
             <button class="btn-success mt-3  btn-sm  rounded  " style="margin-left:-150px" onclick="friend(event)" id="{{$tc->id}}" type="button">Đồng ý</button>
-           </div>
+          </div>
         </div>
       </li>
       @endforeach 
@@ -52,7 +52,14 @@
        <div class="media-body mt-3">
         <p class="name" >{{$tc->name}}</p>
       </div>
-      <div id="heart" class="mt-3 " ><button class="btn-success mt-1 btn-sm rounded" onclick="unfriend(event)" id="{{$tc->id}}" type="button">Hủy kết bạn </button></div>
+      <div id="heart" class="mt-3 row   " >
+        <button class="btn-success mt-1 btn-sm rounded mr-1 " onclick="unfriend(event)" id="{{$tc->id}}" type="button">Hủy kết bạn </button>
+        @if(($friend->where('user_id_2',Auth::id())->where('user_id_1',$tc->id)->where('block',0)->count('user_id_2')>0)||($friend->where('user_id_2',$tc->id)->where('user_id_1',Auth::id())->where('block',0)->count('user_id_2')>0))
+        <div class="blockfr-{{$tc->id}} "> <button class=" mt-1 btn-sm rounded mr-1  chan-{{$tc->id}} btn-info" onclick="blockfr(event)" id="{{$tc->id}}" type="button">Chặn</button> </div>
+        @elseif(($friend->where('user_id_2',Auth::id())->where('user_id_1',$tc->id)->where('block',Auth::id())->count('user_id_2')>0)||($friend->where('user_id_2',$tc->id)->where('user_id_1',Auth::id())->where('block',Auth::id())->count('user_id_2')>0)) 
+        <div class="aaa-{{$tc->id}}"> <button class="btn-info mt-1 btn-sm rounded  huy-{{$tc->id}}" onclick="unblockfr(event)" id="{{$tc->id}}" type="button">Hủy chặn</button> </div>
+        @endif
+      </div>
     </div>
   </li>
   @endforeach 
@@ -116,7 +123,7 @@ function unfriend(event)
 }
 
 function unrequest(event)
- {
+{
   $.ajax({
     url:'/huybo',
     type:'POST',
@@ -130,9 +137,63 @@ function unrequest(event)
     success: function (data)
     {
       console.log(data);
-        var kq='.tt-'+event.target.id;
+      var kq='.tt-'+event.target.id;
       $(kq).addClass('d-none');
-       $('#alert').html('Thao tác thành công');
+      $('#alert').html('Thao tác thành công');
+    }
+
+  }); 
+}
+
+function blockfr(event)
+{
+  $.ajax({
+    url:'/chan',
+    type:'POST',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data:{
+      'id_user1':{{Auth::id()}},
+      'id_user2':event.target.id,
+    },
+    success: function (data)
+    {
+      console.log(data);
+      var kq='.chan-'+event.target.id;
+      // $(kq).addClass('d-none');
+      var ht='.blockfr-'+event.target.id;
+      $(ht).html('<button class="btn-info mt-1 btn-sm rounded huy-'+event.target.id+' " onclick="unblockfr(event)" id="'+event.target.id+'" type="button">Hủy chặn</button>');
+       var ht1='.aaa-'+event.target.id;
+      $(ht1).html('<button class="btn-info mt-1 btn-sm rounded huy-'+event.target.id+' " onclick="unblockfr(event)" id="'+event.target.id+'" type="button">Hủy chặn</button>');
+      $('#alert').html('Thao tác thành công');
+    }
+
+  }); 
+}
+
+function unblockfr(event)
+{
+  $.ajax({
+    url:'/huychan',
+    type:'POST',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data:{
+      'id_user1':{{Auth::id()}},
+      'id_user2':event.target.id,
+    },
+    success: function (data)
+    {
+      console.log(data);
+      var kq='.huy-'+event.target.id;
+      // $(kq).addClass('d-none');
+      var ht1='.blockfr-'+event.target.id;
+      $(ht1).html('<button class=" mt-1 btn-sm rounded mr-1  chan-'+event.target.id+' btn-info" onclick="blockfr(event)" id="'+event.target.id+'" type="button">Chặn</button>');
+      var ht='.aaa-'+event.target.id;
+      $(ht).html('<button class=" mt-1 btn-sm rounded mr-1  chan-'+event.target.id+' btn-info" onclick="blockfr(event)" id="'+event.target.id+'" type="button">Chặn</button>');
+      $('#alert').html('Thao tác thành công');
     }
 
   }); 
