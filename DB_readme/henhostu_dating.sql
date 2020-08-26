@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost
--- Thời gian đã tạo: Th8 18, 2020 lúc 05:13 PM
+-- Thời gian đã tạo: Th8 27, 2020 lúc 12:06 AM
 -- Phiên bản máy phục vụ: 10.3.16-MariaDB-cll-lve
 -- Phiên bản PHP: 7.2.30
 
@@ -122,7 +122,11 @@ CREATE TABLE `albums` (
 INSERT INTO `albums` (`id_album`, `name_album`, `dateCreated`, `description`, `id`) VALUES
 (1, 'hehe', '2020-08-01', 'hihi', 51),
 (2, 'aaaaaaaaaaaaaaaaaaaaaaaa', '2020-08-05', 'hahahahahaha', 51),
-(8, 'Test Album lần cuối', '2020-08-14', 'AAAAAAAAAAAAAAAAAAAAAA', 62);
+(8, 'Test Album lần cuối', '2020-08-14', 'AAAAAAAAAAAAAAAAAAAAAA', 62),
+(10, 'Mãi là anh em', '2020-08-19', 'Kỉ niệm Vũng Tàu', 52),
+(11, 'hehehehehe', '2020-08-26', 'hehehehehe', 55),
+(12, 'demo 1', '2020-08-26', 'My memory at STU', 59),
+(13, 'hehehehehe', '2020-08-26', 'vui oi la vui', 54);
 
 -- --------------------------------------------------------
 
@@ -222,7 +226,10 @@ INSERT INTO `comment` (`id_comment`, `id_user`, `images`, `content`, `date`, `id
 (9, 51, '/frontend/img/diem.jpg', 'hehe', '2020-08-05', 3, 8),
 (10, 51, '/frontend/img/diem.jpg', 'hihi', '2020-08-05', 3, 9),
 (12, 51, '/frontend/img/diem.jpg', 'wow wow', '2020-08-05', 8, NULL),
-(37, 51, '/frontend/img/diem.jpg', 'hello bạn', '2020-08-17', 27, NULL);
+(37, 51, '/frontend/img/diem.jpg', 'hello bạn', '2020-08-17', 27, NULL),
+(55, 52, '/frontend/img/dat.jpg', 'hihi bạn', '2020-08-22', 27, NULL),
+(56, 51, '/frontend/img/diem.jpg', '(y)', '2020-08-24', 12, NULL),
+(57, 59, 'https://lh3.googleusercontent.com/a-/AOh14GhTv1Mywxqq84Jln6BxfVx9HVQS4fLho7N2rIGUfQ', 'oh', '2020-08-26', 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -251,7 +258,9 @@ INSERT INTO `contact` (`id`, `name`, `email`, `subject`, `message`, `date`, `sta
 (2, 'Diễm Ú', 'Diem@gmail.com', 'hello', 'hihihihi', '2020-07-13', 1, NULL, NULL, NULL),
 (4, 'Hiểu', 'acolmillado@cokils.com', 'hello hello', 'Test chuc nang', '2020-08-09', 1, NULL, NULL, NULL),
 (5, 'ABC', 'sneeuwla@xbombo.site', 'asfasfsafsa', 'sfaffffasfasfa', '2020-08-10', 1, NULL, NULL, NULL),
-(6, 'KhongCoTen', 'zakvormiger@khoastore.net', 'THắc về cái gì đó', 'Tôi muốn được hỗ trợ thêm về ABCD', '2020-08-17', 1, NULL, NULL, NULL);
+(6, 'KhongCoTen', 'zakvormiger@khoastore.net', 'THắc về cái gì đó', 'Tôi muốn được hỗ trợ thêm về ABCD', '2020-08-17', 1, NULL, NULL, NULL),
+(8, 'ssss', 'tragedietta@victorypointgames.org', 'hello', 'aDASDASFASFASFASFASFAS', '2020-08-20', 1, NULL, NULL, NULL),
+(10, 'Diễm Ú', 'tuufun@hotmail.red', 'hello', 'asdasasfasasdasd', '2020-08-24', 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -279,6 +288,7 @@ CREATE TABLE `friends` (
   `user_id_1` bigint(20) UNSIGNED NOT NULL,
   `user_id_2` bigint(20) UNSIGNED NOT NULL,
   `approved` tinyint(1) NOT NULL DEFAULT 0,
+  `block` tinyint(4) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -287,80 +297,87 @@ CREATE TABLE `friends` (
 -- Đang đổ dữ liệu cho bảng `friends`
 --
 
-INSERT INTO `friends` (`id`, `user_id_1`, `user_id_2`, `approved`, `created_at`, `updated_at`) VALUES
-(2, 51, 53, 1, '2020-08-01 14:33:45', '2020-08-01 16:35:47'),
-(3, 51, 54, 0, '2020-08-01 14:33:48', '2020-08-01 14:33:48'),
-(6, 55, 52, 1, '2020-08-02 14:50:44', '2020-08-05 07:57:32'),
-(7, 55, 53, 0, '2020-08-02 15:03:29', '2020-08-02 15:03:29'),
-(8, 52, 54, 0, '2020-08-02 15:37:56', '2020-08-02 15:37:56'),
-(9, 58, 51, 1, '2020-08-02 15:47:34', '2020-08-07 15:35:44'),
-(10, 59, 52, 1, '2020-08-02 15:53:58', '2020-08-05 07:57:32'),
-(11, 59, 53, 1, '2020-08-02 15:53:59', '2020-08-09 16:08:55'),
-(12, 59, 54, 0, '2020-08-02 15:54:03', '2020-08-02 15:54:03'),
-(13, 59, 55, 1, '2020-08-02 15:54:06', '2020-08-09 08:06:59'),
-(15, 51, 59, 0, '2020-08-05 04:51:04', '2020-08-05 04:51:04'),
-(16, 64, 52, 1, '2020-08-05 06:30:04', '2020-08-05 07:57:32'),
-(17, 64, 52, 1, '2020-08-05 06:32:23', '2020-08-05 07:57:32'),
-(18, 64, 58, 1, '2020-08-05 06:32:34', '2020-08-07 03:35:51'),
-(19, 64, 62, 1, '2020-08-05 06:32:36', '2020-08-09 07:32:16'),
-(21, 64, 52, 1, '2020-08-05 06:33:04', '2020-08-05 07:57:32'),
-(22, 51, 64, 1, '2020-08-05 06:36:14', '2020-08-08 12:28:18'),
-(25, 64, 53, 0, '2020-08-05 06:41:53', '2020-08-05 06:41:53'),
-(26, 64, 54, 1, '2020-08-05 06:41:53', '2020-08-09 08:00:55'),
-(27, 64, 58, 1, '2020-08-05 06:41:56', '2020-08-07 03:35:51'),
-(32, 67, 63, 0, '2020-08-05 21:30:20', '2020-08-05 21:30:20'),
-(34, 58, 68, 0, '2020-08-07 01:57:35', '2020-08-07 01:57:35'),
-(35, 69, 51, 1, '2020-08-07 01:58:40', '2020-08-07 15:35:44'),
-(36, 69, 53, 1, '2020-08-07 01:58:52', '2020-08-09 16:08:44'),
-(37, 72, 59, 0, '2020-08-07 02:30:25', '2020-08-07 02:30:25'),
-(38, 69, 55, 1, '2020-08-07 02:39:39', '2020-08-09 08:07:01'),
-(40, 82, 51, 1, '2020-08-07 06:46:54', '2020-08-07 15:35:44'),
-(41, 82, 53, 1, '2020-08-07 06:46:58', '2020-08-09 16:09:01'),
-(42, 82, 55, 1, '2020-08-07 06:47:01', '2020-08-09 08:08:32'),
-(43, 82, 58, 1, '2020-08-07 06:47:05', '2020-08-12 03:23:42'),
-(46, 69, 59, 0, '2020-08-07 12:03:24', '2020-08-07 12:03:24'),
-(49, 69, 63, 0, '2020-08-07 12:03:34', '2020-08-07 12:03:34'),
-(50, 69, 66, 0, '2020-08-07 12:03:42', '2020-08-07 12:03:42'),
-(52, 69, 78, 0, '2020-08-07 12:03:53', '2020-08-07 12:03:53'),
-(53, 84, 51, 1, '2020-08-07 12:31:25', '2020-08-07 15:35:44'),
-(54, 84, 58, 1, '2020-08-07 12:31:34', '2020-08-12 03:23:43'),
-(55, 84, 82, 0, '2020-08-07 12:32:11', '2020-08-07 12:32:11'),
-(67, 51, 68, 0, '2020-08-07 15:36:31', '2020-08-07 15:36:31'),
-(68, 77, 69, 1, '2020-08-07 16:39:01', '2020-08-07 16:39:40'),
-(69, 77, 69, 1, '2020-08-07 16:39:02', '2020-08-07 16:39:40'),
-(70, 77, 69, 1, '2020-08-07 16:39:02', '2020-08-07 16:39:40'),
-(71, 77, 69, 1, '2020-08-07 16:39:03', '2020-08-07 16:39:40'),
-(72, 77, 69, 1, '2020-08-07 16:39:03', '2020-08-07 16:39:40'),
-(73, 77, 69, 1, '2020-08-07 16:39:03', '2020-08-07 16:39:40'),
-(74, 77, 69, 1, '2020-08-07 16:39:05', '2020-08-07 16:39:40'),
-(75, 77, 69, 1, '2020-08-07 16:39:06', '2020-08-07 16:39:40'),
-(76, 77, 69, 1, '2020-08-07 16:39:07', '2020-08-07 16:39:40'),
-(77, 77, 69, 1, '2020-08-07 16:39:11', '2020-08-07 16:39:40'),
-(78, 77, 69, 1, '2020-08-07 16:39:20', '2020-08-07 16:39:40'),
-(86, 51, 71, 0, '2020-08-08 13:33:27', '2020-08-08 13:33:27'),
-(88, 51, 63, 0, '2020-08-08 13:40:26', '2020-08-08 13:40:26'),
-(90, 52, 58, 1, '2020-08-08 13:44:58', '2020-08-12 03:23:44'),
-(122, 54, 55, 1, '2020-08-09 08:14:18', '2020-08-09 08:14:26'),
-(123, 53, 58, 1, '2020-08-09 16:09:18', '2020-08-12 03:23:45'),
-(125, 58, 62, 1, '2020-08-12 03:26:30', '2020-08-12 06:12:51'),
-(131, 91, 51, 1, '2020-08-14 08:36:07', '2020-08-15 15:13:50'),
-(132, 91, 52, 1, '2020-08-14 08:36:08', '2020-08-16 14:58:30'),
-(133, 91, 90, 0, '2020-08-14 08:36:10', '2020-08-14 08:36:10'),
-(134, 91, 53, 1, '2020-08-14 08:36:15', '2020-08-16 14:57:55'),
-(135, 91, 54, 0, '2020-08-14 08:36:15', '2020-08-14 08:36:15'),
-(136, 94, 53, 1, '2020-08-14 16:14:02', '2020-08-16 14:57:56'),
-(137, 94, 54, 0, '2020-08-14 16:14:04', '2020-08-14 16:14:04'),
-(138, 94, 55, 0, '2020-08-14 16:14:05', '2020-08-14 16:14:05'),
-(139, 94, 59, 0, '2020-08-14 16:14:08', '2020-08-14 16:14:08'),
-(140, 94, 58, 1, '2020-08-14 16:14:16', '2020-08-15 02:31:31'),
-(141, 94, 52, 1, '2020-08-14 16:14:25', '2020-08-16 14:58:31'),
-(142, 94, 51, 1, '2020-08-14 16:14:27', '2020-08-15 15:13:52'),
-(143, 94, 62, 1, '2020-08-14 16:15:26', '2020-08-15 15:46:19'),
-(144, 91, 55, 0, '2020-08-15 05:07:42', '2020-08-15 05:07:42'),
-(145, 91, 59, 0, '2020-08-15 05:07:54', '2020-08-15 05:07:54'),
-(148, 65, 52, 0, '2020-08-15 16:15:11', '2020-08-15 16:15:11'),
-(149, 65, 53, 0, '2020-08-15 16:15:11', '2020-08-15 16:15:11'),
-(168, 62, 51, 0, '2020-08-17 15:44:33', '2020-08-17 15:44:33');
+INSERT INTO `friends` (`id`, `user_id_1`, `user_id_2`, `approved`, `block`, `created_at`, `updated_at`) VALUES
+(2, 51, 53, 1, 0, '2020-08-01 14:33:45', '2020-08-01 16:35:47'),
+(3, 51, 54, 0, 0, '2020-08-01 14:33:48', '2020-08-01 14:33:48'),
+(6, 55, 52, 1, 0, '2020-08-02 14:50:44', '2020-08-05 07:57:32'),
+(7, 55, 53, 0, 0, '2020-08-02 15:03:29', '2020-08-02 15:03:29'),
+(9, 58, 51, 1, 0, '2020-08-02 15:47:34', '2020-08-07 15:35:44'),
+(10, 59, 52, 1, 0, '2020-08-02 15:53:58', '2020-08-05 07:57:32'),
+(11, 59, 53, 1, 0, '2020-08-02 15:53:59', '2020-08-09 16:08:55'),
+(12, 59, 54, 1, 0, '2020-08-02 15:54:03', '2020-08-26 16:55:14'),
+(13, 59, 55, 1, 0, '2020-08-02 15:54:06', '2020-08-09 08:06:59'),
+(15, 51, 59, 1, 0, '2020-08-05 04:51:04', '2020-08-26 10:58:18'),
+(16, 64, 52, 1, 0, '2020-08-05 06:30:04', '2020-08-05 07:57:32'),
+(17, 64, 52, 1, 0, '2020-08-05 06:32:23', '2020-08-05 07:57:32'),
+(18, 64, 58, 1, 0, '2020-08-05 06:32:34', '2020-08-07 03:35:51'),
+(19, 64, 62, 1, 0, '2020-08-05 06:32:36', '2020-08-22 07:00:35'),
+(21, 64, 52, 1, 0, '2020-08-05 06:33:04', '2020-08-05 07:57:32'),
+(22, 51, 64, 1, 0, '2020-08-05 06:36:14', '2020-08-08 12:28:18'),
+(25, 64, 53, 0, 0, '2020-08-05 06:41:53', '2020-08-05 06:41:53'),
+(26, 64, 54, 1, 0, '2020-08-05 06:41:53', '2020-08-09 08:00:55'),
+(27, 64, 58, 1, 0, '2020-08-05 06:41:56', '2020-08-07 03:35:51'),
+(32, 67, 63, 0, 0, '2020-08-05 21:30:20', '2020-08-05 21:30:20'),
+(34, 58, 68, 0, 0, '2020-08-07 01:57:35', '2020-08-07 01:57:35'),
+(35, 69, 51, 1, 0, '2020-08-07 01:58:40', '2020-08-07 15:35:44'),
+(36, 69, 53, 1, 0, '2020-08-07 01:58:52', '2020-08-09 16:08:44'),
+(37, 72, 59, 1, 0, '2020-08-07 02:30:25', '2020-08-26 10:58:19'),
+(38, 69, 55, 1, 0, '2020-08-07 02:39:39', '2020-08-09 08:07:01'),
+(40, 82, 51, 1, 0, '2020-08-07 06:46:54', '2020-08-07 15:35:44'),
+(41, 82, 53, 1, 0, '2020-08-07 06:46:58', '2020-08-09 16:09:01'),
+(42, 82, 55, 1, 0, '2020-08-07 06:47:01', '2020-08-09 08:08:32'),
+(43, 82, 58, 1, 0, '2020-08-07 06:47:05', '2020-08-12 03:23:42'),
+(46, 69, 59, 1, 0, '2020-08-07 12:03:24', '2020-08-26 10:58:20'),
+(49, 69, 63, 0, 0, '2020-08-07 12:03:34', '2020-08-07 12:03:34'),
+(50, 69, 66, 0, 0, '2020-08-07 12:03:42', '2020-08-07 12:03:42'),
+(52, 69, 78, 0, 0, '2020-08-07 12:03:53', '2020-08-07 12:03:53'),
+(53, 84, 51, 1, 0, '2020-08-07 12:31:25', '2020-08-07 15:35:44'),
+(54, 84, 58, 1, 0, '2020-08-07 12:31:34', '2020-08-12 03:23:43'),
+(55, 84, 82, 0, 0, '2020-08-07 12:32:11', '2020-08-07 12:32:11'),
+(67, 51, 68, 0, 0, '2020-08-07 15:36:31', '2020-08-07 15:36:31'),
+(68, 77, 69, 1, 0, '2020-08-07 16:39:01', '2020-08-07 16:39:40'),
+(69, 77, 69, 1, 0, '2020-08-07 16:39:02', '2020-08-07 16:39:40'),
+(70, 77, 69, 1, 0, '2020-08-07 16:39:02', '2020-08-07 16:39:40'),
+(71, 77, 69, 1, 0, '2020-08-07 16:39:03', '2020-08-07 16:39:40'),
+(72, 77, 69, 1, 0, '2020-08-07 16:39:03', '2020-08-07 16:39:40'),
+(73, 77, 69, 1, 0, '2020-08-07 16:39:03', '2020-08-07 16:39:40'),
+(74, 77, 69, 1, 0, '2020-08-07 16:39:05', '2020-08-07 16:39:40'),
+(75, 77, 69, 1, 0, '2020-08-07 16:39:06', '2020-08-07 16:39:40'),
+(76, 77, 69, 1, 0, '2020-08-07 16:39:07', '2020-08-07 16:39:40'),
+(77, 77, 69, 1, 0, '2020-08-07 16:39:11', '2020-08-07 16:39:40'),
+(78, 77, 69, 1, 0, '2020-08-07 16:39:20', '2020-08-07 16:39:40'),
+(86, 51, 71, 0, 0, '2020-08-08 13:33:27', '2020-08-08 13:33:27'),
+(90, 52, 58, 1, 0, '2020-08-08 13:44:58', '2020-08-12 03:23:44'),
+(122, 54, 55, 1, 0, '2020-08-09 08:14:18', '2020-08-09 08:14:26'),
+(123, 53, 58, 1, 0, '2020-08-09 16:09:18', '2020-08-12 03:23:45'),
+(125, 58, 62, 1, 0, '2020-08-12 03:26:30', '2020-08-12 06:12:51'),
+(131, 91, 51, 1, 0, '2020-08-14 08:36:07', '2020-08-15 15:13:50'),
+(132, 91, 52, 1, 0, '2020-08-14 08:36:08', '2020-08-16 14:58:30'),
+(133, 91, 90, 0, 0, '2020-08-14 08:36:10', '2020-08-14 08:36:10'),
+(134, 91, 53, 1, 0, '2020-08-14 08:36:15', '2020-08-16 14:57:55'),
+(135, 91, 54, 1, 0, '2020-08-14 08:36:15', '2020-08-26 16:55:17'),
+(136, 94, 53, 1, 0, '2020-08-14 16:14:02', '2020-08-16 14:57:56'),
+(137, 94, 54, 1, 0, '2020-08-14 16:14:04', '2020-08-26 16:55:18'),
+(138, 94, 55, 0, 0, '2020-08-14 16:14:05', '2020-08-14 16:14:05'),
+(139, 94, 59, 1, 0, '2020-08-14 16:14:08', '2020-08-26 10:58:21'),
+(140, 94, 58, 1, 0, '2020-08-14 16:14:16', '2020-08-15 02:31:31'),
+(141, 94, 52, 1, 0, '2020-08-14 16:14:25', '2020-08-16 14:58:31'),
+(142, 94, 51, 1, 0, '2020-08-14 16:14:27', '2020-08-15 15:13:52'),
+(143, 94, 62, 1, 0, '2020-08-14 16:15:26', '2020-08-15 15:46:19'),
+(144, 91, 55, 0, 0, '2020-08-15 05:07:42', '2020-08-15 05:07:42'),
+(145, 91, 59, 1, 0, '2020-08-15 05:07:54', '2020-08-26 10:58:23'),
+(148, 65, 52, 0, 0, '2020-08-15 16:15:11', '2020-08-15 16:15:11'),
+(149, 65, 53, 0, 0, '2020-08-15 16:15:11', '2020-08-15 16:15:11'),
+(173, 51, 70, 0, 0, '2020-08-22 06:56:00', '2020-08-22 06:56:00'),
+(176, 62, 51, 0, 0, '2020-08-22 06:59:13', '2020-08-22 06:59:13'),
+(178, 52, 51, 1, 0, '2020-08-22 07:03:57', '2020-08-22 07:16:11'),
+(179, 104, 59, 1, 0, '2020-08-24 15:07:38', '2020-08-26 10:58:25'),
+(181, 106, 51, 0, 0, '2020-08-24 15:28:04', '2020-08-24 15:28:04'),
+(182, 106, 58, 1, 0, '2020-08-24 15:28:18', '2020-08-26 11:25:00'),
+(183, 106, 75, 0, 0, '2020-08-24 15:28:33', '2020-08-24 15:28:33'),
+(185, 108, 107, 0, 0, '2020-08-24 16:10:41', '2020-08-24 16:10:41'),
+(186, 108, 69, 0, 0, '2020-08-24 16:11:13', '2020-08-24 16:11:13'),
+(187, 59, 109, 0, 0, '2020-08-26 10:59:58', '2020-08-26 10:59:58');
 
 -- --------------------------------------------------------
 
@@ -403,7 +420,17 @@ INSERT INTO `images` (`id_image`, `name_image`, `id_album`) VALUES
 (22, '5nxb_f59db58b5e09083091e383cc232bd700.jpg', 7),
 (23, '99nn_0bde895d89f41570547e0dc0d87774ec.jpg', 8),
 (26, '9jsk_e0a8b98f2232e5a9c910ba6bd9d23d39.jpg', 8),
-(27, 'aPBw_f59db58b5e09083091e383cc232bd700.jpg', 8);
+(27, 'aPBw_f59db58b5e09083091e383cc232bd700.jpg', 8),
+(30, 'Et3N_106989107_778596352679161_845680436130736670_n.jpg', 10),
+(31, 'iWJs_ddds.JPG', 11),
+(32, 'GbgI_HINH.JPG', 11),
+(33, 'sBdn_hình-nền-đẹp-cho-laptop-win10-1068x601.jpg', 11),
+(34, '3R7f_12829228_1705324159730272_4493385171624151929_o.jpg', 12),
+(35, 'qeVc_19247834_10213968708037581_423506367597242865_n.jpg', 12),
+(36, 'zapt_22528204_962398657231496_3287448973261593942_n.jpg', 12),
+(37, 'YGnb_26231498_10211201356536184_7924072361560516736_n.jpg', 12),
+(38, 'N760_53220899_2128236527258193_3286290365358800896_n.jpg', 12),
+(39, 'AcEg_ddds.JPG', 13);
 
 -- --------------------------------------------------------
 
@@ -426,11 +453,9 @@ CREATE TABLE `likes` (
 INSERT INTO `likes` (`id`, `id_post`, `id_user`, `created_at`, `updated_at`) VALUES
 (134, 3, 52, NULL, NULL),
 (142, 3, 55, NULL, NULL),
-(158, 4, 51, NULL, NULL),
 (159, 8, 51, NULL, NULL),
 (175, 3, 51, NULL, NULL),
 (176, 8, 54, NULL, NULL),
-(183, 4, 52, NULL, NULL),
 (191, 27, 91, NULL, NULL),
 (195, 27, 53, NULL, NULL),
 (196, 12, 53, NULL, NULL),
@@ -438,7 +463,9 @@ INSERT INTO `likes` (`id`, `id_post`, `id_user`, `created_at`, `updated_at`) VAL
 (198, 8, 58, NULL, NULL),
 (199, 3, 58, NULL, NULL),
 (201, 27, 51, NULL, NULL),
-(202, 12, 51, NULL, NULL);
+(205, 12, 51, NULL, NULL),
+(207, 38, 52, NULL, NULL),
+(208, 27, 54, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -461,13 +488,13 @@ CREATE TABLE `messages` (
 --
 
 INSERT INTO `messages` (`id`, `from`, `to`, `message`, `is_read`, `created_at`, `updated_at`) VALUES
-(1, 52, 51, 'hello you', 1, '2020-08-02 15:38:49', '2020-08-16 14:56:55'),
-(2, 52, 51, 'hihi', 1, '2020-08-02 15:39:13', '2020-08-16 14:56:55'),
-(3, 51, 58, 'hello', 1, '2020-08-02 15:50:29', '2020-08-16 14:52:48'),
-(4, 58, 51, 'Hiểu Khùng', 1, '2020-08-02 15:51:12', '2020-08-16 14:56:56'),
-(5, 52, 51, '1234', 1, '2020-08-05 04:59:28', '2020-08-16 14:56:55'),
-(6, 52, 51, '2435', 1, '2020-08-05 04:59:47', '2020-08-16 14:56:55'),
-(7, 64, 51, 'hello', 1, '2020-08-05 06:37:52', '2020-08-05 06:42:34'),
+(1, 52, 51, 'hello you', 1, '2020-08-02 15:38:49', '2020-08-24 02:41:11'),
+(2, 52, 51, 'hihi', 1, '2020-08-02 15:39:13', '2020-08-24 02:41:11'),
+(3, 51, 58, 'hello', 1, '2020-08-02 15:50:29', '2020-08-26 11:40:28'),
+(4, 58, 51, 'Hiểu Khùng', 1, '2020-08-02 15:51:12', '2020-08-26 16:52:49'),
+(5, 52, 51, '1234', 1, '2020-08-05 04:59:28', '2020-08-24 02:41:11'),
+(6, 52, 51, '2435', 1, '2020-08-05 04:59:47', '2020-08-24 02:41:11'),
+(7, 64, 51, 'hello', 1, '2020-08-05 06:37:52', '2020-08-26 16:52:56'),
 (8, 51, 64, 'hihi', 1, '2020-08-05 06:39:57', '2020-08-08 12:29:09'),
 (9, 61, 51, '<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">', 1, '2020-08-05 06:41:03', '2020-08-05 06:41:25'),
 (10, 61, 52, 'ypooo', 1, '2020-08-07 14:31:18', '2020-08-07 14:31:25'),
@@ -476,7 +503,22 @@ INSERT INTO `messages` (`id`, `from`, `to`, `message`, `is_read`, `created_at`, 
 (13, 77, 69, 'Alo', 1, '2020-08-07 16:42:57', '2020-08-07 16:42:58'),
 (14, 61, 61, '222', 1, '2020-08-12 06:39:38', '2020-08-12 06:40:04'),
 (15, 101, 102, 'hello ban', 1, '2020-08-17 09:37:21', '2020-08-17 09:37:27'),
-(16, 102, 101, 'chao ban', 1, '2020-08-17 09:37:26', '2020-08-17 09:37:27');
+(16, 102, 101, 'chao ban', 1, '2020-08-17 09:37:26', '2020-08-17 09:37:27'),
+(17, 51, 52, 'hihi', 1, '2020-08-18 10:23:06', '2020-08-26 16:51:59'),
+(18, 51, 52, 'kkk', 1, '2020-08-18 10:23:20', '2020-08-26 16:51:59'),
+(19, 51, 52, '1234', 1, '2020-08-18 10:23:27', '2020-08-26 16:51:59'),
+(20, 52, 51, 'ok', 1, '2020-08-18 10:23:37', '2020-08-24 02:41:11'),
+(21, 52, 51, 'ok', 1, '2020-08-18 10:23:45', '2020-08-24 02:41:11'),
+(22, 51, 58, 'WOW', 1, '2020-08-19 15:45:04', '2020-08-26 11:40:28'),
+(23, 51, 52, 'HEHE', 1, '2020-08-19 15:45:20', '2020-08-26 16:51:59'),
+(24, 58, 51, 'emoji đâuuuuuu', 1, '2020-08-19 21:35:06', '2020-08-26 16:52:49'),
+(25, 51, 58, 'WOW CHUA LAY DUOC DU LIEU CUA NO NEN CHUA UPDATE LEN', 1, '2020-08-20 04:03:26', '2020-08-26 11:40:28'),
+(26, 51, 52, 'HELLO', 1, '2020-08-20 04:03:48', '2020-08-26 16:51:59'),
+(27, 52, 51, 'hihi', 1, '2020-08-22 06:52:36', '2020-08-24 02:41:11'),
+(28, 51, 52, 'alo alo', 1, '2020-08-22 06:52:48', '2020-08-26 16:51:59'),
+(29, 58, 51, 'emoji đâuuuuuuuuuuuuuuuu', 1, '2020-08-26 11:40:27', '2020-08-26 16:52:49'),
+(30, 52, 51, 'ok ban oi', 0, '2020-08-26 16:51:58', '2020-08-26 16:51:58'),
+(31, 51, 58, 'wow ko lam haha', 0, '2020-08-26 16:52:40', '2020-08-26 16:52:40');
 
 -- --------------------------------------------------------
 
@@ -543,13 +585,15 @@ CREATE TABLE `post` (
 
 INSERT INTO `post` (`id_post`, `content`, `image`, `public`, `date`, `id`) VALUES
 (3, 'Cùng nhay chống covid nào mọi người !!!', 'img/Kufj_images5399854_3.jpg', 1, '2020-08-02', 52),
-(4, 'Đạt Bé Bỏng xin chào các bạn', 'img/ZmVJ_3A699814-03E5-4FD5-BEB5-C313A3043204.jpeg', 0, '2020-08-12', 52),
 (7, 'adc', 'img/jl1E_doraemon.jpg', 1, '2020-08-05', 63),
 (8, 'Hôm nay tôi buồn', 'img/Ba4v_83059302_2697110870564415_7131202937258749121_n.jpg', 1, '2020-08-05', 64),
 (12, 'Alo test app, sanh diên năm  3 F.a chán , bạn nào tìm hiểu hơm', 'img/vzum_inbound6568290909578512570.jpg', 1, '2020-08-07', 69),
 (13, 'Buồn', '', 1, '2020-08-07', 68),
 (15, 'hé lô \r\ncó ai thấy t ko :)))', '', 1, '2020-08-07', 73),
-(27, 'asdasdasd', 'img/t164_2.png', 1, '2020-08-14', 91);
+(27, 'asdasdasd', 'img/t164_2.png', 1, '2020-08-14', 91),
+(35, '1', 'img/TmVa_def.jpg', 1, '2020-08-23', 67),
+(37, 'Nobody can bring you peace but yourself', '', 1, '2020-08-26', 109),
+(38, 'helooo', 'img/0v7b_2e32cdb4a3b5ba0d4dd19825867e090a.jpg', 1, '2020-08-26', 58);
 
 -- --------------------------------------------------------
 
@@ -576,7 +620,8 @@ INSERT INTO `review` (`Id_review`, `date`, `content`, `status`, `id`) VALUES
 (4, '2020-06-26 00:00:00', 'Cám ơn WhoToDate đã đem đến cho mình một bạn nữ xinh xắn. Ủng hộ hết mình', 1, 50),
 (5, '2020-06-27 00:00:00', 'Cá nhân mình thấy ý tưởng ứng dụng hay, hay hơn nhiều ứng dụng hẹn hò khác nhưng lag hơn, có lẽ do chưa đủ kinh phí nâng cấp hệ thống.', 1, 54),
 (6, '2020-06-26 00:00:00', 'Tôi thấy rất thú vị vì có thêm bạn mới,cho tôi trải nghiệm cuộc sống tâm tư tình cảm với các bạn khác giới, tôi muốn ứng dụng này càng phát triển và mạnh mẽ hơn để vươn xa đến tất cả các bạn vùng sâu được biết và trải nghiệm.Tôi hi vọng tôi sẽ tìm được một nửa của mình thật ưng ý và sẽ đi tiếp với tôi cuộc đời còn lại.', 1, 55),
-(10, '2020-08-14 22:35:59', 'Hello admin', 0, 62);
+(10, '2020-08-14 22:35:59', 'Hello admin', 0, 62),
+(11, '2020-08-24 22:29:25', 'quá xuất xắc thầy ơi', 0, 106);
 
 -- --------------------------------------------------------
 
@@ -615,20 +660,20 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `dob`, `gender`, `religion`, `phone`, `city`, `district`, `ward`, `job`, `habit`, `intro`, `findlove`, `email`, `email_verified_at`, `password`, `status`, `role`, `remember_token`, `created_at`, `updated_at`, `img`) VALUES
 (20, 'Admin', '2020-06-24', 1, '', '', '4', '18', '378', NULL, '', '', 'NULL', 'admin@gmail.com', '2020-06-10 17:00:00', '$2y$10$hOvPNUnhexGthI0h9WPHYeCSoOwgaUC/SLnzS0/CqIFC/0qDVFHNi', 0, 1, NULL, '2020-06-09 01:18:25', '2020-08-10 16:44:41', 'img/35wl_a9be081231f9a1fa7f09af9fbf023030.jpg'),
-(50, 'Hiểu', '1998-05-29', 1, 'Không', '0909456789', '4', '12', '14140', 'sinh viên', 'Lập trình, chơi game, linh kiện điện tửa', 'Mình là một người khá trầm tính, thích màu hồng, yêu màu tím, ghét sự giả dối.', 'Mình muốn tìm một bạn nữ yêu đá bóng', 'lehieu1142@gmail.com', '2020-06-24 20:51:15', '$2y$10$nTUtUHivr930o1aDAQpf0OymqNqK4jTaOLZ0nq39acmEfH0PQGg0C', 0, 1, 'oGAXwGIUakgaXyRishzlJi4UOFUYsB7FcGE81L46w5xvk1rurb9HTgkyuXtD', '2020-06-24 20:49:38', '2020-08-10 16:42:22', 'img/hieu.jpg'),
-(51, 'Diễm', '1992-04-23', 0, 'Thiên Chúa', '0909123456', '4', '31', '15591', 'Học sinh cấp 3....', 'Đi đu đưa', 'ble ble ble', 'Tìm một bạn nam nuôi ăn tới già , con nhà đại gia', 'Diem@gmail.com', '2020-06-24 17:00:00', '$2y$10$TNesqU0sC/tZ1aJneJ3Jk.CRoAuNKpg7M1L9yxrdqSthFLY2BLOVq', 0, 0, NULL, '2020-06-24 21:02:49', '2020-08-15 16:56:25', 'img/diem.jpg'),
+(50, 'Hiểu', '1998-05-29', 1, 'Không', '0909456789', '4', '12', '14140', 'sinh viên', 'Lập trình, chơi game, linh kiện điện tửa', 'Mình là một người khá trầm tính, thích màu hồng, yêu màu tím, ghét sự giả dối.', 'Mình muốn tìm một bạn nữ yêu đá bóng', 'lehieu1142@gmail.com', '2020-06-24 20:51:15', '$2y$10$nTUtUHivr930o1aDAQpf0OymqNqK4jTaOLZ0nq39acmEfH0PQGg0C', 0, 1, 'sDlN54ZgrNzzem7hO7nPWmPPwVA8MXBSDJgHLGiBc4qvnh5euHzBfg0JqkId', '2020-06-24 20:49:38', '2020-08-10 16:42:22', 'img/hieu.jpg'),
+(51, 'Diễm', '1992-04-23', 0, 'Thiên Chúa', '0909123456', '4', '31', '15591', 'Học sinh cấp 3....', 'Đi đu đưa', 'ble ble ble', 'Tìm một bạn nam nuôi ăn tới già , con nhà đại gia', 'Diem@gmail.com', '2020-06-24 17:00:00', '$2y$10$TNesqU0sC/tZ1aJneJ3Jk.CRoAuNKpg7M1L9yxrdqSthFLY2BLOVq', 0, 0, NULL, '2020-06-24 21:02:49', '2020-08-20 04:32:04', 'img/diem.jpg'),
 (52, 'Đạt', '2020-06-03', 1, '', '690404592', '4', '1', '10', 'Chủ tịch', 'Chơi siêu xe, đồng hồ, trang sức', 'Mình thích thì mình dùng thôi', 'Tìm kiếm người tiêu tiền giúp', 'Dat@gmail.com', '2020-06-25 17:00:00', '$2y$10$UYc7OzGDi6yCYScauG.wjOKifrNX5ETHFaIgtFXvXwiTX12gAfmry', 0, 0, NULL, NULL, '2020-08-14 14:21:23', 'img/dat.jpg'),
 (53, 'Thắng', '2020-06-16', 1, 'Thần đạo', '', '4', '1', '10', 'Kỹ sư xây dựng', 'Sưu tầm đỗ cổ, du lịch, tìm kiếm sự tự do', 'Mình là người cởi mở, thích những cái mới mẻ, tiêu tiền như nước', 'Tìm bạn đồng hành suốt cuộc đời', 'Thang@gmail.com', '2020-06-25 17:00:00', '$2y$10$UYc7OzGDi6yCYScauG.wjOKifrNX5ETHFaIgtFXvXwiTX12gAfmry', 0, 0, NULL, NULL, '2020-07-22 08:57:25', 'img/thang.jpg'),
 (54, 'Thạch', '2020-06-26', 1, 'Không', NULL, '4', '77', '15620', 'Doanh nhân', 'Đọc sách, tham quan các bảo tàng, có niềm đam mê với lịch sử', 'Do từ nhỏ đã được tiếp xúc với sách nên mình rất thích sách. Mình luôn tìm mua các loại sách liên quan về lịch sử nhân loại.', 'Tìm bạn có cùng sở thích', 'Thach@gmail.com', '2020-06-25 17:00:00', '$2y$10$UYc7OzGDi6yCYScauG.wjOKifrNX5ETHFaIgtFXvXwiTX12gAfmry', 0, 0, NULL, NULL, '2020-07-22 14:16:30', 'img/thach.jpg'),
 (55, 'Thành', '2020-06-25', 1, '', '0731495678', '4', '2', '11', 'Nhân viên IT', 'Dạo phố, tập thể dục, gym, xăm hình', 'Mình cao 1m69, da ngâm, có nhà có xe', 'Cần tìm người để yêu, nếu hợp thì đám cưới luôn', 'Thanh@gmail.com', '2020-06-25 17:00:00', '$2y$10$UYc7OzGDi6yCYScauG.wjOKifrNX5ETHFaIgtFXvXwiTX12gAfmry', 0, 0, NULL, NULL, '2020-07-22 14:11:05', 'img/thanh.jpg'),
-(58, 'Kiều Diễm', '1998-08-10', 0, 'Không', NULL, '4', '13', '935', NULL, NULL, NULL, NULL, NULL, '2020-08-02 15:47:11', '$2y$10$QXXg86y/1VsIYqZmolXkMuzjtmHjXR5kC4hsmG1kWfPtt9LxjLd56', NULL, 0, 'iBA38l9WstrBWwLp2ZIi0F84TDxPOkxbeNa6ICWHbvkC5BYGEUOb6mnrd2sk', '2020-08-02 15:47:11', '2020-08-15 02:32:10', 'https://graph.facebook.com/v3.3/157998225798710/picture?type=normal'),
-(59, 'Hung Tran Van', NULL, NULL, NULL, NULL, '4', '18', '387', NULL, NULL, NULL, NULL, 'hung.seu@gmail.com', '2020-08-02 15:52:59', '$2y$10$HHIMWQwlJ3U6XTdlSwoQtulGsDKNs1KUiKS0j2pGXIC2Bj/Dz94Jm', NULL, 0, '2Pepq78hafAOEvAIaa9OKySvNJl0ujl4gj6FVDQn225YQETtgGiPyFOs269M', '2020-08-02 15:52:59', '2020-08-02 15:52:59', 'https://lh3.googleusercontent.com/a-/AOh14GhTv1Mywxqq84Jln6BxfVx9HVQS4fLho7N2rIGUfQ'),
+(58, 'Kiều Diễm', '1998-08-10', 0, 'Không', NULL, '4', '13', '935', NULL, NULL, NULL, NULL, NULL, '2020-08-02 15:47:11', '$2y$10$QXXg86y/1VsIYqZmolXkMuzjtmHjXR5kC4hsmG1kWfPtt9LxjLd56', NULL, 0, 'MAb0pkfATtzsGwan2jIwMKnVxh7e1cZJkYYZobuPZn49x9SCW5XST98Mkwzs', '2020-08-02 15:47:11', '2020-08-15 02:32:10', 'https://graph.facebook.com/v3.3/157998225798710/picture?type=normal'),
+(59, 'Hung Tran Van', NULL, 1, 'Không', NULL, '4', '18', '387', NULL, NULL, NULL, NULL, 'hung.seu@gmail.com', '2020-08-02 15:52:59', '$2y$10$HHIMWQwlJ3U6XTdlSwoQtulGsDKNs1KUiKS0j2pGXIC2Bj/Dz94Jm', NULL, 0, '2Pepq78hafAOEvAIaa9OKySvNJl0ujl4gj6FVDQn225YQETtgGiPyFOs269M', '2020-08-02 15:52:59', '2020-08-26 10:59:04', 'https://lh3.googleusercontent.com/a-/AOh14GhTv1Mywxqq84Jln6BxfVx9HVQS4fLho7N2rIGUfQ'),
 (62, 'Nhật Long', '1998-12-29', 1, 'Không', NULL, '4', '18', '378', NULL, NULL, NULL, NULL, 'nguyenbachnhatlong357@gmail.com', '2020-08-05 05:10:55', '$2y$10$1v6rv/yMRqz2CqEggJnodO5TTh6gFP/YJ/tHNwbd.sceaakt7ECTy', 0, 0, 'vC2Xn8LuGN6gbaM8655x2a7ps2WeCIQDIrYiYYObbG1z36VfB2gaQxEUfh16', '2020-08-05 05:10:55', '2020-08-15 16:50:29', 'img/guf0_f59db58b5e09083091e383cc232bd700.jpg'),
 (63, 'Diễm Kiều', '1998-08-10', 1, NULL, NULL, '4', '2', '11', 'Sinh Viên', 'Đi phượt', 'Mình là big big girl', 'Trai đẹp', 'diemnguyen1459@gmail.com', '2020-08-05 06:07:42', '$2y$10$Gs9Vc/LxDglTgOZc2NEMDOeS6FQ.evoY8Yqrw3ANKuxFo6/P/IZaG', 0, 0, NULL, '2020-08-05 06:07:24', '2020-08-05 06:07:42', 'img/user.jpg'),
 (64, 'Đặng Đạt', '1998-02-14', 1, 'Không', '123456789', '4', '2', '11', NULL, NULL, NULL, NULL, 'nhozjacky1@gmail.com', '2020-08-05 06:29:58', '$2y$10$9kYmuxTSob/cOKR.n3mzSeOPI1wRdRCNZlXMBzG2/xmWMhZqdfBOq', 0, 0, '99RoikfqURf14tMQDof61D3C2LO3paIj3KrRFkZGA7m1pHE8QL2Q8ctorE6M', '2020-08-05 06:29:58', '2020-08-05 06:35:14', 'https://graph.facebook.com/v3.3/3480348621987844/picture?type=normal'),
 (65, 'Mã Đặng Vĩnh Trần', NULL, 1, 'Không', NULL, '4', '10', '842', NULL, NULL, NULL, NULL, 'motvisao_codon_1998@yahoo.com.vn', '2020-08-05 07:28:55', '$2y$10$QUbb4g4BRHlP.wl4vVSWluTjcZhsNHpZYMGVwVNQfoir5Fo8bttdm', 0, 0, 'pyg1XCeUx4BG9yDM4nIXITAc0Bla8GqBiWwlxSp2NhC50TGetj3pXEDx9KgP', '2020-08-05 07:28:55', '2020-08-09 08:11:59', 'img/qHow_f7450879a0e22ba3e4601cb0c6e64cea.jpg'),
 (66, 'Trần Văn Hùng', NULL, NULL, NULL, NULL, '4', '2', '11', NULL, NULL, NULL, NULL, 'test.phpmailer.hungtv@gmail.com', '2020-08-05 12:04:47', '$2y$10$5jjLOVpa2G5HdUqlEt99M.ujRvhuUJ9PHPoJvSyadpo73xyRTos7S', 0, 0, 'mp8OjKpQC4YSnHq2cIkmJ6gk27P2YB8NMl3MFHUrp5hvRn7zfqSVeHUzG5Ok', '2020-08-05 12:04:47', '2020-08-05 12:04:47', 'https://lh6.googleusercontent.com/-VYxi1P-r7z4/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucl72dH_iOrKhQYmCKek7_DxpbIjqg/photo.jpg'),
-(67, 'Nguyễn Hoàng Hải', NULL, NULL, NULL, NULL, '4', '2', '11', NULL, NULL, NULL, NULL, 'devilistears@yahoo.com.vn', '2020-08-05 20:57:04', '$2y$10$CvNuSXTyh323H4xtvz04Qu9gMUucY4VORA9ses4vVCHFJ0aCKp1JS', 0, 0, 'JFwcQ21MnFBr7pVBLFtKBcCZICksuxJEiGSTmvOhhZQ84H3HHzN5qXfdnZ8G', '2020-08-05 20:57:04', '2020-08-08 18:26:56', 'img/hCuN_bo-hinh-nen-chat-luong-cao-12.jpg'),
+(67, 'Nguyễn Hoàng Hải', NULL, NULL, NULL, NULL, '4', '2', '11', NULL, NULL, NULL, NULL, 'devilistears@yahoo.com.vn', '2020-08-05 20:57:04', '$2y$10$CvNuSXTyh323H4xtvz04Qu9gMUucY4VORA9ses4vVCHFJ0aCKp1JS', 0, 0, 'xfhgNbAojbuKboAS6nWWKbP73fLbB19328OY8nPdJKoIh8VSgaBQctQaEAJO', '2020-08-05 20:57:04', '2020-08-08 18:26:56', 'img/hCuN_bo-hinh-nen-chat-luong-cao-12.jpg'),
 (68, 'Ellie Phạm', NULL, NULL, NULL, NULL, '4', '2', '11', NULL, NULL, NULL, NULL, 'lightdying13@gmail.com', '2020-08-07 01:55:56', '$2y$10$kmlgSfGtnLk/6q2ifzSPtus/QVLhgymm8pVd8SLwuOffTSms4Avhi', 0, 0, 'zvBklAILn9vYfbf4E2TtUOkqORviofXd6gf6qF578nT9tahoq55w66XD7VsN', '2020-08-07 01:55:56', '2020-08-07 01:55:56', 'https://graph.facebook.com/v3.3/637166696891785/picture?type=normal'),
 (69, 'Trần Thiên', '1999-06-21', 1, 'Kinh', '0913184232', '16', '438', '6425', 'Sinh Viên', 'Đọc sách', 'Đẹp trai . hết', 'cute', 'tranngocthien12a1@gmail.com', '2020-08-07 01:56:01', '$2y$10$2d9gHKzwE2KM/ihkCp2RzOiqlhTHF.LNmMGD8VP4dMDTwI/v2kcv2', 0, 0, 'csgVDY71XYucXkZvkbL93oMJw6AIzwdnURfRPmTHFkSjfm0mw67h452GMHYY', '2020-08-07 01:56:01', '2020-08-07 16:41:44', 'https://graph.facebook.com/v3.3/2669641499978442/picture?type=normal'),
 (70, 'Nguyễn Bảo Phát', '1999-01-14', 1, NULL, NULL, '4', '79', '895', 'Sinh viên', 'Trống', 'Trống', 'Trống', 'nbphat2018@gmail.com', '2020-08-07 02:14:57', '$2y$10$HuAddYE3sQQZwv7w41uRcOqTZJGpXunEPiFaWaxx6xi0n1UEXgVQ.', 0, 0, NULL, '2020-08-07 02:14:19', '2020-08-07 02:14:57', 'img/user.jpg'),
@@ -653,7 +698,13 @@ INSERT INTO `users` (`id`, `name`, `dob`, `gender`, `religion`, `phone`, `city`,
 (91, 'Tran Ngoc Quan', '1998-10-20', 1, NULL, NULL, '4', '9', NULL, 'asdad', 'asdad', 'ad', 'adasd', 'anchodien1@gmail.com', '2020-08-14 08:36:02', '$2y$10$ulSRfjhBrs.s/TpO5ZuGXeZjmApeBVHSOtxRyN4nf2c6.Ve/dKYa.', 0, 0, NULL, '2020-08-14 08:35:22', '2020-08-14 08:36:02', 'img/user.jpg'),
 (93, 'Nguyễn', '1998-12-29', 1, NULL, NULL, '4', '18', '378', NULL, NULL, NULL, NULL, 'snowwind15@yahoo.com.vn', '2020-08-14 14:42:05', '$2y$10$w/twzuXkqt9hmePA7XP.1OxvEPbuFG9pQ6Zu2t2bqgbro0N9lyYCG', 0, 1, 'vo1ES2dWrJN4v4U1d7rozNyy2jqC1So8buqdD0GLdB4jSl4nGJHOxD1irbJv', '2020-08-14 14:42:05', '2020-08-14 14:53:40', 'https://graph.facebook.com/v3.3/2914624048666621/picture?type=normal'),
 (94, 'chan zack', NULL, NULL, NULL, NULL, '4', '12', '14140', NULL, NULL, NULL, NULL, 'zackchan337@gmail.com', '2020-08-14 16:11:56', '$2y$10$Lo1kwgtGtKqjXHaUDzkJgefuPXjHoRWP.aTy4L9UCI2q76uCabtCa', 0, 0, 'BsvinNd34oCbOIbOA7f7Q5OH6OfiRt0cYgtZSdE8fwZajEinVLCiit5RUnHI', '2020-08-14 16:11:56', '2020-08-15 15:46:52', 'https://lh6.googleusercontent.com/-wELB8Ui_zZw/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucmI1OFlXwzLC-oa79IOQMaUn1wupg/photo.jpg'),
-(102, 'Nhật Long Nguyễn Bạch', NULL, NULL, NULL, NULL, '4', '12', '14140', NULL, NULL, NULL, NULL, 'nguyenbachnhatlong@gmail.com', '2020-08-17 09:36:39', '$2y$10$tS1eeix7pJTABdRupKFXAOkRH.2SDEAiw5U9VnzgV.MLx9ETLk4OC', 0, 0, 'g4ulaMYhbvNk76FQMhzt1ebIZ7JIBUfOx5l0VdOHnhtGgXX9R1QRYjEBo4xK', '2020-08-17 09:36:39', '2020-08-17 09:36:39', 'https://lh3.googleusercontent.com/a-/AOh14GiMZY7Nxw58mE26_Gv7qhXZAfAJ9fO4-fo84nbx');
+(102, 'Nhật Long Nguyễn Bạch', NULL, NULL, NULL, NULL, '4', '12', '14140', NULL, NULL, NULL, NULL, 'nguyenbachnhatlong@gmail.com', '2020-08-17 09:36:39', '$2y$10$tS1eeix7pJTABdRupKFXAOkRH.2SDEAiw5U9VnzgV.MLx9ETLk4OC', 0, 0, 'g4ulaMYhbvNk76FQMhzt1ebIZ7JIBUfOx5l0VdOHnhtGgXX9R1QRYjEBo4xK', '2020-08-17 09:36:39', '2020-08-17 09:36:39', 'https://lh3.googleusercontent.com/a-/AOh14GiMZY7Nxw58mE26_Gv7qhXZAfAJ9fO4-fo84nbx'),
+(104, 'Mạnh Huy', NULL, 1, 'Không', NULL, '4', '15', '2300', NULL, NULL, NULL, NULL, 'spidercater20@gmail.com', '2020-08-24 15:07:20', '$2y$10$VM0melFW4VRRFfagxTG0yu6C9cF0QOl.L8VQFAKrwec13xbGuXJIS', 0, 0, 'fFORGu4Jj5SFRTORHERPkjHM0hosMVwhIzLpN1Kx1WUWBDBV8wqmYBhPdX6X', '2020-08-24 15:07:20', '2020-08-24 15:10:19', 'https://graph.facebook.com/v3.3/2826069457674560/picture?type=normal'),
+(105, 'abc', NULL, 0, 'Không', NULL, '4', '12', '14140', NULL, NULL, NULL, NULL, 'acmadentuthienduong0688@gmail.com', '2020-08-24 15:11:03', '$2y$10$Cfl5Cyt/ps2CQtYza0YOju9QqVZA7PKHO510UdVEuwGT1PEEHU692', 0, 0, 'Wkst3uQFEEm4hrrtpFVOpI7ju9bsPhVD1I8naVNtATK0aNdRLKtQgt5TNqe0', '2020-08-24 15:11:03', '2020-08-24 15:16:18', 'https://lh5.googleusercontent.com/-6kUOH6pcJ5c/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnUY2QxbCUJ8Esk4a-bB8vz-ufztw/photo.jpg'),
+(106, 'Tuấn', '1997-01-14', 1, 'Không', NULL, '4', '18', '402', NULL, NULL, NULL, NULL, 'ohmanso97@gmail.com', '2020-08-24 15:27:59', '$2y$10$4.dLE4R9x5wySSYWlIm1r.3WcGA/FRnC13QFiYay1OKso7PwP1rcm', 0, 0, '90WzUWLwMVDCsE5sdJQvJET97RDKYqhMapCMVyuFMKcyDAfZqFcMNgc2Elcb', '2020-08-24 15:27:59', '2020-08-24 15:30:09', 'https://lh3.googleusercontent.com/-5nt6DhblaXI/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucn_AT8ZcK1tDcuhPHyM1l0wChMaUw/photo.jpg'),
+(107, 'Mộng Thu', NULL, NULL, NULL, NULL, '4', '12', '14140', NULL, NULL, NULL, NULL, 'mongthu2301@gmail.com', '2020-08-24 15:42:14', '$2y$10$Z8eqzFTrTRlVzYl7KmFfk.furZvYsNOL0R9ryvTs3HHvWGEVvsRBS', 0, 0, 'Ji4ieJCRuN9kBp8KYc6pGYwff11XC5EyhstA9mdcO6b171gCxbwUFpNmBFJC', '2020-08-24 15:42:14', '2020-08-24 15:42:14', 'https://graph.facebook.com/v3.3/309900107007359/picture?type=normal'),
+(108, 'Tuan Le Hoang', NULL, NULL, NULL, NULL, '4', '12', '14140', NULL, NULL, NULL, NULL, 'dh51905085@student.stu.edu.vn', '2020-08-24 16:09:32', '$2y$10$wwovClGe65fByyUIiqcb.ufBnnMJiTlwb0EHOgXrpULCGF64GD1GO', 0, 0, 'f3yngv8kvvgAyW8nx3AceQTeIXPQIZkesw5Q4YIKoXXHYIrV6nfiTGZl6rOC', '2020-08-24 16:09:32', '2020-08-24 16:09:32', 'https://lh6.googleusercontent.com/-F1rf0VzlOtY/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuck-txQXwbXz_nAux7-IaaLooYBzBA/photo.jpg'),
+(109, 'Cherry Lê', '1995-01-28', 0, 'Không', NULL, '14', '172', '2897', 'Nhân viên văn phòng', NULL, NULL, NULL, 'hang10.avcnqd@gmail.com', '2020-08-26 07:09:29', '$2y$10$vBE31RtXGvGtQ9vsFDbLYeRl3Fuas5ajuqTQj23VCINbPYPD7hvjy', 0, 0, '9fF8AgMs2nCzq4n64KhlazuRnVuc3oQW0kxiXVP75f5Z51zTi68nTPurXj0P', '2020-08-26 07:09:29', '2020-08-26 07:11:22', 'https://lh3.googleusercontent.com/a-/AOh14GgqhPEU_lI5seFh7a63WYTjOQoFODvw95_EeF49nQ');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -782,7 +833,7 @@ ALTER TABLE `abum_blog`
 -- AUTO_INCREMENT cho bảng `albums`
 --
 ALTER TABLE `albums`
-  MODIFY `id_album` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_album` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `blog`
@@ -800,13 +851,13 @@ ALTER TABLE `category_blog`
 -- AUTO_INCREMENT cho bảng `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id_comment` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_comment` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT cho bảng `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT cho bảng `failed_jobs`
@@ -818,25 +869,25 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT cho bảng `friends`
 --
 ALTER TABLE `friends`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
 
 --
 -- AUTO_INCREMENT cho bảng `images`
 --
 ALTER TABLE `images`
-  MODIFY `id_image` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_image` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT cho bảng `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=204;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
 
 --
 -- AUTO_INCREMENT cho bảng `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT cho bảng `migrations`
@@ -848,19 +899,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT cho bảng `post`
 --
 ALTER TABLE `post`
-  MODIFY `id_post` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_post` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT cho bảng `review`
 --
 ALTER TABLE `review`
-  MODIFY `Id_review` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Id_review` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
