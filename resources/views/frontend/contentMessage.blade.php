@@ -11,7 +11,7 @@
 </ul>
 </div>
 <div class="input-text">
-    {{-- <input type="text" name="message" class="submit mb-2 mt-2 " id="emojionearea1"> --}}
+{{--     <input type="text" name="message" class="submit mb-2 mt-2 " id="emojionearea1"> --}}
      <input type="text" name="message" class="submit mb-2" >
 </div>
 <script>

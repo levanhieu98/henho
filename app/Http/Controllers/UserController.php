@@ -185,7 +185,7 @@ class UserController extends Controller
 			friends.user_id_1 = ".Auth::id()." and friends.approved=1
 		)");
 
-		 $friend=Friend::select('user_id_2','user_id_1','block')->Where('approved',1)->get();
+		$friend=Friend::select('user_id_2','user_id_1','block')->Where('approved',1)->get();
    // dd($fr);
 		return view('frontend.banbe',compact(['yc','fr','friend']));
 
@@ -194,9 +194,19 @@ class UserController extends Controller
 	public function thuvienanh(Request $rq)
 	{
 		$albums=DB::table('albums')->where('id',Auth::id())->get();
+		$img=DB::select("select 
+			albums.id,images.name_image,albums.dateCreated
+			FROM
+			albums
+			INNER JOIN
+			images
+			ON 
+			albums.id_album = images.id_album
+			WHERE
+			albums.id=".Auth::id()." ORDER BY albums.dateCreated DESC limit 12");
 		
 
-		return view('frontend.thuvienanh',compact('albums'));
+		return view('frontend.thuvienanh',compact('albums','img'));
 
 	}
 

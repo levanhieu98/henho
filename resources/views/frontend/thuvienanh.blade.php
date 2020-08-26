@@ -66,8 +66,8 @@
                           <i class="glyphicon glyphicon-download-alt"></i>
                           <p>Click vào đây để chọn hình hoặc kéo thả.</p>
                         </div>
-                        <input type="file" name="img_logo[]" class="dropzone @error('img_logo[]') is-invalid @enderror" multiple  accept="image/*">
-                        @error('img_logo[]')
+                        <input type="file" name="img_logo[]" class="dropzone @error('img_logo') is-invalid @enderror" multiple  accept="image/*">
+                        @error('img_logo')
                         <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>
                         </span>
@@ -106,7 +106,14 @@
     <!--  Image By ID -->
     
     <div class="row col-lg-12 portfolio-item  " id="result">
-
+      @foreach($img as $ig)
+      <div class="portfolio-wrap mb-2 col-4">
+      <img src="{{'frontend/img/ima2/'.$ig->name_image}}" style="width:333px;height:300px" alt="">
+      {{-- <div class="portfolio-links">
+      <a href="frontend/img/ima2/'+v.name_image+'" data-gall="portfolioGallery" class="venobox" title="Web 3"><i class="bx bx-plus"></i></a>
+      </div> --}}
+      </div>
+      @endforeach
     </div>
     
 

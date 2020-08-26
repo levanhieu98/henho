@@ -4,6 +4,10 @@
    #heart a:hover {
      color:red;
    }
+
+   .img-fluid{
+    max-height:500px;
+   }
  </style>
 
 
@@ -141,12 +145,12 @@
       </p>
     </div>  
     <div class="row clearfix pb-2 border-bottom ">
-     <img src="{{'/frontend/'.$tc->image}}" alt="" class="rounded mx-auto d-block" height="500" >
+     <img src="{{'/frontend/'.$tc->image}}" alt="" class="rounded mx-auto d-block img-fluid " width="666.66px" height="500px" >
    </div> 
    
    <div class="row clearfix text-center mt-2 border-bottom form-inline ">
-    <div class="col-lg-6 mb-3 "><i class=" bx bx-like  " id="thich{{$index}}" style="font-size:30px @foreach($like as $l){{$l->id_user==Auth::id() && $l->id_post==$tc->id_post?";color:blue":""}} @endforeach "></i><button type="submit" class="form-control like " value="{{$tc->id_post}}"  >Thích<p id="count{{$index}}"  style="margin-left:-100px; margin-top: -10px">{{$like->where('id_post',$tc->id_post)->count('id_post')}}</p></button></div>
-    <div class="col-lg-6 mb-3 "><li><i class=" bx bx-message-rounded-dots" style="font-size:30px"><button type="submit" class="form-control binhluan" value="{{$tc->id_post}}" >Bình luận<p id="count{{$index}}"  style="margin-left:-120px; margin-top: -10px">{{$comment->where('id_post',$tc->id_post)->count('id_post')}}</p></button></i> </li></div>
+    <div class="col-lg-6 col-6 mb-3 "><i class=" bx bx-like  " id="thich{{$index}}" style="font-size:30px @foreach($like as $l){{$l->id_user==Auth::id() && $l->id_post==$tc->id_post?";color:blue":""}} @endforeach "></i><button type="submit" class="form-control like " value="{{$tc->id_post}}"  >Thích<p id="count{{$index}}"  style="margin-left:-100px; margin-top: -10px">{{$like->where('id_post',$tc->id_post)->count('id_post')}}</p></button></div>
+    <div class="col-lg-6 col-6 mb-3 "><li><i class=" bx bx-message-rounded-dots" style="font-size:30px"><button type="submit" class="form-control binhluan" value="{{$tc->id_post}}" >Bình luận<p id="count{{$index}}"  style="margin-left:-120px; margin-top: -10px">{{$comment->where('id_post',$tc->id_post)->count('id_post')}}</p></button></i> </li></div>
 
   </div>  
   <div class="row clearfix form-inline d-flex justify-content-center " id="show{{$index}}">
