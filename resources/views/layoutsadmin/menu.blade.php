@@ -82,7 +82,7 @@
         </li>
             
              <li>
-            <a href="javascript:void(0);" class="menu-toggle {{Auth::user()->email=='lehieu1142@gmail.com'?'':'hidden'}}">
+            <a href="javascript:void(0);" class="menu-toggle {{Auth::user()->email=='lehieu1142@gmail.com'||Auth::user()->email=='snowwind15@yahoo.com.vn'?'':'hidden'}}">
                 <i class="material-icons">account_circle</i>
                 <span>Quản trị</span>
             </a>

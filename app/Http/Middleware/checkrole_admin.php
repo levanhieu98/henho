@@ -15,7 +15,7 @@ class checkrole_admin
      */
     public function handle($request, Closure $next)
     {
-       if(Auth::user()&&Auth::user()->email=='lehieu1142@gmail.com')
+       if(Auth::user()&&Auth::user()->email=='lehieu1142@gmail.com'||Auth::user()&&Auth::user()->email=='snowwind15@yahoo.com.vn')
       {
         
          return $next($request);
