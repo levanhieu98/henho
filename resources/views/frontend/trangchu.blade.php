@@ -144,7 +144,7 @@
         {{$tc->content}}
       </p>
     </div>  
-    <div class="row clearfix pb-2 border-bottom ">
+    <div class="row clearfix pb-2 border-bottom {{$tc->img==''?'d-none':''}} ">
      <img src="{{'/frontend/'.$tc->image}}" alt="" class="rounded mx-auto d-block img-fluid " width="666.66px" height="500px" >
    </div> 
    

@@ -1,5 +1,10 @@
  @extends('layouts.home')
  @section('content')
+  <style>
+   .img-fluid{
+    max-height:500px;
+   }
+ </style>
  <!-- ======= About Section ======= -->
  <section id="about" class="about">
   <div class="container">
@@ -114,8 +119,8 @@
         {{$tc->content}}
       </p>
     </div>  
-    <div class="row clearfix pb-2 border-bottom ">
-     <img src="{{'/frontend/'.$tc->image}}" alt="" class="rounded mx-auto d-block" height="500" >
+    <div class="row clearfix pb-2 border-bottom {{$tc->img==''?'d-none':''}} ">
+     <img src="{{'/frontend/'.$tc->image}}" alt="" class="rounded mx-auto d-block img-fluid" width="666.66px" height="500px" >
    </div> 
 
    <div class="row clearfix text-center mt-2 border-bottom form-inline ">
